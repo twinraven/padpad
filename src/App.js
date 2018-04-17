@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Canvas } from './Canvas/Canvas';
-import './App.css';
 import { retrieveText } from './utils/localstorage';
+import { Wrapper } from './App.styles';
 
 class App extends Component {
 	render() {
 		const text = retrieveText();
 
 		return (
-			<div className="App">
+			<Wrapper>
 				<Canvas initialText={text} />
-			</div>
+			</Wrapper>
 		);
 	}
 }
