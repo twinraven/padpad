@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "lint-staged": "^7.0.4",
     "lodash.debounce": "^4.0.8",
     "polished": "^1.9.2",
     "prettier": "^1.12.1",
@@ -14,10 +15,16 @@
     "react-scripts": "1.1.4",
     "styled-components": "^3.2.5"
   },
+  "lint-staged": {
+    "*.js": [
+      "prettier --config .prettierrc --write",
+      "git add"
+    ]
+  },
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "format": "prettier --config .prettierrc --write \"**/*.js\""
   }
 }

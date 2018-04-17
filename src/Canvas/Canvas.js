@@ -24,7 +24,11 @@ export class Canvas extends Component {
 
 		return (
 			<Wrapper>
-				<Text onChange={this.handleTextChange} onKeyUp={this.storeText} value={text}/>
+				<Text
+					onChange={this.handleTextChange}
+					onKeyUp={this.storeText}
+					value={text}
+				/>
 			</Wrapper>
 		);
 	}

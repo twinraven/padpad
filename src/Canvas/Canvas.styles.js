@@ -18,7 +18,7 @@ export const Text = styled.textarea`
 	resize: none;
 	text-align: left;
 	width: 100%;
-	
+
 	&:focus {
 		outline: none;
 	}
