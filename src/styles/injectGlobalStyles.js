@@ -35,6 +35,13 @@ export default function() {
 		html {
 			-ms-overflow-style: -ms-autohiding-scrollbar;
 		}
+		
+		html,
+		body, 
+		#root {
+			width: 100%;
+			height: 100%;
+		}
 
 		body {
 			overflow: hidden;
