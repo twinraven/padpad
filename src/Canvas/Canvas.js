@@ -16,7 +16,7 @@ export class Canvas extends Component {
 	constructor(props) {
 		super(props);
 
-		this.storeText = debounce(this.storeText, 250);
+		this.storeTextDebounced = debounce(this.storeText, 250);
 	}
 
 	render() {
@@ -26,7 +26,7 @@ export class Canvas extends Component {
 			<Wrapper>
 				<Text
 					onChange={this.handleTextChange}
-					onKeyUp={this.storeText}
+					onKeyUp={this.storeTextDebounced}
 					value={text}
 				/>
 			</Wrapper>
