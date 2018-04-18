@@ -1,24 +1,31 @@
 ###TODO:
 
-- [ ] Tidy up/Refactor
-
-
-- [ ] Add basic styles to canvas
-- [ ] Add button styles
-- [ ] Add customisable:
-    - [ ] Colours (text -- and bg?)
+- [X] Share button
+- [ ] Basic Canvas styles
+- [ ] Button styles
+- [ ] Popup & Modal styles
+- [ ] Toggle control
+- [ ] customisable:
+    - [ ] Bg colour
+    - [ ] Text colour (defaults to 'auto' - contrast-based) 
     - [ ] Font size (slider - i.e. scale)
-    - [ ] Line height?
-- [ ] Add share button
-- [ ] Add toast/popups (for 'copied to clipboard' messages)
+    - [ ] Line height (defaults to 'auto')
+- [ ] Toast/popups (for 'copied to clipboard' messages)
+- [ ] Animations
 
 ###Future:
 
-- [ ] Add Markdown support:
+- [ ] Markdown support:
     - [ ] Editor
-    - [ ] Panels - expand/collapse
-    - [ ] toggle control
-    - [ ] Auto-detection
+    - [ ] Panels - expand/collapse/drag
+    - [ ] Auto-detection + popup
 - [ ] Save online
-- [ ] Auth
+    - [ ] 'detach' option
+    - [ ] Warning modal (when detaching)
 - [ ] App / Install & Offline support
+
+--------------------
+
+###Ideas:
+
+Integrate `react-storybook`?
