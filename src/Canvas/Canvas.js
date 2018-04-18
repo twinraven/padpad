@@ -39,8 +39,8 @@ export class Canvas extends Component {
 	updateUrl = () => {
 		const url = this.getUrl();
 
-		if (window.history.pushState) {
-			window.history.pushState({ path: url }, '', url);
+		if (document.history.pushState) {
+			document.history.pushState({ path: url }, '', url);
 		}
 	};
 
