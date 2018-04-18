@@ -44,7 +44,7 @@ export class Canvas extends Component {
 		}
 	};
 
-	// TODO: move to utils
+	// TODO: move to utils eventually
 	getUrl() {
 		const { protocol, host, pathname } = document.location;
 		const text = encodeURIComponent(this.state.text);
