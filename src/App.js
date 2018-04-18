@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import queryString from 'query-string';
 import { Canvas } from './Canvas/Canvas';
-import { Wrapper } from './App.styles';
+import { Wrapper, ShareButton } from './App.styles';
 
 class App extends Component {
 	render() {
@@ -11,6 +11,7 @@ class App extends Component {
 		return (
 			<Wrapper>
 				<Canvas initialText={text} />
+				<ShareButton />
 			</Wrapper>
 		);
 	}

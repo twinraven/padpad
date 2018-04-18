@@ -30,7 +30,6 @@ export class Canvas extends Component {
 					value={text}
 					placeholder="Type something..."
 				/>
-				<button onClick={this.copyUrl}>Copy</button>
 			</Wrapper>
 		);
 	}
@@ -45,21 +44,7 @@ export class Canvas extends Component {
 		}
 	};
 
-	copyUrl = () => {
-		const url = document.location.href;
-
-		navigator.clipboard
-			.writeText(url)
-			.then(() => {
-				alert('Text copied to clipboard');
-			})
-			.catch(err => {
-				// This can happen if the user denies clipboard permissions:
-				alert('Could not copy text: ');
-				console.log('clipboard error', err);
-			});
-	};
-
+	// TODO: move to utils
 	getUrl() {
 		const { protocol, host, pathname } = document.location;
 		const text = encodeURIComponent(this.state.text);
