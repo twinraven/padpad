@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
+import qs from 'qs';
 import debounce from 'lodash.debounce';
 import { Wrapper, Text } from './Canvas.styles.js';
 
@@ -48,8 +48,8 @@ export class Canvas extends Component {
 	getUrl() {
 		const { protocol, host, pathname } = document.location;
 		const text = encodeURIComponent(this.state.text);
-		const qs = text && `?${queryString.stringify({ text })}`;
+		const querystring = text && `?${qs.stringify({ text })}`;
 
-		return `${protocol}//${host}${pathname}${qs}`;
+		return `${protocol}//${host}${pathname}${querystring}`;
 	}
 }

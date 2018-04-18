@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import queryString from 'query-string';
+import qs from 'qs';
 import { Canvas } from './Canvas/Canvas';
 import { Wrapper, ShareButton } from './App.styles';
 
 class App extends Component {
 	render() {
-		const qs = queryString.parse(document.location.search);
-		const text = qs.text && decodeURIComponent(qs.text);
+		const search = document.location.search.replace('?', '');
+		const qsData = qs.parse(search);
+		const text = qsData.text && decodeURIComponent(qsData.text);
 
 		return (
 			<Wrapper>

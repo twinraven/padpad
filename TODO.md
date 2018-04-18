@@ -1,5 +1,8 @@
 ###TODO:
 
+- [ ] Tidy up/Refactor
+
+
 - [ ] Add basic styles to canvas
 - [ ] Add button styles
 - [ ] Add customisable:
