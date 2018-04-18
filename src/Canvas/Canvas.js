@@ -28,6 +28,7 @@ export class Canvas extends Component {
 					onChange={this.handleTextChange}
 					onKeyUp={this.updateUrlDebounced}
 					value={text}
+					placeholder="Type something..."
 				/>
 				<button onClick={this.copyUrl}>Copy</button>
 			</Wrapper>
@@ -39,13 +40,13 @@ export class Canvas extends Component {
 	updateUrl = () => {
 		const url = this.getUrl();
 
-		if (document.history.pushState) {
-			document.history.pushState({ path: url }, '', url);
+		if (window.history.pushState) {
+			window.history.pushState({ path: url }, '', url);
 		}
 	};
 
 	copyUrl = () => {
-		const url = this.getUrl();
+		const url = document.location.href;
 
 		navigator.clipboard
 			.writeText(url)
