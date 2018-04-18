@@ -6,9 +6,7 @@ import { Wrapper } from './App.styles';
 class App extends Component {
 	render() {
 		const qs = queryString.parse(document.location.search);
-		const text = decodeURIComponent(qs.text) || '';
-
-		console.log(text);
+		const text = qs.text && decodeURIComponent(qs.text);
 
 		return (
 			<Wrapper>

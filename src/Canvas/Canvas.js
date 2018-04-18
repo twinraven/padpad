@@ -63,8 +63,8 @@ export class Canvas extends Component {
 	getUrl() {
 		const { protocol, host, pathname } = document.location;
 		const text = encodeURIComponent(this.state.text);
-		const qs = queryString.stringify({ text });
+		const qs = text && `?${queryString.stringify({ text })}`;
 
-		return `${protocol}//${host}${pathname}?${qs}`;
+		return `${protocol}//${host}${pathname}${qs}`;
 	}
 }
