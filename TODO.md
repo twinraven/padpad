@@ -7,6 +7,7 @@
     - [ ] Font size (slider - i.e. scale)
     - [ ] Line height?
 - [ ] Add share button
+- [ ] Add toast/popups (for 'copied to clipboard' messages)
 
 ###Future:
 
