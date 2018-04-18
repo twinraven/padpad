@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import debounce from 'lodash.debounce';
 import { Wrapper, Text } from './Canvas.styles.js';
-import { storeText } from '../utils/localstorage.js';
 
 export class Canvas extends Component {
 	static propTypes = {
@@ -16,7 +16,7 @@ export class Canvas extends Component {
 	constructor(props) {
 		super(props);
 
-		this.storeTextDebounced = debounce(this.storeText, 250);
+		this.updateUrlDebounced = debounce(this.updateUrl, 200);
 	}
 
 	render() {
@@ -26,14 +26,44 @@ export class Canvas extends Component {
 			<Wrapper>
 				<Text
 					onChange={this.handleTextChange}
-					onKeyUp={this.storeTextDebounced}
+					onKeyUp={this.updateUrlDebounced}
 					value={text}
 				/>
+				<button onClick={this.copyUrl}>Copy</button>
 			</Wrapper>
 		);
 	}
 
 	handleTextChange = event => this.setState({ text: event.target.value });
 
-	storeText = () => storeText(this.state.text);
+	updateUrl = () => {
+		const url = this.getUrl();
+
+		if (window.history.pushState) {
+			window.history.pushState({ path: url }, '', url);
+		}
+	};
+
+	copyUrl = () => {
+		const url = this.getUrl();
+
+		navigator.clipboard
+			.writeText(url)
+			.then(() => {
+				alert('Text copied to clipboard');
+			})
+			.catch(err => {
+				// This can happen if the user denies clipboard permissions:
+				alert('Could not copy text: ');
+				console.log('clipboard error', err);
+			});
+	};
+
+	getUrl() {
+		const { protocol, host, pathname } = document.location;
+		const text = encodeURIComponent(this.state.text);
+		const qs = queryString.stringify({ text });
+
+		return `${protocol}//${host}${pathname}?${qs}`;
+	}
 }

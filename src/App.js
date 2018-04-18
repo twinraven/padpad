@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import queryString from 'query-string';
 import { Canvas } from './Canvas/Canvas';
-import { retrieveText } from './utils/localstorage';
 import { Wrapper } from './App.styles';
 
 class App extends Component {
 	render() {
-		const text = retrieveText();
+		const qs = queryString.parse(document.location.search);
+		const text = decodeURIComponent(qs.text) || '';
+
+		console.log(text);
 
 		return (
 			<Wrapper>
