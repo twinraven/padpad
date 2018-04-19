@@ -20,6 +20,7 @@ export class SettingsPanel extends Component {
 				<CloseButton onClick={onClose} />
 				<Content>
 					<p>
+						{/*TODO: add colour wheel*/}
 						Background color:
 						<input value={bgColor} onChange={this.handleChangeBgColor} />
 						Text color:

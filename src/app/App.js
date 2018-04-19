@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Canvas } from 'components/Canvas/Canvas';
 import { ShareButton } from 'components/ShareButton/ShareButton';
 import { DEFAULT_BG_COLOR, DEFAULT_TEXT_COLOR } from 'config';
 import { getUrlParams } from 'utils/url';
 import { getAutoTextColor } from 'utils/colour';
-import { Wrapper, Controls, SettingsButton, SettingsPanel } from './App.styles';
+import { Wrapper, Canvas, Controls, SettingsButton, SettingsPanel } from './App.styles';
 
 class App extends Component {
 	state = {
@@ -12,6 +11,7 @@ class App extends Component {
 	};
 
 	componentDidMount() {
+		// TODO: move to utils?
 		let {
 			bgColor = DEFAULT_BG_COLOR,
 			textColor = DEFAULT_TEXT_COLOR,
@@ -19,6 +19,7 @@ class App extends Component {
 		} = getUrlParams();
 
 		if (bgColor !== DEFAULT_BG_COLOR) {
+			// and 'auto' mode isn't disabled
 			textColor = getAutoTextColor(bgColor);
 		}
 
@@ -29,16 +30,18 @@ class App extends Component {
 		const { isSettingsOpen, bgColor, textColor, text } = this.state;
 
 		return (
-			<Wrapper textColor={textColor} bgColor={bgColor}>
-				<Canvas text={text} changeText={text => this.setState({ text })} />
-
+			<Wrapper bgColor={bgColor}>
+				<Canvas
+					textColor={textColor}
+					text={text}
+					changeText={text => this.setState({ text })}
+				/>
 				<Controls>
 					<ShareButton />
 					<SettingsButton onClick={this.handleSettingsToggle}>
 						Settings
 					</SettingsButton>
 				</Controls>
-
 				{isSettingsOpen && (
 					<SettingsPanel
 						bgColor={bgColor}

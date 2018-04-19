@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { SettingsPanel as _SettingsPanel } from '../components/SettingsPanel/SettingsPanel';
+import { Canvas as _Canvas } from '../components/Canvas/Canvas';
 
 export const Wrapper = styled.div`
 	text-align: center;
@@ -12,7 +13,9 @@ export const Wrapper = styled.div`
 		css`
 			background-color: #${props.bgColor};
 		`};
-	
+`;
+
+export const Canvas = styled(_Canvas)`
 	${props =>
 		props.textColor &&
 		css`
@@ -32,9 +35,9 @@ export const Controls = styled.div`
 	position: absolute;
 	right: 20px;
 
-	> button {
+	/*> button {
 		padding-left: 15px;
-	}
+	}*/
 `;
 
 export const SettingsButton = styled.button`
