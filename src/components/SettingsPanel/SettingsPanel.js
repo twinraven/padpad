@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { setUrlParams } from '../utils/url';
+import { setUrlParams } from 'utils/url';
 import { Wrapper, Content, CloseButton } from './SettingsPanel.styles';
 
 export class SettingsPanel extends Component {

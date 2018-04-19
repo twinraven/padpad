@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import { setUrlParams } from '../utils/url';
+import { setUrlParams } from 'utils/url';
 import { Wrapper, Text } from './Canvas.styles.js';
 
 export class Canvas extends Component {

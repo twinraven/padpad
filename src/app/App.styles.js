@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { SettingsPanel as _SettingsPanel } from './SettingsPanel/SettingsPanel';
+import { SettingsPanel as _SettingsPanel } from '../components/SettingsPanel/SettingsPanel';
 
 export const Wrapper = styled.div`
 	text-align: center;

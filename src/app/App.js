@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Canvas } from './Canvas/Canvas';
-import { ShareButton } from './ShareButton/ShareButton';
-import { getUrlParams } from './utils/url';
+import { Canvas } from 'components/Canvas/Canvas';
+import { ShareButton } from 'components/ShareButton/ShareButton';
+import { getUrlParams } from 'utils/url';
 import { Wrapper, Controls, SettingsButton, SettingsPanel } from './App.styles';
 
 class App extends Component {
