@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
+import { URL_UPDATE_DELAY } from 'config';
 import { setUrlParams } from 'utils/url';
 import { Wrapper, Text } from './Canvas.styles';
 
-const URL_UPDATE_DELAY = 250;
-
 export class Canvas extends Component {
 	static propTypes = {
-		initialText: PropTypes.string,
-	};
-
-	state = {
-		text: this.props.initialText || '',
+		text: PropTypes.string,
+		changeText: PropTypes.func.isRequired,
 	};
 
 	constructor(props) {
@@ -22,7 +18,7 @@ export class Canvas extends Component {
 	}
 
 	render() {
-		const { text } = this.state;
+		const { text } = this.props;
 
 		return (
 			<Wrapper>
@@ -36,10 +32,10 @@ export class Canvas extends Component {
 		);
 	}
 
-	handleTextChange = event => this.setState({ text: event.target.value });
+	handleTextChange = event => this.props.changeText(event.target.value);
 
 	updateUrl = () => {
-		const { text } = this.state;
+		const { text } = this.props;
 
 		setUrlParams({ text });
 	};

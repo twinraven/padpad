@@ -1,25 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { setUrlParams } from 'utils/url';
+import { getAutoTextColor } from 'utils/colour';
 import { Wrapper, Content, CloseButton } from './SettingsPanel.styles';
 
 export class SettingsPanel extends Component {
 	static propTypes = {
+		bgColor: PropTypes.string.isRequired,
+		textColor: PropTypes.string.isRequired,
 		onClose: PropTypes.func.isRequired,
-		initialBgColor: PropTypes.string,
-	};
-
-	static defaultProps = {
-		initialBgColor: 'fff',
-	};
-
-	state = {
-		bgColor: this.props.initialBgColor,
+		onChangeSettings: PropTypes.func.isRequired,
 	};
 
 	render() {
-		const { onClose, ...props } = this.props;
-		const { bgColor } = this.state;
+		const { bgColor, textColor, onClose, ...props } = this.props;
 
 		return (
 			<Wrapper {...props}>
@@ -27,17 +21,32 @@ export class SettingsPanel extends Component {
 				<Content>
 					<p>
 						Background color:
-						<input value={bgColor} onChange={this.handleBgColorChange} />
+						<input value={bgColor} onChange={this.handleChangeBgColor} />
+						Text color:
+						<input
+							value={textColor}
+							onChange={this.handleChangeTextColor}
+						/>
 					</p>
 				</Content>
 			</Wrapper>
 		);
 	}
 
-	handleBgColorChange = event => {
-		const bgColor = event.target.value;
+	handleChangeBgColor = event =>
+		this.handleChangeSettings({ bgColor: event.target.value });
 
-		this.setState({ bgColor });
-		setUrlParams({ bgColor });
+	handleChangeTextColor = event => {
+		// const prop = { textColor: event.target.value };
+
+		// if auto set colour
+		const prop = { textColor: getAutoTextColor(this.props.bgColor) };
+
+		this.handleChangeSettings(prop);
+	};
+
+	handleChangeSettings = prop => {
+		this.props.onChangeSettings(prop);
+		setUrlParams(prop);
 	};
 }
