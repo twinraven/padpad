@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Canvas } from 'components/Canvas/Canvas';
 import { ShareButton } from 'components/ShareButton/ShareButton';
 import { getUrlParams } from 'utils/url';
+import { getAutoTextColor } from 'utils/colour';
 import { Wrapper, Controls, SettingsButton, SettingsPanel } from './App.styles';
 
 class App extends Component {
@@ -12,9 +13,10 @@ class App extends Component {
 	render() {
 		const { isSettingsOpen } = this.state;
 		const { text, bgColor } = getUrlParams();
+		const textColor = getAutoTextColor(bgColor);
 
 		return (
-			<Wrapper bgColor={bgColor}>
+			<Wrapper textColor={textColor} bgColor={bgColor}>
 				<Canvas
 					bgColor={bgColor}
 					initialText={text && decodeURIComponent(text)}

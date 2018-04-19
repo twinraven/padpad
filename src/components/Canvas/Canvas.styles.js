@@ -12,6 +12,7 @@ export const Wrapper = styled.div`
 export const Text = styled.textarea`
 	background-color: transparent;
 	border: none;
+	color: inherit;
 	font-family: inherit;
 	height: 100%;
 	margin: 0 auto;

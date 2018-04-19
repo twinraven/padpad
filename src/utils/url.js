@@ -2,11 +2,11 @@ import qs from 'qs';
 import { map } from 'ramda';
 
 export function setUrlParams(params) {
-	const { protocol, host, pathname } = document.location;
+	const { pathname } = document.location;
 	const currentParams = getUrlParams();
 	const encodedParams = map(encodeURIComponent, { ...currentParams, ...params });
 	const querystring = qs.stringify(encodedParams);
-	const url = `${protocol}//${host}${pathname}/?${querystring}`;
+	const url = `${pathname}?${querystring}`;
 
 	if (window.history.pushState) {
 		window.history.pushState({ path: url }, '', url);

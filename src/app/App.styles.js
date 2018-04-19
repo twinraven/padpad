@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { SettingsPanel as _SettingsPanel } from '../components/SettingsPanel/SettingsPanel';
 
 export const Wrapper = styled.div`
@@ -11,7 +12,18 @@ export const Wrapper = styled.div`
 		css`
 			background-color: #${props.bgColor};
 		`};
+	
+	${props =>
+		props.textColor &&
+		css`
+			color: #${props.textColor};
+		`};
 `;
+
+Wrapper.propTypes = {
+	bgColor: PropTypes.string,
+	textColor: PropTypes.string,
+};
 
 export const Controls = styled.div`
 	bottom: 20px;
