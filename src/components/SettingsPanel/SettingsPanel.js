@@ -6,11 +6,11 @@ import { Wrapper, Content, CloseButton } from './SettingsPanel.styles';
 export class SettingsPanel extends Component {
 	static propTypes = {
 		onClose: PropTypes.func.isRequired,
-		bgColor: PropTypes.string,
+		initialBgColor: PropTypes.string,
 	};
 
 	static defaultProps = {
-		bgColor: 'fff',
+		initialBgColor: 'fff',
 	};
 
 	state = {
