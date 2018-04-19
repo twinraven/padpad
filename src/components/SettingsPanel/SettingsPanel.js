@@ -23,27 +23,24 @@ export class SettingsPanel extends Component {
 						Background color:
 						<input value={bgColor} onChange={this.handleChangeBgColor} />
 						Text color:
-						<input
-							value={textColor}
-							onChange={this.handleChangeTextColor}
-						/>
+						<input value={textColor} onChange={this.handleChangeTextColor} />
 					</p>
 				</Content>
 			</Wrapper>
 		);
 	}
 
-	handleChangeBgColor = event =>
-		this.handleChangeSettings({ bgColor: event.target.value });
-
-	handleChangeTextColor = event => {
-		// const prop = { textColor: event.target.value };
+	handleChangeBgColor = event => {
+		const bgColor = event.target.value;
 
 		// if auto set colour
-		const prop = { textColor: getAutoTextColor(this.props.bgColor) };
+		const textColor = getAutoTextColor(bgColor);
 
-		this.handleChangeSettings(prop);
+		this.handleChangeSettings({ bgColor, textColor });
 	};
+
+	handleChangeTextColor = event =>
+		this.handleChangeSettings({ textColor: event.target.value });
 
 	handleChangeSettings = prop => {
 		this.props.onChangeSettings(prop);

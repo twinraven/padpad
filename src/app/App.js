@@ -9,19 +9,20 @@ import { Wrapper, Controls, SettingsButton, SettingsPanel } from './App.styles';
 class App extends Component {
 	state = {
 		isSettingsOpen: false,
-		bgColor: DEFAULT_BG_COLOR,
-		textColor: DEFAULT_TEXT_COLOR,
-		text: '',
 	};
 
 	componentDidMount() {
-		const { bgColor = DEFAULT_BG_COLOR, textColor = DEFAULT_TEXT_COLOR, text } = getUrlParams();
-		const newTextColor =
-			bgColor === DEFAULT_BG_COLOR && !!textColor
-				? DEFAULT_TEXT_COLOR
-				: getAutoTextColor(bgColor);
-		debugger;
-		this.setState({ bgColor, textColor: newTextColor, text });
+		let {
+			bgColor = DEFAULT_BG_COLOR,
+			textColor = DEFAULT_TEXT_COLOR,
+			text = '',
+		} = getUrlParams();
+
+		if (bgColor !== DEFAULT_BG_COLOR) {
+			textColor = getAutoTextColor(bgColor);
+		}
+
+		this.setState({ bgColor, textColor, text });
 	}
 
 	render() {
