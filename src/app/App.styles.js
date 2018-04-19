@@ -38,7 +38,7 @@ export const Controls = styled.div`
 `;
 
 export const SettingsButton = styled.button`
-	background: red;
+	background: white;
 `;
 
 export const SettingsPanel = styled(_SettingsPanel)`

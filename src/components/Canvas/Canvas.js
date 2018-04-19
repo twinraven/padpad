@@ -4,6 +4,8 @@ import debounce from 'lodash.debounce';
 import { setUrlParams } from 'utils/url';
 import { Wrapper, Text } from './Canvas.styles';
 
+const URL_UPDATE_DELAY = 250;
+
 export class Canvas extends Component {
 	static propTypes = {
 		initialText: PropTypes.string,
@@ -16,7 +18,7 @@ export class Canvas extends Component {
 	constructor(props) {
 		super(props);
 
-		this.updateUrlDebounced = debounce(this.updateUrl, 200);
+		this.updateUrlDebounced = debounce(this.updateUrl, URL_UPDATE_DELAY);
 	}
 
 	render() {

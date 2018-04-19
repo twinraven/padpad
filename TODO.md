@@ -1,5 +1,6 @@
 ###TODO:
 
+- [ ] Url as source of truth in app? Investigate approach
 - [X] Share button
 - [ ] Basic Canvas styles
 - [ ] Button styles
