@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import qs from 'qs';
 import debounce from 'lodash.debounce';
+import { setUrlParams } from '../utils/url';
 import { Wrapper, Text } from './Canvas.styles.js';
 
 export class Canvas extends Component {
@@ -37,19 +37,8 @@ export class Canvas extends Component {
 	handleTextChange = event => this.setState({ text: event.target.value });
 
 	updateUrl = () => {
-		const url = this.getUrl();
+		const { text } = this.state;
 
-		if (window.history.pushState) {
-			window.history.pushState({ path: url }, '', url);
-		}
+		setUrlParams({ text });
 	};
-
-	// TODO: move to utils eventually
-	getUrl() {
-		const { protocol, host, pathname } = document.location;
-		const text = encodeURIComponent(this.state.text);
-		const querystring = text && `?${qs.stringify({ text })}`;
-
-		return `${protocol}//${host}${pathname}${querystring}`;
-	}
 }
