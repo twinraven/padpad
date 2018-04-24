@@ -4,6 +4,7 @@ import { ShareButton } from 'components/ShareButton/ShareButton';
 import { DEFAULT_BG_COLOR, DEFAULT_TEXT_COLOR } from 'config';
 import { getUrlParams } from 'utils/url';
 import { getAutoTextColor } from 'utils/colour';
+import { hasValue } from 'utils/type';
 import {
 	Wrapper,
 	Canvas,
@@ -36,7 +37,7 @@ class App extends Component {
 	render() {
 		const { isSettingsOpen, bgColor, textColor, text } = this.state;
 
-		const title = this.getTitle(text);
+		const title = this.getTitle({ text, defaultTitle: 'Pad' });
 
 		return (
 			<Wrapper bgColor={bgColor}>
@@ -66,8 +67,8 @@ class App extends Component {
 		);
 	}
 
-	getTitle = text => {
-		if (!text || text.length === 0) return 'Pad';
+	getTitle = ({ text, defaultTitle }) => {
+		if (!hasValue(text)) return defaultTitle;
 
 		const firstLine = text.split('\n')[0];
 		let title = firstLine.substring(0, 25);
