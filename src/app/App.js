@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
+import Helmet from 'react-helmet';
 import { ShareButton } from 'components/ShareButton/ShareButton';
 import { DEFAULT_BG_COLOR, DEFAULT_TEXT_COLOR } from 'config';
 import { getUrlParams } from 'utils/url';
 import { getAutoTextColor } from 'utils/colour';
-import { Wrapper, Canvas, Controls, SettingsButton, SettingsPanel } from './App.styles';
+import {
+	Wrapper,
+	Canvas,
+	Controls,
+	SettingsButton,
+	SettingsPanel,
+} from './App.styles';
 
 class App extends Component {
 	state = {
@@ -29,8 +36,13 @@ class App extends Component {
 	render() {
 		const { isSettingsOpen, bgColor, textColor, text } = this.state;
 
+		const title = this.getTitle(text);
+
 		return (
 			<Wrapper bgColor={bgColor}>
+				<Helmet>
+					<title>{title}</title>
+				</Helmet>
 				<Canvas
 					textColor={textColor}
 					text={text}
@@ -53,6 +65,19 @@ class App extends Component {
 			</Wrapper>
 		);
 	}
+
+	getTitle = text => {
+		if (!text || text.length === 0) return 'Pad';
+
+		const firstLine = text.split('\n')[0];
+		let title = firstLine.substring(0, 25);
+
+		if (title.length < firstLine.length) {
+			title = `${title}…`;
+		}
+
+		return title;
+	};
 
 	handleSettingsToggle = () =>
 		this.setState(state => ({

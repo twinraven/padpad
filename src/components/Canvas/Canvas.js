@@ -26,7 +26,7 @@ export class Canvas extends Component {
 					onChange={this.handleTextChange}
 					onKeyUp={this.updateUrlDebounced}
 					value={text}
-					placeholder="Type something..."
+					placeholder="Type something…"
 				/>
 			</Wrapper>
 		);
