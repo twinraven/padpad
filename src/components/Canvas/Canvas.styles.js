@@ -14,6 +14,7 @@ export const Text = styled.textarea`
 	font-family: inherit;
 	margin: 0;
 	max-width: 800px;
+	min-height: 100vh;
 	padding: 15px 0;
 	overflow: hidden;
 	resize: none;
