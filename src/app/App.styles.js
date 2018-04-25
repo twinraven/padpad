@@ -21,6 +21,12 @@ export const Canvas = styled(_Canvas)`
 		css`
 			color: #${props.textColor};
 		`};
+
+	${props =>
+		props.fontSize &&
+		css`
+			font-size: ${props.fontSize}px;
+		`};
 `;
 
 Wrapper.propTypes = {

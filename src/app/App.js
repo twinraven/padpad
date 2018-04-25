@@ -24,6 +24,7 @@ class App extends Component {
 			bgColor = DEFAULT_BG_COLOR,
 			textColor = DEFAULT_TEXT_COLOR,
 			text,
+			fontSize,
 		} = getUrlParams();
 
 		if (bgColor !== DEFAULT_BG_COLOR) {
@@ -31,11 +32,11 @@ class App extends Component {
 			textColor = getAutoTextColor(bgColor);
 		}
 
-		return { bgColor, textColor, text };
+		return { bgColor, textColor, fontSize, text };
 	}
 
 	render() {
-		const { isSettingsOpen, bgColor, textColor, text } = this.state;
+		const { isSettingsOpen, bgColor, textColor, fontSize, text } = this.state;
 
 		const title = this.getTitle(text);
 
@@ -46,6 +47,7 @@ class App extends Component {
 				</Helmet>
 				<Canvas
 					textColor={textColor}
+					fontSize={fontSize}
 					text={text}
 					changeText={text => this.setState({ text })}
 				/>
@@ -57,8 +59,10 @@ class App extends Component {
 				</Controls>
 				{isSettingsOpen && (
 					<SettingsPanel
+						// TODO: make these 'initial-' props?
 						bgColor={bgColor}
 						textColor={textColor}
+						fontSize={fontSize}
 						onChangeSettings={prop => this.setState(prop)}
 						onClose={this.handleSettingsToggle}
 					/>

@@ -12,6 +12,7 @@ export const Text = styled.textarea`
 	border: none;
 	color: inherit;
 	font-family: inherit;
+	font-size: 13px;
 	margin: 0;
 	max-width: 800px;
 	min-height: 100vh;

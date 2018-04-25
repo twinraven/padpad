@@ -29,7 +29,7 @@ export class Canvas extends Component {
 	}
 
 	render() {
-		const { text } = this.props;
+		const { text, ...props } = this.props;
 		const { height } = this.state;
 
 		return (
@@ -41,6 +41,7 @@ export class Canvas extends Component {
 					readOnly={true}
 				/>
 				<Text
+					{...props}
 					style={{ height }}
 					onChange={this.handleTextChange}
 					onKeyUp={this.handleKeyUp}
