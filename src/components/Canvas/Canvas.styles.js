@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DEFAULT_FONT_SIZE } from 'config';
 
 export const Wrapper = styled.div`
 	display: flex;
@@ -12,6 +13,7 @@ export const Text = styled.textarea`
 	border: none;
 	color: inherit;
 	font-family: inherit;
+	font-size: ${DEFAULT_FONT_SIZE}px;
 	margin: 0;
 	max-width: 800px;
 	min-height: 100vh;

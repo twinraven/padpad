@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { ShareButton } from 'components/ShareButton/ShareButton';
-import { DEFAULT_BG_COLOR, DEFAULT_TEXT_COLOR } from 'config';
+import {
+	DEFAULT_BG_COLOR,
+	DEFAULT_FONT_COLOR,
+	DEFAULT_FONT_SIZE,
+} from 'config';
 import { getUrlParams } from 'utils/url';
 import { getAutoTextColor } from 'utils/colour';
 import { isDefined } from 'utils/type';
@@ -19,23 +23,23 @@ class App extends Component {
 	};
 
 	static getDerivedStateFromProps() {
-		// TODO: move to utils?
 		let {
 			bgColor = DEFAULT_BG_COLOR,
-			textColor = DEFAULT_TEXT_COLOR,
-			text,
+			fontColor = DEFAULT_FONT_COLOR,
+			fontSize = DEFAULT_FONT_SIZE,
+			text = '',
 		} = getUrlParams();
 
 		if (bgColor !== DEFAULT_BG_COLOR) {
-			// and 'auto' mode isn't disabled
-			textColor = getAutoTextColor(bgColor);
+			// TODO: and 'auto' mode isn't disabled
+			fontColor = getAutoTextColor(bgColor);
 		}
 
-		return { bgColor, textColor, text };
+		return { bgColor, fontColor, fontSize, text };
 	}
 
 	render() {
-		const { isSettingsOpen, bgColor, textColor, text } = this.state;
+		const { isSettingsOpen, bgColor, fontColor, fontSize, text } = this.state;
 
 		const title = this.getTitle(text);
 
@@ -45,7 +49,8 @@ class App extends Component {
 					<title>{title}</title>
 				</Helmet>
 				<Canvas
-					textColor={textColor}
+					fontColor={fontColor}
+					fontSize={fontSize}
 					text={text}
 					changeText={text => this.setState({ text })}
 				/>
@@ -57,8 +62,10 @@ class App extends Component {
 				</Controls>
 				{isSettingsOpen && (
 					<SettingsPanel
+						// TODO: make these 'initial-' props?
 						bgColor={bgColor}
-						textColor={textColor}
+						fontColor={fontColor}
+						fontSize={fontSize}
 						onChangeSettings={prop => this.setState(prop)}
 						onClose={this.handleSettingsToggle}
 					/>

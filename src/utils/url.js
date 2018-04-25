@@ -1,10 +1,14 @@
 import qs from 'qs';
 import { map } from 'ramda';
-import { DEFAULT_BG_COLOR, DEFAULT_TEXT_COLOR } from 'config';
+import {
+	DEFAULT_BG_COLOR,
+	DEFAULT_FONT_COLOR,
+	DEFAULT_FONT_SIZE,
+} from 'config';
 
 export function setUrlParams(newParams) {
 	const { pathname } = document.location;
-	const params = { ...getUrlParams(), ...newParams }; // TODO: check for perf issues in using getUrlParams here..?
+	const params = { ...getUrlParams(), ...newParams };
 
 	const cleanParams = removeDefaultValues(params);
 	const encodedParams = map(encodeURIComponent, cleanParams);
@@ -19,8 +23,9 @@ export function setUrlParams(newParams) {
 }
 
 function removeDefaultValues(params) {
-	if (params.textColor === DEFAULT_TEXT_COLOR) delete params.textColor;
 	if (params.bgColor === DEFAULT_BG_COLOR) delete params.bgColor;
+	if (params.fontColor === DEFAULT_FONT_COLOR) delete params.fontColor;
+	if (params.fontSize === DEFAULT_FONT_SIZE) delete params.fontSize;
 	if (params.text === '') delete params.text;
 
 	return params;

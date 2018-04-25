@@ -15,17 +15,27 @@ export const Wrapper = styled.div`
 		`};
 `;
 
+Wrapper.propTypes = {
+	bgColor: PropTypes.string,
+};
+
 export const Canvas = styled(_Canvas)`
 	${props =>
-		props.textColor &&
+		props.fontColor &&
 		css`
-			color: #${props.textColor};
+			color: #${props.fontColor};
+		`};
+
+	${props =>
+		props.fontSize &&
+		css`
+			font-size: ${props.fontSize}px;
 		`};
 `;
 
 Wrapper.propTypes = {
-	bgColor: PropTypes.string,
-	textColor: PropTypes.string,
+	fontColor: PropTypes.string,
+	fontSize: PropTypes.number,
 };
 
 export const Controls = styled.div`
