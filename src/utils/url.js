@@ -5,7 +5,7 @@ import { DEFAULT_BG_COLOR, DEFAULT_TEXT_COLOR } from 'config';
 export function setUrlParams(newParams) {
 	const { pathname } = document.location;
 	const params = { ...getUrlParams(), ...newParams }; // TODO: check for perf issues in using getUrlParams here..?
-	
+
 	const cleanParams = removeDefaultValues(params);
 	const encodedParams = map(encodeURIComponent, cleanParams);
 
@@ -27,8 +27,9 @@ function removeDefaultValues(params) {
 }
 
 export function getUrlParams() {
-	const search = document.location.search.replace('?', '');
-	const params = qs.parse(search);
+	const params = qs.parse(document.location.search, {
+		ignoreQueryPrefix: true,
+	});
 
 	return map(decodeURIComponent, params);
 }
