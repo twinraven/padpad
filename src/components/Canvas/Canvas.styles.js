@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-	display: block;
-	height: 100%;
-	margin: 0 auto;
-	max-width: 80%;
-	padding: 20px;
+	display: flex;
+	justify-content: center;
+	padding: 0 15px;
 	width: 100%;
 `;
 
@@ -14,9 +12,11 @@ export const Text = styled.textarea`
 	border: none;
 	color: inherit;
 	font-family: inherit;
-	height: 100%;
-	margin: 0 auto;
+	margin: 0;
 	max-width: 800px;
+	min-height: 100vh;
+	overflow: hidden;
+	padding: 15px 0;
 	resize: none;
 	text-align: left;
 	width: 100%;
@@ -24,4 +24,10 @@ export const Text = styled.textarea`
 	&:focus {
 		outline: none;
 	}
+`;
+
+export const GhostText = styled(Text)`
+	position: absolute;
+	top: 0;
+	visibility: hidden;
 `;

@@ -18,12 +18,12 @@ class App extends Component {
 		isSettingsOpen: false,
 	};
 
-	componentDidMount() {
+	static getDerivedStateFromProps() {
 		// TODO: move to utils?
 		let {
 			bgColor = DEFAULT_BG_COLOR,
 			textColor = DEFAULT_TEXT_COLOR,
-			text = '',
+			text,
 		} = getUrlParams();
 
 		if (bgColor !== DEFAULT_BG_COLOR) {
@@ -31,7 +31,7 @@ class App extends Component {
 			textColor = getAutoTextColor(bgColor);
 		}
 
-		this.setState({ bgColor, textColor, text });
+		return { bgColor, textColor, text };
 	}
 
 	render() {

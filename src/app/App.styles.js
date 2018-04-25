@@ -4,9 +4,9 @@ import { SettingsPanel as _SettingsPanel } from '../components/SettingsPanel/Set
 import { Canvas as _Canvas } from '../components/Canvas/Canvas';
 
 export const Wrapper = styled.div`
+	position: relative;
 	text-align: center;
 	width: 100%;
-	height: 100%;
 
 	${props =>
 		props.bgColor &&
@@ -32,7 +32,7 @@ export const Controls = styled.div`
 	bottom: 20px;
 	display: flex;
 	justify-content: space-between;
-	position: absolute;
+	position: fixed;
 	right: 20px;
 
 	/*> button {
@@ -45,8 +45,8 @@ export const SettingsButton = styled.button`
 `;
 
 export const SettingsPanel = styled(_SettingsPanel)`
-	position: fixed;
-	left: 0;
-	right: 0;
 	bottom: 0;
+	left: 0;
+	position: fixed;
+	right: 0;
 `;
