@@ -42,9 +42,7 @@ export class Canvas extends Component {
 	render() {
 		const { text } = this.props;
 		const { height } = this.state;
-
-		const isOneLine = height <= DEFAULT_HEIGHT;
-
+		
 		return (
 			<Wrapper>
 				<Ghost
@@ -54,7 +52,7 @@ export class Canvas extends Component {
 					readOnly={true}
 				/>
 				<Text
-					style={{ height, resize: isOneLine ? 'none' : null }}
+					style={{ height }}
 					onChange={this.handleTextChange}
 					onKeyUp={this.handleKeyUp}
 					autoFocus={true}
