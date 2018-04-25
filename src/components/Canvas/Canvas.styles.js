@@ -15,8 +15,8 @@ export const Text = styled.textarea`
 	margin: 0;
 	max-width: 800px;
 	min-height: 100vh;
-	padding: 15px 0;
 	overflow: hidden;
+	padding: 15px 0;
 	resize: none;
 	text-align: left;
 	width: 100%;
