@@ -23,7 +23,7 @@ export class SettingsPanel extends Component {
 					<p>
 						Background color:
 						<input value={bgColor} onChange={this.handleChangeBgColor} />
-						Text color:
+						Font color:
 						<input value={fontColor} onChange={this.handleChangeFontColor} />
 						Font size:
 						<input
