@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import { URL_UPDATE_DELAY } from 'config';
 import { setUrlParams } from 'utils/url';
-import { Wrapper, Text, Ghost } from './Canvas.styles';
+import { Wrapper, Text, GhostText } from './Canvas.styles';
 
 const DEFAULT_HEIGHT = 100;
 
@@ -21,31 +21,20 @@ export class Canvas extends Component {
 		super(props);
 
 		this.ghostRef = React.createRef();
-
 		this.updateUrlDebounced = debounce(this.updateUrl, URL_UPDATE_DELAY);
 	}
 
 	componentDidMount() {
-		this.mounted = true;
-
-		this.setFilledTextareaHeight();
-	}
-
-	setFilledTextareaHeight() {
-		if (this.mounted) {
-			this.setState({
-				height: this.ghostRef.current.scrollHeight,
-			});
-		}
+		this.setHeight();
 	}
 
 	render() {
 		const { text } = this.props;
 		const { height } = this.state;
-		
+
 		return (
 			<Wrapper>
-				<Ghost
+				<GhostText
 					aria-hidden={true}
 					innerRef={this.ghostRef}
 					value={text}
@@ -67,8 +56,16 @@ export class Canvas extends Component {
 
 	handleKeyUp = () => {
 		this.updateUrlDebounced();
-		this.setFilledTextareaHeight();
+		this.setHeight();
 	};
+
+	setHeight() {
+		if (this.ghostRef.current) {
+			this.setState({
+				height: this.ghostRef.current.scrollHeight,
+			});
+		}
+	}
 
 	updateUrl = () => {
 		const { text } = this.props;

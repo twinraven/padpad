@@ -25,7 +25,7 @@ export const Text = styled.textarea`
 	}
 `;
 
-export const Ghost = styled(Text)`
+export const GhostText = styled(Text)`
 	position: absolute;
 	top: 0;
 	visibility: hidden;
