@@ -24,7 +24,7 @@ export class SettingsPanel extends Component {
 						Background color:
 						<input value={bgColor} onChange={this.handleChangeBgColor} />
 						Text color:
-						<input value={fontColor} onChange={this.handleChangeTextColor} />
+						<input value={fontColor} onChange={this.handleChangeFontColor} />
 						Font size:
 						<input
 							type="range"
@@ -49,7 +49,7 @@ export class SettingsPanel extends Component {
 		this.handleChangeSettings({ bgColor, fontColor });
 	};
 
-	handleChangeTextColor = event =>
+	handleChangeFontColor = event =>
 		this.handleChangeSettings({ fontColor: event.target.value });
 
 	handleChangeFontSize = event =>
