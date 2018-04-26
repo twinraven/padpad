@@ -1,5 +1,4 @@
 import qs from 'qs';
-import { map } from 'ramda';
 import {
 	DEFAULT_BG_COLOR,
 	DEFAULT_FONT_COLOR,
@@ -8,14 +7,12 @@ import {
 
 export function setUrlParams(newParams) {
 	const { pathname } = document.location;
-	const params = { ...getUrlParams(), ...newParams };
+	const params = { ...getQueryParams(), ...newParams };
 
 	const cleanParams = removeDefaultValues(params);
-	const encodedParams = map(encodeURIComponent, cleanParams);
-
-	const querystring = qs.stringify(encodedParams, { encode: false });
-	const qmark = querystring.length ? '?' : '';
-	const url = `${pathname}${qmark}${querystring}`;
+	const querystring = qs.stringify(cleanParams);
+	const queryPrefix = querystring.length ? '?' : '';
+	const url = `${pathname}${queryPrefix}${querystring}`;
 
 	if (window.history.pushState) {
 		window.history.pushState({ path: url }, '', url);
@@ -31,10 +28,7 @@ function removeDefaultValues(params) {
 	return params;
 }
 
-export function getUrlParams() {
-	const params = qs.parse(document.location.search, {
+export const getQueryParams = () =>
+	qs.parse(document.location.search, {
 		ignoreQueryPrefix: true,
 	});
-
-	return map(decodeURIComponent, params);
-}

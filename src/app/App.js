@@ -6,7 +6,7 @@ import {
 	DEFAULT_FONT_COLOR,
 	DEFAULT_FONT_SIZE,
 } from 'config';
-import { getUrlParams } from 'utils/url';
+import { getQueryParams } from 'utils/url';
 import { getAutoTextColor } from 'utils/colour';
 import { isDefined } from 'utils/type';
 import {
@@ -28,7 +28,7 @@ class App extends Component {
 			fontColor = DEFAULT_FONT_COLOR,
 			fontSize = DEFAULT_FONT_SIZE,
 			text = '',
-		} = getUrlParams();
+		} = getQueryParams();
 
 		if (bgColor !== DEFAULT_BG_COLOR) {
 			// TODO: and 'auto' mode isn't disabled
