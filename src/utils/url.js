@@ -1,4 +1,5 @@
 import qs from 'qs';
+import { map } from 'ramda';
 import {
 	DEFAULT_BG_COLOR,
 	DEFAULT_FONT_COLOR,
@@ -10,7 +11,9 @@ export function setUrlParams(newParams) {
 	const params = { ...getQueryParams(), ...newParams };
 
 	const cleanParams = removeDefaultValues(params);
-	const querystring = qs.stringify(cleanParams);
+	const encodedParams = map(encodeURIComponent, cleanParams);
+
+	const querystring = qs.stringify(encodedParams, { encode: false });
 	const queryPrefix = querystring.length ? '?' : '';
 	const url = `${pathname}${queryPrefix}${querystring}`;
 
