@@ -12,6 +12,7 @@ import {
 	SettingsButton,
 	SettingsPanel,
 } from './App.styles';
+import ColorPicker, { CustomHue } from 'components/ColorPicker/ColorPicker';
 
 class App extends Component {
 	state = {
@@ -39,7 +40,7 @@ class App extends Component {
 				<Helmet>
 					<title>{title}</title>
 				</Helmet>
-				<Canvas
+				{/*<Canvas
 					fontColor={fontColor}
 					fontSize={fontSize}
 					text={text}
@@ -61,7 +62,9 @@ class App extends Component {
 						onChangeSettings={this.changeSettings}
 						onResetSettings={this.resetSettings}
 					/>
-				)}
+				)}*/}
+
+				<ColorPicker />
 			</Wrapper>
 		);
 	}
