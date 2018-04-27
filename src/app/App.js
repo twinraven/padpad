@@ -10,7 +10,7 @@ import {
 	Canvas,
 	Controls,
 	SettingsButton,
-	SettingsPanel,
+	Settings,
 } from './App.styles';
 
 class App extends Component {
@@ -60,7 +60,7 @@ class App extends Component {
 					</SettingsButton>
 				</Controls>
 				{isSettingsOpen && (
-					<SettingsPanel
+					<Settings
 						isAutoFontColor={isAutoFontColor}
 						bgColor={bgColor}
 						fontColor={fontColor}

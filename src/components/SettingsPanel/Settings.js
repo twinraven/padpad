@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getAutoTextColor } from 'utils/colour';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
-import { Wrapper, Content, CloseButton, Link } from './SettingsPanel.styles';
+import { Wrapper, Content, CloseButton, Link } from './Settings.styles';
 
-export class SettingsPanel extends Component {
+export class Settings extends Component {
 	static propTypes = {
 		isAutoFontColor: PropTypes.bool.isRequired,
 		bgColor: PropTypes.string.isRequired,
