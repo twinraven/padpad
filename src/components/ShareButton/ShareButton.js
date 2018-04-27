@@ -9,7 +9,6 @@ export function ShareButton(props) {
 
 	const getUrl = () => {
 		getShortUrl(document.location.href)
-			.then(response => response.json())
 			.then(({ data, status_code }) => {
 				if (status_code === 500) {
 					throw new Error();
