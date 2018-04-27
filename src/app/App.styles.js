@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 	${props =>
 		props.bgColor &&
 		css`
-			background-color: #${props.bgColor};
+			background-color: ${props.bgColor};
 		`};
 `;
 
@@ -23,7 +23,7 @@ export const Canvas = styled(_Canvas)`
 	${props =>
 		props.fontColor &&
 		css`
-			color: #${props.fontColor};
+			color: ${props.fontColor};
 		`};
 
 	${props =>

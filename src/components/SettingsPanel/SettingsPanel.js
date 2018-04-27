@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getAutoTextColor } from 'utils/colour';
 import { Wrapper, Content, CloseButton } from './SettingsPanel.styles';
+import ColorPicker from 'components/ColorPicker/ColorPicker';
 
 export class SettingsPanel extends Component {
 	static propTypes = {
@@ -28,9 +29,9 @@ export class SettingsPanel extends Component {
 			<Wrapper {...props}>
 				<CloseButton onClick={onClose} />
 				<Content>
-					<p>
+					<div>
 						Background color:
-						<input value={bgColor} onChange={this.handleChangeBgColor} />
+						<ColorPicker color={bgColor} onChange={this.handleChangeBgColor} />
 						Font color:
 						<input
 							value={fontColor}
@@ -50,14 +51,14 @@ export class SettingsPanel extends Component {
 							}
 						/>
 						<a onClick={onResetSettings}>reset all</a>
-					</p>
+					</div>
 				</Content>
 			</Wrapper>
 		);
 	}
 
-	handleChangeBgColor = event => {
-		const bgColor = event.target.value;
+	handleChangeBgColor = ({ hex }) => {
+		const bgColor = hex;
 
 		// if auto set colour
 		const fontColor = getAutoTextColor(bgColor);
