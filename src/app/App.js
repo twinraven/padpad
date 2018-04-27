@@ -16,6 +16,7 @@ import {
 class App extends Component {
 	state = {
 		isSettingsOpen: false,
+		isAutoFontColor: true,
 	};
 
 	static getDerivedStateFromProps() {
@@ -30,7 +31,14 @@ class App extends Component {
 	}
 
 	render() {
-		const { isSettingsOpen, bgColor, fontColor, fontSize, text } = this.state;
+		const {
+			isSettingsOpen,
+			isAutoFontColor,
+			bgColor,
+			fontColor,
+			fontSize,
+			text,
+		} = this.state;
 
 		const title = this.getTitle(text);
 
@@ -53,7 +61,7 @@ class App extends Component {
 				</Controls>
 				{isSettingsOpen && (
 					<SettingsPanel
-						// TODO: make these 'initial-' props?
+						isAutoFontColor={isAutoFontColor}
 						bgColor={bgColor}
 						fontColor={fontColor}
 						fontSize={fontSize}

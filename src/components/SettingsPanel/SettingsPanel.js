@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getAutoTextColor } from 'utils/colour';
-import { Wrapper, Content, CloseButton } from './SettingsPanel.styles';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
+import { Wrapper, Content, CloseButton, Link } from './SettingsPanel.styles';
 
 export class SettingsPanel extends Component {
 	static propTypes = {
+		isAutoFontColor: PropTypes.bool.isRequired,
 		bgColor: PropTypes.string.isRequired,
 		fontColor: PropTypes.string.isRequired,
 		fontSize: PropTypes.string.isRequired,
@@ -16,6 +17,7 @@ export class SettingsPanel extends Component {
 
 	render() {
 		const {
+			isAutoFontColor,
 			bgColor,
 			fontColor,
 			fontSize,
@@ -33,12 +35,14 @@ export class SettingsPanel extends Component {
 						Background color:
 						<ColorPicker color={bgColor} onChange={this.handleChangeBgColor} />
 						Font color:
-						<input
-							value={fontColor}
-							onChange={event =>
-								onChangeSettings({ fontColor: event.target.value })
-							}
-						/>
+						{isAutoFontColor ? (
+							<Link onClick={this.handleToggleAuto}>auto</Link>
+						) : (
+							<ColorPicker
+								color={fontColor}
+								onChange={this.handleChangeFontColor}
+							/>
+						)}
 						Font size:
 						<input
 							type="range"
@@ -58,11 +62,22 @@ export class SettingsPanel extends Component {
 	}
 
 	handleChangeBgColor = ({ hex }) => {
-		const bgColor = hex;
+		let settings = { bgColor: hex };
 
-		// if auto set colour
-		const fontColor = getAutoTextColor(bgColor);
+		if (!this.props.isAutoFontColor) {
+			settings.fontColor = getAutoTextColor(hex);
+		}
 
-		this.props.onChangeSettings({ bgColor, fontColor });
+		this.props.onChangeSettings(settings);
+	};
+
+	handleChangeFontColor = ({ hex }) => {
+		this.handleToggleAuto();
+
+		this.props.onChangeSettings({ fontColor: hex });
+	};
+
+	handleToggleAuto = () => {
+		console.log('toggle auto font colour');
 	};
 }

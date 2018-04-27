@@ -20,3 +20,9 @@ export const CloseButton = styled.div.attrs({
 	top: 10px;
 	z-index: 1;
 `;
+
+export const Link = styled.a`
+	color: blue;
+	text-decoration: underline;
+	text-decoration-style: dotted;
+`;
