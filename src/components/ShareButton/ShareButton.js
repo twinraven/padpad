@@ -1,21 +1,27 @@
 import React from 'react';
-import Clipboard from 'clipboard';
 import { Button } from './ShareButton.styles';
-
-new Clipboard('.share-button');
+import { getShortUrl } from 'utils/url';
 
 export function ShareButton(props) {
+	const displayShortUrl = url => {
+		alert(url); // TODO: popup/toast notification, with 'click-to-copy'
+	};
+
+	const shareUrl = () => {
+		getShortUrl(document.location.href)
+			.then(({ data, status_code }) => {
+				if (status_code === 500) {
+					throw new Error();
+				}
+
+				displayShortUrl(data.url);
+			})
+			.catch(() => displayShortUrl(document.location.href));
+	};
+
 	return (
 		<div {...props}>
-			<Button
-				onClick={() => alert('copied')} // TODO: use toast notification
-				{...props}
-				/* these props last so as not to break Clipboard.js... */
-				className="share-button"
-				data-clipboard-text={document.location.href}
-			>
-				Share
-			</Button>
+			<Button onClick={shareUrl}>Share</Button>
 		</div>
 	);
 }
