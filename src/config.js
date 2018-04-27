@@ -11,3 +11,4 @@ export const DEFAULT_CONFIG = {
 };
 
 export const URL_UPDATE_DELAY = 250;
+export const RESIZE_UPDATE_DELAY = 100;

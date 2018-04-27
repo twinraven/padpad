@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import { URL_UPDATE_DELAY } from 'config';
+import { URL_UPDATE_DELAY, RESIZE_UPDATE_DELAY } from 'config';
 import { setUrlParams } from 'utils/url';
 import { Wrapper, Text, GhostText } from './Canvas.styles';
 
@@ -21,11 +21,19 @@ export class Canvas extends Component {
 		super(props);
 
 		this.ghostRef = React.createRef();
+
 		this.updateUrlDebounced = debounce(this.updateUrl, URL_UPDATE_DELAY);
+		this.setHeightDebounced = debounce(this.setHeight, RESIZE_UPDATE_DELAY);
+
+		window.addEventListener('resize', this.setHeightDebounced);
 	}
 
 	componentDidMount() {
 		this.setHeight();
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.setHeightDebounced);
 	}
 
 	render() {
@@ -60,13 +68,13 @@ export class Canvas extends Component {
 		this.setHeight();
 	};
 
-	setHeight() {
+	setHeight = () => {
 		if (this.ghostRef.current) {
 			this.setState({
 				height: this.ghostRef.current.scrollHeight,
 			});
 		}
-	}
+	};
 
 	updateUrl = () => {
 		const { text } = this.props;
