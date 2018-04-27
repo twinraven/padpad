@@ -7,7 +7,7 @@ export function ShareButton(props) {
 		alert(url); // TODO: popup/toast notification, with 'click-to-copy'
 	};
 
-	const getUrl = () => {
+	const shareUrl = () => {
 		getShortUrl(document.location.href)
 			.then(({ data, status_code }) => {
 				if (status_code === 500) {
@@ -21,7 +21,7 @@ export function ShareButton(props) {
 
 	return (
 		<div {...props}>
-			<Button onClick={getUrl}>Share</Button>
+			<Button onClick={shareUrl}>Share</Button>
 		</div>
 	);
 }
