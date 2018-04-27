@@ -7,5 +7,5 @@ export function getAutoTextColor(hex = '#fff') {
 			.map(char => char + char)
 			.join('');
 	}
-	return `0x${color}` > 0xffffff / 2 ? '#333' : '#fff';
+	return `0x${color}` > 0xffffff * 0.75 ? '#333' : '#fff';
 }

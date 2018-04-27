@@ -1,19 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { CustomPicker } from 'react-color';
 import { Hue, Saturation } from 'react-color/lib/components/common';
-import { HuePicker, SaturationPicker } from './ColorPicker.styles';
+import {
+	Wrapper,
+	HueWrapper,
+	HuePicker,
+	SaturationWrapper,
+	SaturationPicker,
+} from './ColorPicker.styles';
 
 const ColorPicker = props => {
 	return (
-		<div style={{ display: 'flex' }}>
-			<div style={{ width: 20, height: 100, position: 'relative' }}>
+		<Wrapper>
+			<HueWrapper>
 				<Hue {...props} pointer={HuePicker} direction={'vertical'} />
-			</div>
-			<div style={{ width: 200, height: 100, position: 'relative' }}>
+			</HueWrapper>
+			<SaturationWrapper>
 				<Saturation {...props} pointer={SaturationPicker} />
-			</div>
-		</div>
+			</SaturationWrapper>
+		</Wrapper>
 	);
+};
+
+ColorPicker.propTypes = {
+	color: PropTypes.string.isRequired,
+	onChange: PropTypes.func.isRequired,
 };
 
 export default CustomPicker(ColorPicker);
