@@ -56,7 +56,8 @@ export const SettingsButton = styled.button`
 
 export const Settings = styled(_Settings)`
 	bottom: 0;
-	left: 0;
 	position: fixed;
 	right: 0;
+	width: 100%;
+	max-width: 250px;
 `;

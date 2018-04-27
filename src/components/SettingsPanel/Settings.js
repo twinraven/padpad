@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getAutoTextColor } from 'utils/colour';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
-import { Wrapper, Content, CloseButton, Link } from './Settings.styles';
+import {
+	Wrapper,
+	Content,
+	CloseButton,
+	Link,
+	Swatch,
+	Row,
+	CloseColorButton,
+} from './Settings.styles';
 
 export class Settings extends Component {
 	static propTypes = {
@@ -13,6 +21,12 @@ export class Settings extends Component {
 		onClose: PropTypes.func.isRequired,
 		onChangeSettings: PropTypes.func.isRequired,
 		onResetSettings: PropTypes.func.isRequired,
+		onSetAutoFontColor: PropTypes.func.isRequired,
+	};
+
+	state = {
+		isBgColorOpen: false,
+		isFontColorOpen: false,
 	};
 
 	render() {
@@ -26,23 +40,76 @@ export class Settings extends Component {
 			onResetSettings,
 			...props
 		} = this.props;
+		const { isBgColorOpen, isFontColorOpen } = this.state;
 
 		return (
 			<Wrapper {...props}>
 				<CloseButton onClick={onClose} />
 				<Content>
-					<div>
+					<Row>
 						Background color:
-						<ColorPicker color={bgColor} onChange={this.handleChangeBgColor} />
+						<Swatch
+							color={bgColor}
+							onClick={() =>
+								this.setState(({ isBgColorOpen }) => ({
+									isBgColorOpen: !isBgColorOpen,
+								}))
+							}
+						/>
+						{isBgColorOpen && (
+							<React.Fragment>
+								<ColorPicker
+									color={bgColor}
+									onChange={this.handleChangeBgColor}
+								/>
+								<div>
+									<CloseColorButton
+										onClick={() => this.setState({ isBgColorOpen: false })}
+									>
+										X
+									</CloseColorButton>
+								</div>
+							</React.Fragment>
+						)}
+					</Row>
+					<Row>
 						Font color:
 						{isAutoFontColor ? (
-							<Link onClick={this.handleToggleAuto}>auto</Link>
+							<Link onClick={this.handleActivateFontControl}>auto</Link>
 						) : (
-							<ColorPicker
-								color={fontColor}
-								onChange={this.handleChangeFontColor}
-							/>
+							<React.Fragment>
+								<Swatch
+									color={fontColor}
+									onClick={() =>
+										this.setState(({ isFontColorOpen }) => ({
+											isFontColorOpen: !isFontColorOpen,
+										}))
+									}
+								/>
+								{isFontColorOpen && (
+									<React.Fragment>
+										<ColorPicker
+											color={fontColor}
+											onChange={this.handleChangeFontColor}
+										/>
+										<div>
+											<Link onClick={this.handleResetFontControl}>
+												set automatically
+											</Link>
+											<CloseColorButton
+												onClick={() =>
+													this.setState({ isFontColorOpen: false })
+												}
+											>
+												X
+											</CloseColorButton>
+										</div>
+									</React.Fragment>
+								)}
+							</React.Fragment>
 						)}
+					</Row>
+					<Row>
 						Font size:
 						<input
 							type="range"
@@ -54,8 +121,8 @@ export class Settings extends Component {
 								onChangeSettings({ fontSize: event.target.value })
 							}
 						/>
-						<a onClick={onResetSettings}>reset all</a>
-					</div>
+						<Link onClick={onResetSettings}>reset all</Link>
+					</Row>
 				</Content>
 			</Wrapper>
 		);
@@ -64,20 +131,26 @@ export class Settings extends Component {
 	handleChangeBgColor = ({ hex }) => {
 		let settings = { bgColor: hex };
 
-		if (!this.props.isAutoFontColor) {
+		if (this.props.isAutoFontColor) {
 			settings.fontColor = getAutoTextColor(hex);
 		}
 
 		this.props.onChangeSettings(settings);
 	};
 
-	handleChangeFontColor = ({ hex }) => {
-		this.handleToggleAuto();
-
-		this.props.onChangeSettings({ fontColor: hex });
+	handleActivateFontControl = () => {
+		this.props.onSetAutoFontColor(false);
+		this.setState({ isFontColorOpen: true });
 	};
 
-	handleToggleAuto = () => {
-		console.log('toggle auto font colour');
+	handleResetFontControl = () => {
+		this.props.onSetAutoFontColor(true);
+		this.setState({ isFontColorOpen: false });
+	};
+
+	handleChangeFontColor = ({ hex }) => {
+		this.props.onSetAutoFontColor(false);
+
+		this.props.onChangeSettings({ fontColor: hex });
 	};
 }

@@ -68,6 +68,9 @@ class App extends Component {
 						onClose={this.toggleSettingsOpen}
 						onChangeSettings={this.changeSettings}
 						onResetSettings={this.resetSettings}
+						onSetAutoFontColor={isAutoFontColor =>
+							this.setState({ isAutoFontColor })
+						}
 					/>
 				)}
 			</Wrapper>
@@ -87,11 +90,6 @@ class App extends Component {
 		return title;
 	};
 
-	toggleSettingsOpen = () =>
-		this.setState(state => ({
-			isSettingsOpen: !state.isSettingsOpen,
-		}));
-
 	changeSettings = props => {
 		this.setState(props);
 		setUrlParams(props);
@@ -102,6 +100,11 @@ class App extends Component {
 
 		this.changeSettings(DefaultsWithoutText);
 	};
+
+	toggleSettingsOpen = () =>
+		this.setState(({ isSettingsOpen }) => ({
+			isSettingsOpen: !isSettingsOpen,
+		}));
 }
 
 export default App;
