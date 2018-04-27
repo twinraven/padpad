@@ -1,10 +1,6 @@
 import qs from 'qs';
 import { map } from 'ramda';
-import {
-	DEFAULT_BG_COLOR,
-	DEFAULT_FONT_COLOR,
-	DEFAULT_FONT_SIZE,
-} from 'config';
+import { DEFAULT_CONFIG } from 'config';
 
 export function setUrlParams(newParams) {
 	const { pathname } = document.location;
@@ -23,10 +19,9 @@ export function setUrlParams(newParams) {
 }
 
 function removeDefaultValues(params) {
-	if (params.bgColor === DEFAULT_BG_COLOR) delete params.bgColor;
-	if (params.fontColor === DEFAULT_FONT_COLOR) delete params.fontColor;
-	if (params.fontSize === DEFAULT_FONT_SIZE) delete params.fontSize;
-	if (params.text === '') delete params.text;
+	for (const [key, value] of Object.entries(params)) {
+		if (value === DEFAULT_CONFIG[key]) delete params[key];
+	}
 
 	return params;
 }
@@ -35,6 +30,11 @@ export const getQueryParams = () =>
 	qs.parse(document.location.search, {
 		ignoreQueryPrefix: true,
 	});
+
+export const getQueryParamsWithDefaults = () => ({
+	...DEFAULT_CONFIG,
+	...getQueryParams(),
+});
 
 export function getShortUrl(longUrl) {
 	const token = process.env.REACT_APP_BITLY_API_TOKEN;

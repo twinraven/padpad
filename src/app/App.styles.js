@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { SettingsPanel as _SettingsPanel } from '../components/SettingsPanel/SettingsPanel';
-import { Canvas as _Canvas } from '../components/Canvas/Canvas';
+import { SettingsPanel as _SettingsPanel } from 'components/SettingsPanel/SettingsPanel';
+import { Canvas as _Canvas } from 'components/Canvas/Canvas';
 
 export const Wrapper = styled.div`
 	position: relative;

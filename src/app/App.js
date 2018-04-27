@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { ShareButton } from 'components/ShareButton/ShareButton';
-import {
-	DEFAULT_BG_COLOR,
-	DEFAULT_FONT_COLOR,
-	DEFAULT_FONT_SIZE,
-} from 'config';
-import { getQueryParams } from 'utils/url';
+import { DEFAULT_CONFIG, DEFAULT_BG_COLOR } from 'config';
+import { getQueryParamsWithDefaults, setUrlParams } from 'utils/url';
 import { getAutoTextColor } from 'utils/colour';
 import { isDefined } from 'utils/type';
 import {
@@ -23,12 +19,7 @@ class App extends Component {
 	};
 
 	static getDerivedStateFromProps() {
-		let {
-			bgColor = DEFAULT_BG_COLOR,
-			fontColor = DEFAULT_FONT_COLOR,
-			fontSize = DEFAULT_FONT_SIZE,
-			text = '',
-		} = getQueryParams();
+		let { bgColor, fontColor, fontSize, text } = getQueryParamsWithDefaults();
 
 		if (bgColor !== DEFAULT_BG_COLOR) {
 			// TODO: and 'auto' mode isn't disabled
@@ -56,7 +47,7 @@ class App extends Component {
 				/>
 				<Controls>
 					<ShareButton />
-					<SettingsButton onClick={this.handleSettingsToggle}>
+					<SettingsButton onClick={this.toggleSettingsOpen}>
 						Settings
 					</SettingsButton>
 				</Controls>
@@ -66,8 +57,9 @@ class App extends Component {
 						bgColor={bgColor}
 						fontColor={fontColor}
 						fontSize={fontSize}
-						onChangeSettings={prop => this.setState(prop)}
-						onClose={this.handleSettingsToggle}
+						onClose={this.toggleSettingsOpen}
+						onChangeSettings={this.changeSettings}
+						onResetSettings={this.resetSettings}
 					/>
 				)}
 			</Wrapper>
@@ -87,10 +79,21 @@ class App extends Component {
 		return title;
 	};
 
-	handleSettingsToggle = () =>
+	toggleSettingsOpen = () =>
 		this.setState(state => ({
 			isSettingsOpen: !state.isSettingsOpen,
 		}));
+
+	changeSettings = props => {
+		this.setState(props);
+		setUrlParams(props);
+	};
+
+	resetSettings = () => {
+		const { text, ...DefaultsWithoutText } = DEFAULT_CONFIG;
+
+		this.changeSettings(DefaultsWithoutText);
+	};
 }
 
 export default App;
