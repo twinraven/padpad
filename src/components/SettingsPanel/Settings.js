@@ -76,7 +76,10 @@ export class Settings extends Component {
 					<Row>
 						Font color:
 						{isAutoFontColor ? (
-							<Link onClick={this.handleActivateFontControl}>auto</Link>
+							<p>
+								auto{' '}
+								<Link onClick={this.handleActivateFontControl}>(edit)</Link>
+							</p>
 						) : (
 							<React.Fragment>
 								<Swatch
