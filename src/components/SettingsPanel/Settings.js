@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from 'config';
 import { getAutoTextColor } from 'utils/colour';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
 import {
@@ -113,8 +114,8 @@ export class Settings extends Component {
 						Font size:
 						<input
 							type="range"
-							min={10}
-							max={30}
+							min={MIN_FONT_SIZE}
+							max={MAX_FONT_SIZE}
 							step={0.1}
 							value={fontSize}
 							onChange={event =>

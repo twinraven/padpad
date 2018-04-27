@@ -12,3 +12,6 @@ export const DEFAULT_CONFIG = {
 
 export const URL_UPDATE_DELAY = 250;
 export const RESIZE_UPDATE_DELAY = 100;
+
+export const MIN_FONT_SIZE = 10;
+export const MAX_FONT_SIZE = 60;
