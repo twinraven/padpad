@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DEFAULT_FONT_SIZE } from 'config';
+import { DEFAULT_FONT_SIZE } from 'config.js';
 
 export const Wrapper = styled.div`
 	display: flex;

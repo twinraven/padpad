@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { map } from 'ramda';
-import { DEFAULT_CONFIG } from 'config';
+import { DEFAULT_PARAMS } from 'config.js';
 
 export function setUrlParams(newParams) {
 	const { pathname } = document.location;
@@ -20,7 +20,7 @@ export function setUrlParams(newParams) {
 
 function removeDefaultValues(params) {
 	for (const [key, value] of Object.entries(params)) {
-		if (value === DEFAULT_CONFIG[key]) delete params[key];
+		if (value === DEFAULT_PARAMS[key]) delete params[key];
 	}
 
 	return params;
@@ -30,11 +30,6 @@ export const getQueryParams = () =>
 	qs.parse(document.location.search, {
 		ignoreQueryPrefix: true,
 	});
-
-export const getQueryParamsWithDefaults = () => ({
-	...DEFAULT_CONFIG,
-	...getQueryParams(),
-});
 
 export function getShortUrl(longUrl) {
 	const token = process.env.REACT_APP_BITLY_API_TOKEN;

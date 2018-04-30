@@ -1,38 +1,41 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
+import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
+import { getQueryParams, setUrlParams } from 'utils/url';
 import { ShareButton } from 'components/ShareButton/ShareButton';
-import { DEFAULT_CONFIG, DEFAULT_BG_COLOR } from 'config';
-import { getQueryParamsWithDefaults, setUrlParams } from 'utils/url';
-import { getAutoTextColor } from 'utils/colour';
-import { isDefined } from 'utils/type';
 import {
 	Wrapper,
 	Canvas,
 	Controls,
 	SettingsButton,
-	SettingsPanel,
+	Settings,
 } from './App.styles';
+import { getTitle } from './App.utils';
 
 class App extends Component {
 	state = {
 		isSettingsOpen: false,
+		isAutoFontColor: true,
 	};
 
 	static getDerivedStateFromProps() {
-		let { bgColor, fontColor, fontSize, text } = getQueryParamsWithDefaults();
-
-		if (bgColor !== DEFAULT_BG_COLOR) {
-			// TODO: and 'auto' mode isn't disabled
-			fontColor = getAutoTextColor(bgColor);
-		}
-
-		return { bgColor, fontColor, fontSize, text };
+		return {
+			...DEFAULT_PARAMS,
+			...getQueryParams(),
+		};
 	}
 
 	render() {
-		const { isSettingsOpen, bgColor, fontColor, fontSize, text } = this.state;
+		const {
+			isSettingsOpen,
+			isAutoFontColor,
+			text,
+			bgColor,
+			fontColor,
+			fontSize,
+		} = this.state;
 
-		const title = this.getTitle(text);
+		const title = getTitle(text);
 
 		return (
 			<Wrapper bgColor={bgColor}>
@@ -52,48 +55,32 @@ class App extends Component {
 					</SettingsButton>
 				</Controls>
 				{isSettingsOpen && (
-					<SettingsPanel
-						// TODO: make these 'initial-' props?
+					<Settings
 						bgColor={bgColor}
 						fontColor={fontColor}
 						fontSize={fontSize}
+						isAutoFontColor={isAutoFontColor}
 						onClose={this.toggleSettingsOpen}
 						onChangeSettings={this.changeSettings}
-						onResetSettings={this.resetSettings}
+						onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
+						onSetAutoFontColor={isAutoFontColor =>
+							this.setState({ isAutoFontColor })
+						}
 					/>
 				)}
 			</Wrapper>
 		);
 	}
 
-	getTitle = text => {
-		if (!isDefined(text) || text.length === 0) return 'Pad';
-
-		const firstLine = text.split('\n')[0];
-		let title = firstLine.substring(0, 25);
-
-		if (title.length < firstLine.length) {
-			title = `${title}…`;
-		}
-
-		return title;
+	changeSettings = settings => {
+		this.setState(settings);
+		setUrlParams(settings);
 	};
 
 	toggleSettingsOpen = () =>
-		this.setState(state => ({
-			isSettingsOpen: !state.isSettingsOpen,
+		this.setState(({ isSettingsOpen }) => ({
+			isSettingsOpen: !isSettingsOpen,
 		}));
-
-	changeSettings = props => {
-		this.setState(props);
-		setUrlParams(props);
-	};
-
-	resetSettings = () => {
-		const { text, ...DefaultsWithoutText } = DEFAULT_CONFIG;
-
-		this.changeSettings(DefaultsWithoutText);
-	};
 }
 
 export default App;

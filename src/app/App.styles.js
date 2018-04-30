@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { SettingsPanel as _SettingsPanel } from 'components/SettingsPanel/SettingsPanel';
+import { Settings as _Settings } from 'components/SettingsPanel/Settings';
 import { Canvas as _Canvas } from 'components/Canvas/Canvas';
 
 export const Wrapper = styled.div`
@@ -54,9 +54,10 @@ export const SettingsButton = styled.button`
 	background: white;
 `;
 
-export const SettingsPanel = styled(_SettingsPanel)`
+export const Settings = styled(_Settings)`
 	bottom: 0;
-	left: 0;
 	position: fixed;
 	right: 0;
+	width: 100%;
+	max-width: 250px;
 `;
