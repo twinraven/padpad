@@ -21,7 +21,7 @@ export class Settings extends Component {
 		fontSize: PropTypes.string.isRequired,
 		onClose: PropTypes.func.isRequired,
 		onChangeSettings: PropTypes.func.isRequired,
-		onResetSettings: PropTypes.func.isRequired,
+		onReset: PropTypes.func.isRequired,
 		onSetAutoFontColor: PropTypes.func.isRequired,
 	};
 
@@ -38,7 +38,7 @@ export class Settings extends Component {
 			fontSize,
 			onClose,
 			onChangeSettings,
-			onResetSettings,
+			onReset,
 			...props
 		} = this.props;
 		const { isBgColorOpen, isFontColorOpen } = this.state;
@@ -77,8 +77,7 @@ export class Settings extends Component {
 						Font color:
 						{isAutoFontColor ? (
 							<p>
-								auto{' '}
-								<Link onClick={this.handleActivateFontControl}>(edit)</Link>
+								auto (<Link onClick={this.handleActivateFontControl}>edit</Link>)
 							</p>
 						) : (
 							<React.Fragment>
@@ -125,7 +124,7 @@ export class Settings extends Component {
 								onChangeSettings({ fontSize: event.target.value })
 							}
 						/>
-						<Link onClick={onResetSettings}>reset all</Link>
+						<Link onClick={onReset}>reset all</Link>
 					</Row>
 				</Content>
 			</Wrapper>

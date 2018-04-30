@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
+import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config';
+import { getQueryParams, setUrlParams } from 'utils/url';
 import { ShareButton } from 'components/ShareButton/ShareButton';
-import { DEFAULT_CONFIG } from 'config';
-import { getQueryParamsWithDefaults, setUrlParams } from 'utils/url';
-import { isDefined } from 'utils/type';
 import {
 	Wrapper,
 	Canvas,
@@ -11,6 +10,7 @@ import {
 	SettingsButton,
 	Settings,
 } from './App.styles';
+import { getTitle } from './App.utils';
 
 class App extends Component {
 	state = {
@@ -19,9 +19,10 @@ class App extends Component {
 	};
 
 	static getDerivedStateFromProps() {
-		let { bgColor, fontColor, fontSize, text } = getQueryParamsWithDefaults();
-
-		return { bgColor, fontColor, fontSize, text };
+		return {
+			...DEFAULT_PARAMS,
+			...getQueryParams(),
+		};
 	}
 
 	render() {
@@ -34,7 +35,7 @@ class App extends Component {
 			text,
 		} = this.state;
 
-		const title = this.getTitle(text);
+		const title = getTitle(text);
 
 		return (
 			<Wrapper bgColor={bgColor}>
@@ -55,13 +56,14 @@ class App extends Component {
 				</Controls>
 				{isSettingsOpen && (
 					<Settings
-						isAutoFontColor={isAutoFontColor}
 						bgColor={bgColor}
 						fontColor={fontColor}
 						fontSize={fontSize}
+						text={text}
+						isAutoFontColor={isAutoFontColor}
 						onClose={this.toggleSettingsOpen}
 						onChangeSettings={this.changeSettings}
-						onResetSettings={this.resetSettings}
+						onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
 						onSetAutoFontColor={isAutoFontColor =>
 							this.setState({ isAutoFontColor })
 						}
@@ -71,28 +73,9 @@ class App extends Component {
 		);
 	}
 
-	getTitle = text => {
-		if (!isDefined(text) || text.length === 0) return 'Pad';
-
-		const firstLine = text.split('\n')[0];
-		let title = firstLine.substring(0, 25);
-
-		if (title.length < firstLine.length) {
-			title = `${title}…`;
-		}
-
-		return title;
-	};
-
-	changeSettings = props => {
-		this.setState(props);
-		setUrlParams(props);
-	};
-
-	resetSettings = () => {
-		const { text, ...DefaultsWithoutText } = DEFAULT_CONFIG;
-
-		this.changeSettings(DefaultsWithoutText);
+	changeSettings = settings => {
+		this.setState(settings);
+		setUrlParams(settings);
 	};
 
 	toggleSettingsOpen = () =>

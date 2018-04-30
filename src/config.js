@@ -3,10 +3,16 @@ export const DEFAULT_FONT_COLOR = '#333333';
 export const DEFAULT_FONT_SIZE = '13';
 export const DEFAULT_TEXT = '';
 
-export const DEFAULT_CONFIG = {
+export const DEFAULT_TITLE = 'Pad';
+
+export const DEFAULT_SETTINGS = {
 	bgColor: DEFAULT_BG_COLOR,
 	fontColor: DEFAULT_FONT_COLOR,
 	fontSize: DEFAULT_FONT_SIZE,
+};
+
+export const DEFAULT_PARAMS = {
+	...DEFAULT_SETTINGS,
 	text: DEFAULT_TEXT,
 };
 
