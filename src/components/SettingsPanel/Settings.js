@@ -133,13 +133,14 @@ export class Settings extends Component {
 	}
 
 	handleChangeBgColor = ({ hex }) => {
+		const { isAutoFontColor, onChangeSettings } = this.props;
 		let settings = { bgColor: hex };
 
-		if (this.props.isAutoFontColor) {
+		if (isAutoFontColor) {
 			settings.fontColor = getAutoTextColor(hex);
 		}
 
-		this.props.onChangeSettings(settings);
+		onChangeSettings(settings);
 	};
 
 	handleActivateFontControl = () => {
@@ -148,13 +149,18 @@ export class Settings extends Component {
 	};
 
 	handleResetFontControl = () => {
-		this.props.onSetAutoFontColor(true);
+		const { bgColor, onSetAutoFontColor, onChangeSettings } = this.props;
+
+		onSetAutoFontColor(true);
+		onChangeSettings({ fontColor: getAutoTextColor(bgColor) });
+
 		this.setState({ isFontColorOpen: false });
 	};
 
 	handleChangeFontColor = ({ hex }) => {
-		this.props.onSetAutoFontColor(false);
+		const { onSetAutoFontColor, onChangeSettings } = this.props;
 
-		this.props.onChangeSettings({ fontColor: hex });
+		onSetAutoFontColor(false);
+		onChangeSettings({ fontColor: hex });
 	};
 }
