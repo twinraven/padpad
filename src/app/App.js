@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { ShareButton } from 'components/ShareButton/ShareButton';
-import { DEFAULT_CONFIG, DEFAULT_BG_COLOR } from 'config';
+import { DEFAULT_CONFIG } from 'config';
 import { getQueryParamsWithDefaults, setUrlParams } from 'utils/url';
-import { getAutoTextColor } from 'utils/colour';
 import { isDefined } from 'utils/type';
 import {
 	Wrapper,
@@ -21,11 +20,6 @@ class App extends Component {
 
 	static getDerivedStateFromProps() {
 		let { bgColor, fontColor, fontSize, text } = getQueryParamsWithDefaults();
-
-		if (bgColor !== DEFAULT_BG_COLOR) {
-			// TODO: and 'auto' mode isn't disabled
-			fontColor = getAutoTextColor(bgColor);
-		}
 
 		return { bgColor, fontColor, fontSize, text };
 	}
