@@ -29,10 +29,10 @@ class App extends Component {
 		const {
 			isSettingsOpen,
 			isAutoFontColor,
+			text,
 			bgColor,
 			fontColor,
 			fontSize,
-			text,
 		} = this.state;
 
 		const title = getTitle(text);
@@ -59,7 +59,6 @@ class App extends Component {
 						bgColor={bgColor}
 						fontColor={fontColor}
 						fontSize={fontSize}
-						text={text}
 						isAutoFontColor={isAutoFontColor}
 						onClose={this.toggleSettingsOpen}
 						onChangeSettings={this.changeSettings}
