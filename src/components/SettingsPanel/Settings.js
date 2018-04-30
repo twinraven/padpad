@@ -124,7 +124,7 @@ export class Settings extends Component {
 								onChangeSettings({ fontSize: event.target.value })
 							}
 						/>
-						<Link onClick={onReset}>reset all</Link>
+						<Link onClick={this.handleReset}>reset all</Link>
 					</Row>
 				</Content>
 			</Wrapper>
@@ -161,5 +161,14 @@ export class Settings extends Component {
 
 		onSetAutoFontColor(false);
 		onChangeSettings({ fontColor: hex });
+	};
+
+	handleReset = () => {
+		this.props.onReset();
+
+		this.setState({
+			isBgColorOpen: false,
+			isFontColorOpen: false,
+		});
 	};
 }
