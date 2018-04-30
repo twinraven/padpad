@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
-import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config';
+import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
 import { getQueryParams, setUrlParams } from 'utils/url';
 import { ShareButton } from 'components/ShareButton/ShareButton';
 import {

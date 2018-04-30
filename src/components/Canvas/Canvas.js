@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import { URL_UPDATE_DELAY, RESIZE_UPDATE_DELAY } from 'config';
+import { URL_UPDATE_DELAY, RESIZE_UPDATE_DELAY } from 'config.js';
 import { setUrlParams } from 'utils/url';
 import { Wrapper, Text, GhostText } from './Canvas.styles';
 

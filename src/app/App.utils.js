@@ -1,5 +1,5 @@
 import { isUndefined } from 'utils/type';
-import { DEFAULT_TITLE } from 'config';
+import { DEFAULT_TITLE } from 'config.js';
 
 export function getTitle(text) {
 	if (isUndefined(text) || text.length === 0) return DEFAULT_TITLE;

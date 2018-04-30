@@ -1,6 +1,6 @@
 import qs from 'qs';
 import { map } from 'ramda';
-import { DEFAULT_PARAMS } from 'config';
+import { DEFAULT_PARAMS } from 'config.js';
 
 export function setUrlParams(newParams) {
 	const { pathname } = document.location;

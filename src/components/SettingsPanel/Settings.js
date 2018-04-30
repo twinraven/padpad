@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from 'config';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
 import {
