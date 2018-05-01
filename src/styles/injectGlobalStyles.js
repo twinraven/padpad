@@ -4,28 +4,6 @@ import { normalize } from 'polished';
 export default function() {
 	return injectGlobal`
 		${normalize()};
-
-		/*@font-face {
-			font-family: 'Univers';
-			src: url() format('woff');
-			font-weight: 200;
-			font-style: normal;
-		}
-
-		@font-face {
-			font-family: 'Univers';
-			src: url() format('woff');
-			font-weight: normal;
-			font-style: normal;
-		}
-
-		@font-face {
-			font-family: 'Univers';
-			src: url() format('woff');
-			font-weight: bold;
-			font-style: normal;
-		}*/
-
 		*,
 		*:before,
 		*:after {
@@ -37,7 +15,7 @@ export default function() {
 		}
 
 		body {
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+			font-family: 'Muli', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
 				Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 			font-size: 12px;
 			font-weight: normal;
