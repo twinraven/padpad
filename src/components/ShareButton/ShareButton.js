@@ -8,7 +8,7 @@ export function ShareButton(props) {
 	};
 
 	const shareUrl = () => {
-		getShortUrl(document.location.href)
+		getShortUrl(encodeURIComponent(document.location.href))
 			.then(({ data, status_code }) => {
 				if (status_code === 500) {
 					throw new Error();
