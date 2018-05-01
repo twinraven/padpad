@@ -6,6 +6,7 @@ import { Canvas as _Canvas } from 'components/Canvas/Canvas';
 export const Wrapper = styled.div`
 	position: relative;
 	text-align: center;
+	transition: background 0.1s ease-in-out;
 	width: 100%;
 
 	${props =>
