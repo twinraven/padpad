@@ -3,12 +3,14 @@ import Helmet from 'react-helmet';
 import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
 import { getQueryParams, setUrlParams } from 'utils/url';
 import { ShareButton } from 'components/ShareButton/ShareButton';
+import { Settings } from 'components/Settings/Settings';
 import {
 	Wrapper,
 	Canvas,
 	Controls,
 	SettingsButton,
-	Settings,
+	CloseButton,
+	SettingsModal,
 } from './App.styles';
 import { getTitle } from './App.utils';
 
@@ -50,23 +52,27 @@ class App extends Component {
 				/>
 				<Controls>
 					<ShareButton />
-					<SettingsButton onClick={this.toggleSettingsOpen}>
-						Settings
-					</SettingsButton>
+					{isSettingsOpen ? (
+						<CloseButton onClick={this.toggleSettingsOpen} />
+					) : (
+						<SettingsButton onClick={this.toggleSettingsOpen} />
+					)}
 				</Controls>
 				{isSettingsOpen && (
-					<Settings
-						bgColor={bgColor}
-						fontColor={fontColor}
-						fontSize={fontSize}
-						isAutoFontColor={isAutoFontColor}
-						onClose={this.toggleSettingsOpen}
-						onChangeSettings={this.changeSettings}
-						onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
-						onSetAutoFontColor={isAutoFontColor =>
-							this.setState({ isAutoFontColor })
-						}
-					/>
+					<SettingsModal showClose={false} onClose={this.toggleSettingsOpen}>
+						<Settings
+							bgColor={bgColor}
+							fontColor={fontColor}
+							fontSize={fontSize}
+							isAutoFontColor={isAutoFontColor}
+							onClose={this.toggleSettingsOpen}
+							onChangeSettings={this.changeSettings}
+							onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
+							onSetAutoFontColor={isAutoFontColor =>
+								this.setState({ isAutoFontColor })
+							}
+						/>
+					</SettingsModal>
 				)}
 			</Wrapper>
 		);

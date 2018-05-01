@@ -1,11 +1,7 @@
 import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
-	background: white;
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 	min-height: 50px;
-	padding: 20px;
-	position: relative;
 `;
 
 export const Content = styled.div`
@@ -15,7 +11,7 @@ export const Content = styled.div`
 
 export const Row = styled.div`
 	align-items: center;
-	border-bottom: 1px solid #999;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-between;

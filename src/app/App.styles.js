@@ -1,7 +1,10 @@
 import styled, { css } from 'styled-components';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { Settings as _Settings } from 'components/SettingsPanel/Settings';
 import { Canvas as _Canvas } from 'components/Canvas/Canvas';
+import { Modal } from 'components/Modal/Modal';
+import { CloseIcon } from 'components/Icons/CloseIcon';
+import { SettingsIcon } from 'components/Icons/SettingsIcon';
 
 export const Wrapper = styled.div`
 	position: relative;
@@ -40,25 +43,29 @@ Wrapper.propTypes = {
 };
 
 export const Controls = styled.div`
-	bottom: 20px;
+	top: 20px;
 	display: flex;
 	justify-content: space-between;
 	position: fixed;
 	right: 20px;
 
-	/*> button {
-		padding-left: 15px;
-	}*/
+	> button {
+		margin-left: 5px;
+	}
 `;
 
-export const SettingsButton = styled.button`
-	background: white;
-`;
+export const SettingsButton = styled.button.attrs({
+	type: 'button',
+	children: <SettingsIcon width="20" height="20" />,
+});
 
-export const Settings = styled(_Settings)`
-	bottom: 0;
+export const CloseButton = styled.button.attrs({
+	type: 'button',
+	children: <CloseIcon width="20" height="20" />,
+});
+
+export const SettingsModal = styled(Modal)`
 	position: fixed;
-	right: 0;
-	width: 100%;
-	max-width: 250px;
+	top: 70px;
+	right: 20px;
 `;

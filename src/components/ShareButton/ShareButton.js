@@ -1,5 +1,4 @@
 import React from 'react';
-import { Button } from './ShareButton.styles';
 import { getShortUrl } from 'utils/url';
 
 export function ShareButton(props) {
@@ -19,9 +18,5 @@ export function ShareButton(props) {
 			.catch(() => displayShortUrl(document.location.href));
 	};
 
-	return (
-		<div {...props}>
-			<Button onClick={shareUrl}>Share</Button>
-		</div>
-	);
+	return <button onClick={shareUrl}>1</button>;
 }
