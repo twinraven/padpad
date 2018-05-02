@@ -146,11 +146,11 @@ export const Label = styled.div`
 `;
 
 export const Footer = styled.div`
-	background: white;
+	background: #f6f6f6;
 	display: flex;
 	font-size: 0.85em;
 	justify-content: space-between;
-	padding: 4px 2px 3px 7px;
+	padding: 4px 2px 2px 7px;
 	margin-bottom: -10px;
 `;
 
