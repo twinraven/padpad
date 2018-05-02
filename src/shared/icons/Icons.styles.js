@@ -16,6 +16,6 @@ import styled from 'styled-components';
 export const Icon = styled.svg``;
 
 Icon.defaultProps = {
-	width: '1em',
-	height: '1em',
+	width: '15',
+	height: '15',
 };

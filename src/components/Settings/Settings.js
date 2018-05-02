@@ -6,7 +6,6 @@ import ColorPicker from 'components/ColorPicker/ColorPicker';
 import {
 	Wrapper,
 	Content,
-	CloseButton,
 	Link,
 	Swatch,
 	Row,
@@ -19,7 +18,6 @@ export class Settings extends Component {
 		bgColor: PropTypes.string.isRequired,
 		fontColor: PropTypes.string.isRequired,
 		fontSize: PropTypes.string.isRequired,
-		onClose: PropTypes.func.isRequired,
 		onChangeSettings: PropTypes.func.isRequired,
 		onReset: PropTypes.func.isRequired,
 		onSetAutoFontColor: PropTypes.func.isRequired,
@@ -36,16 +34,13 @@ export class Settings extends Component {
 			bgColor,
 			fontColor,
 			fontSize,
-			onClose,
 			onChangeSettings,
-			onReset,
 			...props
 		} = this.props;
 		const { isBgColorOpen, isFontColorOpen } = this.state;
 
 		return (
 			<Wrapper {...props}>
-				<CloseButton onClick={onClose} />
 				<Content>
 					<Row>
 						Background color:

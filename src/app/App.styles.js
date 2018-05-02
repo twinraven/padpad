@@ -1,10 +1,7 @@
 import styled, { css } from 'styled-components';
-import React from 'react';
 import PropTypes from 'prop-types';
 import { Canvas as _Canvas } from 'components/Canvas/Canvas';
 import { Modal } from 'components/Modal/Modal';
-import { CloseIcon } from 'components/Icons/CloseIcon';
-import { SettingsIcon } from 'components/Icons/SettingsIcon';
 
 export const Wrapper = styled.div`
 	position: relative;
@@ -54,18 +51,14 @@ export const Controls = styled.div`
 	}
 `;
 
-export const SettingsButton = styled.button.attrs({
-	type: 'button',
-	children: <SettingsIcon width="20" height="20" />,
-});
-
-export const CloseButton = styled.button.attrs({
-	type: 'button',
-	children: <CloseIcon width="20" height="20" />,
-});
-
 export const SettingsModal = styled(Modal)`
 	position: fixed;
-	top: 70px;
+	top: 75px;
 	right: 20px;
+`;
+
+export const SharingModal = styled(Modal)`
+	position: fixed;
+	top: 75px;
+	right: 65px;
 `;

@@ -18,15 +18,6 @@ export const Row = styled.div`
 	min-height: 50px;
 `;
 
-export const CloseButton = styled.div.attrs({
-	children: 'x', // <MoreVerticalIcon width={2} height={12} />
-})`
-	position: absolute;
-	right: 10px;
-	top: 10px;
-	z-index: 1;
-`;
-
 export const Link = styled.a`
 	color: blue;
 	text-decoration: underline;

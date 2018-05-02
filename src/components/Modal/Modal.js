@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ClickOutside from 'react-click-outside';
 import { ModalOverlay, ModalContent, ModalClose } from './Modal.styles';
+import { isEscapeKey } from 'utils/keyboard';
 
 export class Modal extends Component {
 	static propTypes = {
@@ -22,10 +23,13 @@ export class Modal extends Component {
 		this.modalRoot = document.createElement('div');
 		this.modalRoot.setAttribute('id', 'modal-root');
 		document.body.appendChild(this.modalRoot);
+
+		document.addEventListener('keyup', this.handleKeyUp);
 	}
 
 	componentWillUnmount() {
 		document.body.removeChild(this.modalRoot);
+		document.removeEventListener('keyup', this.handleKeyUp);
 	}
 
 	render() {
@@ -43,4 +47,10 @@ export class Modal extends Component {
 			this.modalRoot
 		);
 	}
+
+	handleKeyUp = ({ keyCode }) => {
+		if (isEscapeKey(keyCode)) {
+			this.props.onClose();
+		}
+	};
 }

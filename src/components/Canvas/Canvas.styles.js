@@ -19,7 +19,7 @@ export const Text = styled.textarea`
 	max-width: 800px;
 	min-height: 100vh;
 	overflow: hidden;
-	padding: 15px 0;
+	padding: 30px 0;
 	resize: none;
 	text-align: left;
 	transition: font 0.1s linear, color 0.1s ease-in-out;
