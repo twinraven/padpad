@@ -3,9 +3,10 @@ import Helmet from 'react-helmet';
 import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
 import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
 import { Settings } from 'components/Settings/Settings';
+import { Spinner } from 'components/Spinner/Spinner';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
-import { CloseIcon } from 'shared/icons/CloseIcon';
-import { ShareIcon } from 'shared/icons/ShareIcon';
+import { CloseIcon, ShareIcon, CopyIcon } from 'shared/icons';
+import { RoundButton } from 'shared/buttons';
 import {
 	Wrapper,
 	Canvas,
@@ -13,10 +14,7 @@ import {
 	SettingsModal,
 	SharingModal,
 } from './App.styles';
-import { RoundButton } from 'shared/buttons/buttons.styles';
 import { getTitle } from './App.utils';
-import { Spinner } from 'components/Spinner/Spinner';
-import { CopyIcon } from 'shared/icons/CopyIcon';
 
 class App extends Component {
 	state = {

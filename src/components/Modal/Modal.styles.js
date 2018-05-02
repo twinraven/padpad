@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import { CloseIcon } from 'shared/icons/CloseIcon';
+import { CloseIcon } from 'shared/icons';
 import { modalBgColor, modalBorderColor } from 'styles/colours';
 
 export const ModalOverlay = styled.div`

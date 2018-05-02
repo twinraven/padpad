@@ -1,6 +1,6 @@
 import React from 'react';
 import { Wrapper } from './Spinner.styles';
-import { SpinnerIcon } from 'shared/icons/SpinnerIcon';
+import { SpinnerIcon } from 'shared/icons';
 
 export function Spinner(props) {
 	return (
