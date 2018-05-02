@@ -4,10 +4,10 @@ import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
 import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
 import { Settings } from 'components/Settings/Settings';
 import { Spinner } from 'components/Spinner/Spinner';
+import { Sharing } from 'components/Sharing/Sharing';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
 import { RoundButton } from 'shared/buttons';
-import { Sharing } from 'components/Sharing/Sharing';
 import {
 	Wrapper,
 	Canvas,
