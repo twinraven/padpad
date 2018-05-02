@@ -3,3 +3,4 @@ export { CopyIcon } from './CopyIcon';
 export { SettingsIcon } from './SettingsIcon';
 export { ShareIcon } from './ShareIcon';
 export { SpinnerIcon } from './SpinnerIcon';
+export { DownArrowIcon } from './DownArrowIcon';

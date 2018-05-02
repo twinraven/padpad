@@ -5,8 +5,9 @@ import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
 import { Settings } from 'components/Settings/Settings';
 import { Spinner } from 'components/Spinner/Spinner';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
-import { CloseIcon, ShareIcon, CopyIcon } from 'shared/icons';
+import { CloseIcon, ShareIcon } from 'shared/icons';
 import { RoundButton } from 'shared/buttons';
+import { Sharing } from 'components/Sharing/Sharing';
 import {
 	Wrapper,
 	Canvas,
@@ -85,11 +86,7 @@ class App extends Component {
 				{isSharingOpen &&
 					!isLoadingShareUrl && (
 						<SharingModal onClose={this.toggleSharing}>
-							<h2>Ready to share</h2>
-							<input defaultValue={shareUrl} />
-							<button>
-								<CopyIcon /> copy
-							</button>
+							<Sharing url={shareUrl} />
 						</SharingModal>
 					)}
 				{isSettingsOpen && (

@@ -3,12 +3,13 @@ import styled from 'styled-components';
 export const Wrapper = styled.div`
 	display: flex;
 	position: relative;
+	margin: 10px 5px 0 0;
+	width: 100%;
 `;
 
 export const HueWrapper = styled.div`
 	border-radius: 20px;
 	height: 100px;
-	margin-right: 5px;
 	position: relative;
 	width: 20px;
 `;
@@ -16,7 +17,7 @@ export const HueWrapper = styled.div`
 export const SaturationWrapper = styled.div`
 	height: 100px;
 	position: relative;
-	width: 200px;
+	flex: 1;
 `;
 
 const PICKER_SIZE = 12;

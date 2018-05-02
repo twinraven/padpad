@@ -45,6 +45,7 @@ export const Controls = styled.div`
 	justify-content: space-between;
 	position: fixed;
 	right: 20px;
+	z-index: 2;
 
 	> button {
 		margin-left: 5px;
