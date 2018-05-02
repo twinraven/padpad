@@ -1,12 +1,13 @@
 import styled, { css } from 'styled-components';
-import { lovelyBlueColor } from 'styles/colours';
+import { opacify } from 'polished';
+import { highlightColor, buttonColor, buttonHoverColor } from 'styles/colours';
 
 export const RoundButton = styled.button.attrs({
 	type: 'button',
 })`
 	align-items: center;
 	appearance: none;
-	background: #9c9c9c;
+	background: ${buttonColor};
 	border: none;
 	border-radius: 40px;
 	color: white;
@@ -14,10 +15,11 @@ export const RoundButton = styled.button.attrs({
 	height: 40px;
 	justify-content: center;
 	overflow: hidden;
+	transition: background 0.1s;
 	width: 40px;
 
 	&:hover {
-		background: #777;
+		background: ${buttonHoverColor};
 	}
 
 	&:focus {
@@ -27,10 +29,10 @@ export const RoundButton = styled.button.attrs({
 	${props =>
 		props.isSelected &&
 		css`
-			background: ${lovelyBlueColor};
+			background: ${opacify(0.9, highlightColor)};
 
 			&:hover {
-				background: darken(${lovelyBlueColor}, 0.1);
+				background: ${opacify(0.2, highlightColor)};
 			}
 		`};
 `;
