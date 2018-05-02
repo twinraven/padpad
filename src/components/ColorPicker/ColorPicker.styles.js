@@ -1,22 +1,27 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+	background: white;
 	display: flex;
+	margin: 10px 5px 0 0;
 	position: relative;
+	width: 100%;
 `;
 
 export const HueWrapper = styled.div`
-	border-radius: 20px;
 	height: 100px;
-	margin-right: 5px;
 	position: relative;
-	width: 20px;
+	width: 25px;
+
+	.hue-vertical {
+		margin-right: 5px;
+	}
 `;
 
 export const SaturationWrapper = styled.div`
 	height: 100px;
+	flex: 1;
 	position: relative;
-	width: 200px;
 `;
 
 const PICKER_SIZE = 12;

@@ -7,8 +7,12 @@ import {
 	Wrapper,
 	Content,
 	Link,
+	ResetLink,
 	Swatch,
 	Row,
+	Range,
+	Label,
+	Footer,
 	CloseColorButton,
 } from './Settings.styles';
 
@@ -43,39 +47,41 @@ export class Settings extends Component {
 			<Wrapper {...props}>
 				<Content>
 					<Row>
-						Background color:
-						<Swatch
-							color={bgColor}
-							onClick={() =>
-								this.setState(({ isBgColorOpen }) => ({
-									isBgColorOpen: !isBgColorOpen,
-								}))
-							}
-						/>
+						<Label>
+							Background color
+							<Swatch
+								color={bgColor}
+								onClick={() =>
+									this.setState(({ isBgColorOpen }) => ({
+										isBgColorOpen: !isBgColorOpen,
+									}))
+								}
+							/>
+						</Label>
 						{isBgColorOpen && (
 							<React.Fragment>
 								<ColorPicker
 									color={bgColor}
 									onChange={this.handleChangeBgColor}
 								/>
-								<div>
+								<Footer>
 									<CloseColorButton
 										onClick={() => this.setState({ isBgColorOpen: false })}
-									>
-										X
-									</CloseColorButton>
-								</div>
+									/>
+								</Footer>
 							</React.Fragment>
 						)}
 					</Row>
 					<Row>
-						Font color:
-						{isAutoFontColor ? (
-							<p>
-								auto (<Link onClick={this.handleActivateFontControl}>edit</Link>)
-							</p>
-						) : (
-							<React.Fragment>
+						<Label>
+							Font color
+							{isAutoFontColor ? (
+								<p>
+									auto (<Link onClick={this.handleActivateFontControl}>
+										edit
+									</Link>)
+								</p>
+							) : (
 								<Swatch
 									color={fontColor}
 									onClick={() =>
@@ -84,42 +90,44 @@ export class Settings extends Component {
 										}))
 									}
 								/>
-								{isFontColorOpen && (
-									<React.Fragment>
-										<ColorPicker
-											color={fontColor}
-											onChange={this.handleChangeFontColor}
+							)}
+						</Label>
+						{!isAutoFontColor &&
+							isFontColorOpen && (
+								<React.Fragment>
+									<ColorPicker
+										color={fontColor}
+										onChange={this.handleChangeFontColor}
+									/>
+									<Footer>
+										<Link onClick={this.handleResetFontControl}>
+											set automatically
+										</Link>
+										<CloseColorButton
+											onClick={() => this.setState({ isFontColorOpen: false })}
 										/>
-										<div>
-											<Link onClick={this.handleResetFontControl}>
-												set automatically
-											</Link>
-											<CloseColorButton
-												onClick={() =>
-													this.setState({ isFontColorOpen: false })
-												}
-											>
-												X
-											</CloseColorButton>
-										</div>
-									</React.Fragment>
-								)}
-							</React.Fragment>
-						)}
+									</Footer>
+								</React.Fragment>
+							)}
 					</Row>
 					<Row>
-						Font size:
-						<input
-							type="range"
-							min={MIN_FONT_SIZE}
-							max={MAX_FONT_SIZE}
-							step={0.1}
-							value={fontSize}
-							onChange={event =>
-								onChangeSettings({ fontSize: event.target.value })
-							}
-						/>
-						<Link onClick={this.handleReset}>reset all</Link>
+						<Label>
+							Font size
+							<Range
+								min={MIN_FONT_SIZE}
+								max={MAX_FONT_SIZE}
+								step={0.1}
+								value={fontSize}
+								onChange={event =>
+									onChangeSettings({ fontSize: event.target.value })
+								}
+							/>
+						</Label>
+					</Row>
+					<Row>
+						<Label>
+							<ResetLink onClick={this.handleReset}>reset all</ResetLink>
+						</Label>
 					</Row>
 				</Content>
 			</Wrapper>

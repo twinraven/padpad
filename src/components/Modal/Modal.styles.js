@@ -21,7 +21,7 @@ export const ModalContent = styled.div`
 	font-size: 16px;
 	font-weight: 200;
 	max-width: 350px;
-	padding: 10px 15px 15px;
+	padding: 10px 12px 12px;
 	position: fixed;
 	text-align: center;
 

@@ -11,6 +11,7 @@ export const RoundButton = styled.button.attrs({
 	border: none;
 	border-radius: 40px;
 	color: white;
+	cursor: pointer;
 	display: flex;
 	height: 40px;
 	justify-content: center;
