@@ -38,3 +38,15 @@ export function getShortUrl(longUrl) {
 		`https://api-ssl.bitly.com/v3/shorten?access_token=${token}&longUrl=${longUrl}`
 	).then(response => response.json());
 }
+
+export function getShareUrl(urlToShare) {
+	return getShortUrl(encodeURIComponent(urlToShare))
+		.then(({ data, status_code }) => {
+			if (status_code === 500) {
+				throw new Error();
+			}
+
+			return data.url;
+		})
+		.catch(() => urlToShare);
+}
