@@ -27,6 +27,10 @@ export const RoundButton = styled.button.attrs({
 	${props =>
 		props.isSelected &&
 		css`
-			background: ${lovelyBlueColor} !important;
+			background: ${lovelyBlueColor};
+
+			&:hover {
+				background: darken(${lovelyBlueColor}, 0.1);
+			}
 		`};
 `;
