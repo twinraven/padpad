@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import React from 'react';
-import { CloseIcon } from 'shared/icons';
 import { modalBgColor, modalBorderColor } from 'styles/colours';
 
 export const ModalOverlay = styled.div`
@@ -47,17 +45,4 @@ export const ModalContent = styled.div`
 		top: -12px;
 		z-index: 1;
 	}
-`;
-
-export const ModalClose = styled.button.attrs({
-	type: 'button',
-	children: <CloseIcon width={20} height={20} />,
-})`
-	background-color: transparent;
-	border: 0;
-	opacity: 0.4;
-	padding: 0;
-	position: absolute;
-	right: 15px;
-	top: 15px;
 `;

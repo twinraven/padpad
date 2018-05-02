@@ -84,7 +84,7 @@ class App extends Component {
 				</Controls>
 				{isSharingOpen &&
 					!isLoadingShareUrl && (
-						<SharingModal showClose={false} onClose={this.toggleSharing}>
+						<SharingModal onClose={this.toggleSharing}>
 							<h2>Ready to share</h2>
 							<input defaultValue={shareUrl} />
 							<button>
@@ -93,7 +93,7 @@ class App extends Component {
 						</SharingModal>
 					)}
 				{isSettingsOpen && (
-					<SettingsModal showClose={false} onClose={this.toggleSettings}>
+					<SettingsModal onClose={this.toggleSettings}>
 						<Settings
 							bgColor={bgColor}
 							fontColor={fontColor}

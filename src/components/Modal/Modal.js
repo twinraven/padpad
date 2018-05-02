@@ -2,17 +2,12 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ClickOutside from 'react-click-outside';
-import { ModalOverlay, ModalContent, ModalClose } from './Modal.styles';
+import { ModalOverlay, ModalContent } from './Modal.styles';
 import { isEscapeKey } from 'utils/keyboard';
 
 export class Modal extends Component {
 	static propTypes = {
 		onClose: PropTypes.func.isRequired,
-		showClose: PropTypes.bool,
-	};
-
-	static defaultProps = {
-		showClose: true,
 	};
 
 	modalRoot = null;
@@ -33,15 +28,12 @@ export class Modal extends Component {
 	}
 
 	render() {
-		const { children, showClose, onClose, ...props } = this.props;
+		const { children, onClose, ...props } = this.props;
 
 		return ReactDOM.createPortal(
 			<ModalOverlay>
 				<ClickOutside onClickOutside={onClose}>
-					<ModalContent {...props}>
-						{children}
-						{showClose && <ModalClose onClick={onClose} />}
-					</ModalContent>
+					<ModalContent {...props}>{children}</ModalContent>
 				</ClickOutside>
 			</ModalOverlay>,
 			this.modalRoot
