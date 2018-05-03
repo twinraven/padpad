@@ -59,7 +59,7 @@ class App extends Component {
 					text={text}
 					changeText={text => this.setState({ text })}
 				/>
-				<Controls>
+				<Controls isActive={isSettingsOpen || isSharingOpen}>
 					<RoundButton isSelected={isSharingOpen} onClick={this.toggleSharing}>
 						{isSharingOpen ? (
 							isLoadingShareUrl ? (

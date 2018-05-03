@@ -43,14 +43,45 @@ export const Controls = styled.div`
 	top: 20px;
 	display: flex;
 	justify-content: space-between;
+	opacity: 0.4;
 	position: fixed;
 	right: 20px;
+	transition: opacity 0.15s;
 	z-index: 2;
 
 	> button {
 		margin-left: 5px;
+		position: relative;
+		z-index: 1;
 	}
+
+	&::before {
+		content: '';
+		background: transparent;
+		display: block;
+		height: 250%;
+		left: -50%;
+		opacity: 1;
+		position: absolute;
+		top: -75%;
+		width: 200%;
+		z-index: 0;
+	}
+
+	&:hover {
+		opacity: 1;
+	}
+
+	${props =>
+		props.isActive &&
+		css`
+			opacity: 1;
+		`};
 `;
+
+Controls.propTypes = {
+	isActive: PropTypes.bool.isRequired,
+};
 
 export const SettingsModal = styled(Modal)`
 	position: fixed;

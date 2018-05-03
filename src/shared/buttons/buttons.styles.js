@@ -10,17 +10,18 @@ export const RoundButton = styled.button.attrs({
 	background: ${buttonColor};
 	border: none;
 	border-radius: 40px;
-	color: white;
+	color: #888;
 	cursor: pointer;
 	display: flex;
 	height: 40px;
 	justify-content: center;
 	overflow: hidden;
-	transition: background 0.1s;
+	transition: background-color 0.1s, color 0.1s;
 	width: 40px;
 
 	&:hover {
 		background: ${buttonHoverColor};
+		color: white;
 	}
 
 	&:focus {
@@ -31,6 +32,7 @@ export const RoundButton = styled.button.attrs({
 		props.isSelected &&
 		css`
 			background: ${opacify(0.9, highlightColor)};
+			color: white;
 
 			&:hover {
 				background: ${opacify(0.2, highlightColor)};
