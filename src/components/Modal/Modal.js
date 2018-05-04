@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ClickOutside from 'react-click-outside';
-import { ModalOverlay, ModalContent } from './Modal.styles';
 import { isEscapeKey } from 'utils/keyboard';
+import { ModalOverlay, ModalContent } from './Modal.styles';
 
 export class Modal extends Component {
 	static propTypes = {

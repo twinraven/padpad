@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { media } from 'styles/mixins';
 import { CloseIcon, DownArrowIcon } from 'shared/icons';
 import { Icon } from 'shared/icons/Icons.styles';
+import { modalBgColor } from 'styles/colours';
+import { MIN_MODAL_WIDTH } from 'config.js';
 
 const ROW_HEIGHT = 25;
 
@@ -13,7 +16,6 @@ export const Wrapper = styled.div`
 
 	${media.medium`
 		font-size: 15px;
-		padding-bottom: 60px;
 	`};
 `;
 
@@ -40,7 +42,34 @@ export const Row = styled.div`
 		padding-bottom: 0;
 		min-height: 0;
 	}
+
+	${props =>
+		props.isFixed &&
+		media.medium`
+			background: ${modalBgColor};
+			bottom: 0;
+			box-shadow: 0 5px 25px rgba(0,0,0,0.25);
+			height: 75px;
+			padding: 0 12px;
+			position: fixed;
+			right: 0;
+			width: ${MIN_MODAL_WIDTH}px;
+		`};
+
+	${props =>
+		props.isFixed &&
+		media.small`
+			width: 100%;
+		`};
 `;
+
+Row.propTypes = {
+	isFixed: PropTypes.bool,
+};
+
+Row.defaultProps = {
+	isFixed: false,
+};
 
 export const Range = styled.input.attrs({
 	type: 'range',
@@ -178,6 +207,7 @@ export const ResetLink = styled(Link)`
 
 	${media.medium`
 		font-size: 1em;
+		margin-left: 0;
 	`};
 `;
 

@@ -36,6 +36,7 @@ export const RoundButton = styled.button.attrs({
 		css`
 			background: ${opacify(0.9, highlightColor)};
 			color: white;
+			z-index: 20;
 
 			&:hover {
 				background: ${opacify(0.2, highlightColor)};

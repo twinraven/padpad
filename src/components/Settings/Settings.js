@@ -138,7 +138,7 @@ export class Settings extends Component {
 							/>
 						</Label>
 					</Row>
-					<Row>
+					<Row isFixed>
 						<Label>
 							<ResetLink onClick={this.handleReset}>reset all</ResetLink>
 						</Label>

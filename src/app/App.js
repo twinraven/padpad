@@ -7,11 +7,12 @@ import { Spinner } from 'components/Spinner/Spinner';
 import { Sharing } from 'components/Sharing/Sharing';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
-import { RoundButton } from 'shared/buttons';
 import {
 	Wrapper,
 	Canvas,
 	Controls,
+	SharingButton,
+	SelectedButton,
 	SettingsModal,
 	SharingModal,
 } from './App.styles';
@@ -60,7 +61,10 @@ class App extends Component {
 					changeText={text => this.setState({ text })}
 				/>
 				<Controls isActive={isSettingsOpen || isSharingOpen}>
-					<RoundButton isSelected={isSharingOpen} onClick={this.toggleSharing}>
+					<SharingButton
+						isSelected={isSharingOpen}
+						onClick={this.toggleSharing}
+					>
 						{isSharingOpen ? (
 							isLoadingShareUrl ? (
 								<Spinner />
@@ -70,9 +74,9 @@ class App extends Component {
 						) : (
 							<ShareIcon />
 						)}
-					</RoundButton>
+					</SharingButton>
 
-					<RoundButton
+					<SelectedButton
 						isSelected={isSettingsOpen}
 						onClick={this.toggleSettings}
 					>
@@ -81,7 +85,7 @@ class App extends Component {
 						) : (
 							<SettingsIcon />
 						)}
-					</RoundButton>
+					</SelectedButton>
 				</Controls>
 				{isSharingOpen &&
 					!isLoadingShareUrl && (
@@ -113,13 +117,16 @@ class App extends Component {
 		setUrlParams(settings);
 	};
 
-	toggleSettings = () =>
-		this.setState(({ isSettingsOpen }) => ({
-			isSettingsOpen: !isSettingsOpen,
-		}));
+	toggleSettings = event => {
+		event.stopPropagation();
 
-	toggleSharing = () => {
+		this.setState({ isSettingsOpen: !this.state.isSettingsOpen });
+	};
+
+	toggleSharing = event => {
 		const { isSharingOpen } = this.state;
+
+		event.stopPropagation();
 
 		this.setState(
 			{
