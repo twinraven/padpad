@@ -118,7 +118,10 @@ class App extends Component {
 	};
 
 	toggleSettings = event => {
-		if (event) event.stopPropagation();
+		if (event) {
+			event.stopPropagation();
+			event.preventDefault();
+		}
 
 		this.setState({ isSettingsOpen: !this.state.isSettingsOpen });
 	};
@@ -126,7 +129,10 @@ class App extends Component {
 	toggleSharing = event => {
 		const { isSharingOpen } = this.state;
 
-		if (event) event.stopPropagation();
+		if (event) {
+			event.stopPropagation();
+			event.preventDefault();
+		}
 
 		this.setState(
 			{

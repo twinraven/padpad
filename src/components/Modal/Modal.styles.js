@@ -12,7 +12,7 @@ export const ModalOverlay = styled.div`
 	position: fixed;
 	top: 0;
 	width: 100%;
-	z-index: 2;
+	z-index: 20;
 `;
 
 export const ModalContent = styled.div`

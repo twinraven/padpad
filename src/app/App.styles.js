@@ -107,7 +107,7 @@ export const SharingButton = styled(RoundButton)`
 		props.isSelected &&
 		media.medium`
 		right: 15px;
-		z-index: 20;
+		z-index: 30;
 	`};
 `;
 
@@ -121,7 +121,7 @@ export const SettingsButton = styled(RoundButton)`
 	${props =>
 		props.isSelected &&
 		media.medium`
-		z-index: 20;
+		z-index: 30;
 	`};
 `;
 
