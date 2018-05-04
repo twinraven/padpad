@@ -16,7 +16,8 @@ export const DEFAULT_PARAMS = {
 	text: DEFAULT_TEXT,
 };
 
-export const URL_UPDATE_DELAY = 350;
+export const URL_UPDATE_DELAY = 250;
+export const COLOR_UPDATE_DELAY = 100;
 export const RESIZE_UPDATE_DELAY = 100;
 
 export const MIN_FONT_SIZE = 10;
