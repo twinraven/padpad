@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
+import { media } from 'styles/mixins';
 import { CloseIcon, DownArrowIcon } from 'shared/icons';
 import { Icon } from 'shared/icons/Icons.styles';
 
@@ -8,6 +9,12 @@ const ROW_HEIGHT = 25;
 export const Wrapper = styled.div`
 	font-size: 13px;
 	min-height: 50px;
+	z-index: 2;
+
+	${media.medium`
+		font-size: 15px;
+		padding-bottom: 60px;
+	`};
 `;
 
 export const Content = styled.div`
@@ -152,6 +159,11 @@ export const Footer = styled.div`
 	justify-content: space-between;
 	padding: 4px 2px 2px 7px;
 	margin-bottom: -10px;
+
+	${media.medium`
+		font-size: 1em;
+		padding: 8px 4px;
+	`};
 `;
 
 export const Link = styled.a`
@@ -163,6 +175,10 @@ export const Link = styled.a`
 export const ResetLink = styled(Link)`
 	font-size: 0.85em;
 	margin-left: auto;
+
+	${media.medium`
+		font-size: 1em;
+	`};
 `;
 
 export const Swatch = styled.div.attrs({

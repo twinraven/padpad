@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { media, context } from 'styles/mixins';
 import { Canvas as _Canvas } from 'components/Canvas/Canvas';
 import { Modal } from 'components/Modal/Modal';
 
@@ -47,7 +48,7 @@ export const Controls = styled.div`
 	position: fixed;
 	right: 20px;
 	transition: opacity 0.15s;
-	z-index: 2;
+	z-index: 20;
 
 	> button {
 		margin-left: 5px;
@@ -77,6 +78,15 @@ export const Controls = styled.div`
 		css`
 			opacity: 1;
 		`};
+
+	${media.medium`
+		bottom: 20px;
+		top: auto;
+	`};
+
+	${context.touch`
+		opacity: 1;
+	`};
 `;
 
 Controls.propTypes = {
@@ -87,10 +97,24 @@ export const SettingsModal = styled(Modal)`
 	position: fixed;
 	top: 75px;
 	right: 20px;
+
+	${media.medium`
+		bottom: 0;
+		left: 0;
+		right: 0;
+		top: auto;
+	`};
 `;
 
 export const SharingModal = styled(Modal)`
 	position: fixed;
 	top: 75px;
 	right: 65px;
+
+	${media.medium`
+		bottom: 0;
+		left: 0;
+		right: 0;
+		top: auto;
+	`};
 `;
