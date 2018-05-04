@@ -111,7 +111,7 @@ export const SharingButton = styled(RoundButton)`
 	`};
 `;
 
-export const SelectedButton = styled(RoundButton)`
+export const SettingsButton = styled(RoundButton)`
 	${media.medium`
 		bottom: 15px;
 		position: fixed;

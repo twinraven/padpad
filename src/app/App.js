@@ -12,7 +12,7 @@ import {
 	Canvas,
 	Controls,
 	SharingButton,
-	SelectedButton,
+	SettingsButton,
 	SettingsModal,
 	SharingModal,
 } from './App.styles';
@@ -76,7 +76,7 @@ class App extends Component {
 						)}
 					</SharingButton>
 
-					<SelectedButton
+					<SettingsButton
 						isSelected={isSettingsOpen}
 						onClick={this.toggleSettings}
 					>
@@ -85,7 +85,7 @@ class App extends Component {
 						) : (
 							<SettingsIcon />
 						)}
-					</SelectedButton>
+					</SettingsButton>
 				</Controls>
 				{isSharingOpen &&
 					!isLoadingShareUrl && (
@@ -118,7 +118,7 @@ class App extends Component {
 	};
 
 	toggleSettings = event => {
-		event.stopPropagation();
+		if (event) event.stopPropagation();
 
 		this.setState({ isSettingsOpen: !this.state.isSettingsOpen });
 	};
@@ -126,7 +126,7 @@ class App extends Component {
 	toggleSharing = event => {
 		const { isSharingOpen } = this.state;
 
-		event.stopPropagation();
+		if (event) event.stopPropagation();
 
 		this.setState(
 			{

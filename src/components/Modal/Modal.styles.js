@@ -65,6 +65,6 @@ export const ModalContent = styled.div`
 	`};
 
 	${media.small`
-	min-width: 0px;
+		min-width: 0px;
 	`};
 `;
