@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { MIN_FONT_SIZE, MAX_FONT_SIZE } from 'config.js';
+import debounce from 'lodash.debounce';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE, URL_UPDATE_DELAY } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
 import {
@@ -32,6 +33,19 @@ export class Settings extends Component {
 		isFontColorOpen: false,
 	};
 
+	constructor(props) {
+		super(props);
+
+		this.changeBgColorDebounced = debounce(
+			this.handleChangeBgColor,
+			URL_UPDATE_DELAY
+		);
+		this.changeFontColorDebounced = debounce(
+			this.handleChangeFontColor,
+			URL_UPDATE_DELAY
+		);
+	}
+
 	render() {
 		const {
 			isAutoFontColor,
@@ -62,7 +76,7 @@ export class Settings extends Component {
 							<React.Fragment>
 								<ColorPicker
 									color={bgColor}
-									onChange={this.handleChangeBgColor}
+									onChange={this.changeBgColorDebounced}
 								/>
 								<Footer>
 									<CloseColorButton
@@ -97,7 +111,7 @@ export class Settings extends Component {
 								<React.Fragment>
 									<ColorPicker
 										color={fontColor}
-										onChange={this.handleChangeFontColor}
+										onChange={this.changeFontColorDebounced}
 									/>
 									<Footer>
 										<Link onClick={this.handleResetFontControl}>

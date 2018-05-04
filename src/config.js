@@ -21,3 +21,5 @@ export const RESIZE_UPDATE_DELAY = 100;
 
 export const MIN_FONT_SIZE = 10;
 export const MAX_FONT_SIZE = 60;
+
+export const MIN_CANVAS_HEIGHT = 100;

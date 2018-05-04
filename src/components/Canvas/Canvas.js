@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import { URL_UPDATE_DELAY, RESIZE_UPDATE_DELAY } from 'config.js';
+import {
+	MIN_CANVAS_HEIGHT,
+	URL_UPDATE_DELAY,
+	RESIZE_UPDATE_DELAY,
+} from 'config.js';
 import { setUrlParams } from 'utils/url';
 import { Wrapper, Text, GhostText } from './Canvas.styles';
-
-const DEFAULT_HEIGHT = 100;
 
 export class Canvas extends Component {
 	static propTypes = {
@@ -14,7 +16,7 @@ export class Canvas extends Component {
 	};
 
 	state = {
-		height: DEFAULT_HEIGHT,
+		height: MIN_CANVAS_HEIGHT,
 	};
 
 	constructor(props) {
