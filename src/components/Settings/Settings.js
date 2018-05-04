@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import { MIN_FONT_SIZE, MAX_FONT_SIZE, URL_UPDATE_DELAY } from 'config.js';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE, COLOR_UPDATE_DELAY } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
 import {
@@ -38,11 +38,11 @@ export class Settings extends Component {
 
 		this.changeBgColorDebounced = debounce(
 			this.handleChangeBgColor,
-			URL_UPDATE_DELAY
+			COLOR_UPDATE_DELAY
 		);
 		this.changeFontColorDebounced = debounce(
 			this.handleChangeFontColor,
-			URL_UPDATE_DELAY
+			COLOR_UPDATE_DELAY
 		);
 	}
 
@@ -138,7 +138,7 @@ export class Settings extends Component {
 							/>
 						</Label>
 					</Row>
-					<Row>
+					<Row isFixed>
 						<Label>
 							<ResetLink onClick={this.handleReset}>reset all</ResetLink>
 						</Label>

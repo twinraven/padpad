@@ -1,7 +1,9 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
+import { media, context } from 'styles/mixins';
 import { Canvas as _Canvas } from 'components/Canvas/Canvas';
 import { Modal } from 'components/Modal/Modal';
+import { RoundButton } from 'shared/buttons';
 
 export const Wrapper = styled.div`
 	position: relative;
@@ -47,12 +49,10 @@ export const Controls = styled.div`
 	position: fixed;
 	right: 20px;
 	transition: opacity 0.15s;
-	z-index: 2;
+	z-index: 20;
 
 	> button {
 		margin-left: 5px;
-		position: relative;
-		z-index: 1;
 	}
 
 	&::before {
@@ -65,7 +65,7 @@ export const Controls = styled.div`
 		position: absolute;
 		top: -75%;
 		width: 200%;
-		z-index: 0;
+		z-index: -1;
 	}
 
 	&:hover {
@@ -77,20 +77,88 @@ export const Controls = styled.div`
 		css`
 			opacity: 1;
 		`};
+
+	${media.medium`
+		opacity: 1;
+		position: static;
+
+		&::before {
+			display: none;
+		}
+	`};
+
+	${context.touch`
+		opacity: 1;
+	`};
 `;
 
 Controls.propTypes = {
 	isActive: PropTypes.bool.isRequired,
 };
 
+export const SharingButton = styled(RoundButton)`
+	${media.medium`
+		bottom: 15px;
+		position: fixed;
+		right: 65px;
+	`};
+
+	${props =>
+		props.isSelected &&
+		media.medium`
+		right: 15px;
+		z-index: 30;
+	`};
+`;
+
+export const SettingsButton = styled(RoundButton)`
+	${media.medium`
+		bottom: 15px;
+		position: fixed;
+		right: 15px;
+	`};
+
+	${props =>
+		props.isSelected &&
+		media.medium`
+		z-index: 30;
+	`};
+`;
+
 export const SettingsModal = styled(Modal)`
 	position: fixed;
 	top: 75px;
 	right: 20px;
+
+	${media.medium`
+		bottom: 0;
+		margin-bottom: 74px;
+		padding-bottom: 0;
+		right: 0;
+		top: auto;
+	`};
+
+	${media.small`
+		left: 0;
+		max-height: 70vh;
+		right: 0;
+	`};
 `;
 
 export const SharingModal = styled(Modal)`
 	position: fixed;
 	top: 75px;
 	right: 65px;
+
+	${media.medium`
+		bottom: 0;
+		right: 0;
+		top: auto;
+	`};
+
+	${media.small`
+		left: 0;
+		max-height: 70vh;
+		right: 0;
+	`};
 `;
