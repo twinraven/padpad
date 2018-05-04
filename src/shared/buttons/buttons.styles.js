@@ -20,6 +20,8 @@ export const RoundButton = styled.button.attrs({
 	transition: background-color 0.1s, color 0.1s;
 	width: 40px;
 
+	-webkit-tap-highlight-color: transparent;
+
 	&:hover {
 		background: ${buttonHoverColor};
 		color: white;
@@ -34,7 +36,6 @@ export const RoundButton = styled.button.attrs({
 		css`
 			background: ${opacify(0.9, highlightColor)};
 			color: white;
-			z-index: 10;
 
 			&:hover {
 				background: ${opacify(0.2, highlightColor)};
