@@ -17,7 +17,7 @@ import {
 	CloseColorButton,
 } from './Settings.styles';
 
-export class Settings extends Component {
+export class SettingsPanel extends Component {
 	static propTypes = {
 		isAutoFontColor: PropTypes.bool.isRequired,
 		bgColor: PropTypes.string.isRequired,
@@ -29,8 +29,8 @@ export class Settings extends Component {
 	};
 
 	state = {
-		isBgColorOpen: false,
-		isFontColorOpen: false,
+		isEditingBgColor: false,
+		isEditingFontColor: false,
 	};
 
 	constructor(props) {
@@ -55,7 +55,7 @@ export class Settings extends Component {
 			onChangeSettings,
 			...props
 		} = this.props;
-		const { isBgColorOpen, isFontColorOpen } = this.state;
+		const { isEditingBgColor, isEditingFontColor } = this.state;
 
 		return (
 			<Wrapper {...props}>
@@ -66,13 +66,13 @@ export class Settings extends Component {
 							<Swatch
 								color={bgColor}
 								onClick={() =>
-									this.setState(({ isBgColorOpen }) => ({
-										isBgColorOpen: !isBgColorOpen,
+									this.setState(({ isEditingBgColor }) => ({
+										isEditingBgColor: !isEditingBgColor,
 									}))
 								}
 							/>
 						</Label>
-						{isBgColorOpen && (
+						{isEditingBgColor && (
 							<React.Fragment>
 								<ColorPicker
 									color={bgColor}
@@ -80,7 +80,7 @@ export class Settings extends Component {
 								/>
 								<Footer>
 									<CloseColorButton
-										onClick={() => this.setState({ isBgColorOpen: false })}
+										onClick={() => this.setState({ isEditingBgColor: false })}
 									/>
 								</Footer>
 							</React.Fragment>
@@ -99,15 +99,15 @@ export class Settings extends Component {
 								<Swatch
 									color={fontColor}
 									onClick={() =>
-										this.setState(({ isFontColorOpen }) => ({
-											isFontColorOpen: !isFontColorOpen,
+										this.setState(({ isEditingFontColor }) => ({
+											isEditingFontColor: !isEditingFontColor,
 										}))
 									}
 								/>
 							)}
 						</Label>
 						{!isAutoFontColor &&
-							isFontColorOpen && (
+							isEditingFontColor && (
 								<React.Fragment>
 									<ColorPicker
 										color={fontColor}
@@ -118,7 +118,9 @@ export class Settings extends Component {
 											set automatically
 										</Link>
 										<CloseColorButton
-											onClick={() => this.setState({ isFontColorOpen: false })}
+											onClick={() =>
+												this.setState({ isEditingFontColor: false })
+											}
 										/>
 									</Footer>
 								</React.Fragment>
@@ -161,7 +163,7 @@ export class Settings extends Component {
 
 	handleActivateFontControl = () => {
 		this.props.onSetAutoFontColor(false);
-		this.setState({ isFontColorOpen: true });
+		this.setState({ isEditingFontColor: true });
 	};
 
 	handleResetFontControl = () => {
@@ -170,7 +172,7 @@ export class Settings extends Component {
 		onSetAutoFontColor(true);
 		onChangeSettings({ fontColor: getAutoTextColor(bgColor) });
 
-		this.setState({ isFontColorOpen: false });
+		this.setState({ isEditingFontColor: false });
 	};
 
 	handleChangeFontColor = ({ hex }) => {
@@ -184,8 +186,8 @@ export class Settings extends Component {
 		this.props.onReset();
 
 		this.setState({
-			isBgColorOpen: false,
-			isFontColorOpen: false,
+			isEditingBgColor: false,
+			isEditingFontColor: false,
 		});
 	};
 }

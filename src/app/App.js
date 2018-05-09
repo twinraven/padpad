@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
 import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
-import { Settings } from 'components/Settings/Settings';
+import { SettingsPanel } from 'components/Settings/Settings';
 import { Spinner } from 'components/Spinner/Spinner';
-import { Sharing } from 'components/Sharing/Sharing';
+import { SharingPanel } from 'components/Sharing/Sharing';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
 import {
@@ -63,7 +63,7 @@ class App extends Component {
 				<Controls isActive={isSettingsOpen || isSharingOpen}>
 					<SharingButton
 						isSelected={isSharingOpen}
-						onClick={this.toggleSharing}
+						onClick={this.toggleSharingPanel}
 					>
 						{isSharingOpen ? (
 							isLoadingShareUrl ? (
@@ -78,7 +78,7 @@ class App extends Component {
 
 					<SettingsButton
 						isSelected={isSettingsOpen}
-						onClick={this.toggleSettings}
+						onClick={this.toggleSettingsPanel}
 					>
 						{isSettingsOpen ? (
 							<CloseIcon width="13" height="13" />
@@ -89,13 +89,13 @@ class App extends Component {
 				</Controls>
 				{isSharingOpen &&
 					!isLoadingShareUrl && (
-						<SharingModal onClose={this.toggleSharing}>
-							<Sharing url={shareUrl} />
+						<SharingModal onClose={this.toggleSharingPanel}>
+							<SharingPanel url={shareUrl} />
 						</SharingModal>
 					)}
 				{isSettingsOpen && (
-					<SettingsModal onClose={this.toggleSettings}>
-						<Settings
+					<SettingsModal onClose={this.toggleSettingsPanel}>
+						<SettingsPanel
 							bgColor={bgColor}
 							fontColor={fontColor}
 							fontSize={fontSize}
@@ -117,22 +117,16 @@ class App extends Component {
 		setUrlParams(settings);
 	};
 
-	toggleSettings = event => {
-		if (event) {
-			event.stopPropagation();
-			event.preventDefault();
-		}
+	toggleSettingsPanel = event => {
+		this.handleEvent(event);
 
 		this.setState({ isSettingsOpen: !this.state.isSettingsOpen });
 	};
 
-	toggleSharing = event => {
+	toggleSharingPanel = event => {
 		const { isSharingOpen } = this.state;
 
-		if (event) {
-			event.stopPropagation();
-			event.preventDefault();
-		}
+		this.handleEvent(event);
 
 		this.setState(
 			{
@@ -148,6 +142,13 @@ class App extends Component {
 			}
 		);
 	};
+
+	handleEvent(event) {
+		if (event) {
+			event.stopPropagation();
+			event.preventDefault();
+		}
+	}
 }
 
 export default App;
