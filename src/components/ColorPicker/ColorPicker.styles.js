@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 export const Wrapper = styled.div`
-	background: white;
 	display: flex;
 	margin: 10px 5px 0 0;
 	position: relative;
@@ -15,6 +14,7 @@ export const HueWrapper = styled.div`
 	width: 8px;
 
 	.hue-vertical {
+		border-radius: 10px;
 		margin-right: 5px;
 	}
 `;
@@ -23,6 +23,10 @@ export const SaturationWrapper = styled.div`
 	height: 100px;
 	flex: 1;
 	position: relative;
+
+	div {
+		border-radius: 2px;
+	}
 `;
 
 const PICKER_SIZE = 9;
