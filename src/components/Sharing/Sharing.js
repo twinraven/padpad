@@ -10,7 +10,7 @@ import {
 } from './Sharing.styles';
 import { CopyIcon } from 'shared/icons';
 
-export class Sharing extends Component {
+export class SharingPanel extends Component {
 	state = {
 		hasCopied: false,
 	};
