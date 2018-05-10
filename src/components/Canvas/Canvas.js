@@ -34,17 +34,26 @@ export class Canvas extends Component {
 		this.setHeight();
 	}
 
+	componentDidUpdate(prevProps) {
+		// needed to ensure that height updates get pushed through.
+		// componentDidUpdate has a race condition with scrollHeight being updated
+		if (this.props.fontSize !== prevProps.fontSize) {
+			setTimeout(() => this.setHeight(), 100);
+		}
+	}
+
 	componentWillUnmount() {
 		window.removeEventListener('resize', this.setHeightDebounced);
 	}
 
 	render() {
-		const { text, ...props } = this.props;
+		const { text, changeText, ...props } = this.props;
 		const { height } = this.state;
 
 		return (
 			<Wrapper>
 				<GhostText
+					{...props}
 					aria-hidden={true}
 					innerRef={this.ghostRef}
 					value={text}
@@ -53,7 +62,7 @@ export class Canvas extends Component {
 				<Text
 					{...props}
 					style={{ height }}
-					onChange={this.handleTextChange}
+					onChange={({ target }) => this.props.changeText(target.value)}
 					onKeyUp={this.handleKeyUp}
 					autoFocus={true}
 					value={text}
@@ -62,8 +71,6 @@ export class Canvas extends Component {
 			</Wrapper>
 		);
 	}
-
-	handleTextChange = event => this.props.changeText(event.target.value);
 
 	handleKeyUp = () => {
 		this.updateUrlDebounced();
