@@ -4,17 +4,18 @@ import debounce from 'lodash.debounce';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE, COLOR_UPDATE_DELAY } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
 import ColorPicker from 'components/ColorPicker/ColorPicker';
+import { Range } from 'components/Range/Range.styles';
+import { DownArrowIcon, CloseIcon } from 'shared/icons';
+import { hasDefaultParams } from 'utils/url';
 import {
 	Wrapper,
 	Content,
 	Link,
-	ResetLink,
+	ResetButton,
 	Swatch,
 	Row,
-	Range,
 	Label,
 	Footer,
-	CloseColorButton,
 } from './Settings.styles';
 
 export class SettingsPanel extends Component {
@@ -57,6 +58,8 @@ export class SettingsPanel extends Component {
 		} = this.props;
 		const { isEditingBgColor, isEditingFontColor } = this.state;
 
+		const isResetDisabled = hasDefaultParams();
+
 		return (
 			<Wrapper {...props}>
 				<Content>
@@ -70,20 +73,15 @@ export class SettingsPanel extends Component {
 										isEditingBgColor: !isEditingBgColor,
 									}))
 								}
-							/>
+							>
+								{isEditingBgColor ? <CloseIcon /> : <DownArrowIcon />}
+							</Swatch>
 						</Label>
 						{isEditingBgColor && (
-							<React.Fragment>
-								<ColorPicker
-									color={bgColor}
-									onChange={this.changeBgColorDebounced}
-								/>
-								<Footer>
-									<CloseColorButton
-										onClick={() => this.setState({ isEditingBgColor: false })}
-									/>
-								</Footer>
-							</React.Fragment>
+							<ColorPicker
+								color={bgColor}
+								onChange={this.changeBgColorDebounced}
+							/>
 						)}
 					</Row>
 					<Row>
@@ -103,7 +101,9 @@ export class SettingsPanel extends Component {
 											isEditingFontColor: !isEditingFontColor,
 										}))
 									}
-								/>
+								>
+									{isEditingFontColor ? <CloseIcon /> : <DownArrowIcon />}
+								</Swatch>
 							)}
 						</Label>
 						{!isAutoFontColor &&
@@ -117,11 +117,6 @@ export class SettingsPanel extends Component {
 										<Link onClick={this.handleResetFontControl}>
 											set automatically
 										</Link>
-										<CloseColorButton
-											onClick={() =>
-												this.setState({ isEditingFontColor: false })
-											}
-										/>
 									</Footer>
 								</React.Fragment>
 							)}
@@ -142,7 +137,12 @@ export class SettingsPanel extends Component {
 					</Row>
 					<Row isFixed>
 						<Label>
-							<ResetLink onClick={this.handleReset}>reset all</ResetLink>
+							<ResetButton
+								onClick={this.handleReset}
+								disabled={isResetDisabled}
+							>
+								reset all
+							</ResetButton>
 						</Label>
 					</Row>
 				</Content>
@@ -184,6 +184,7 @@ export class SettingsPanel extends Component {
 
 	handleReset = () => {
 		this.props.onReset();
+		this.props.onSetAutoFontColor(true);
 
 		this.setState({
 			isEditingBgColor: false,

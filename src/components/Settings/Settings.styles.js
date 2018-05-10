@@ -1,11 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { media } from 'styles/mixins';
-import { CloseIcon, DownArrowIcon } from 'shared/icons';
 import { Icon } from 'shared/icons/Icons.styles';
-import { modalBgColor } from 'styles/colours';
+import { modalBgColor, highlightColor } from 'styles/colours';
 import { MIN_MODAL_WIDTH } from 'config.js';
+import { darken } from 'polished';
 
 const ROW_HEIGHT = 25;
 
@@ -71,109 +70,6 @@ Row.defaultProps = {
 	isFixed: false,
 };
 
-export const Range = styled.input.attrs({
-	type: 'range',
-})`
-	appearance: none;
-	-webkit-appearance: none;
-	background: transparent;
-	max-width: 50%;
-	margin: 5px 0;
-	transition: all 0.1s;
-	width: 100%;
-
-	&:focus {
-		outline: none;
-	}
-
-	&::-webkit-slider-runnable-track {
-		width: 100%;
-		height: 5px;
-		cursor: pointer;
-		background: #969696;
-		border-radius: 10px;
-		border: 0px solid #010101;
-	}
-
-	&::-webkit-slider-thumb {
-		box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5),
-			0px 0px 1px rgba(13, 13, 13, 0.5);
-		border: none;
-		height: 15px;
-		width: 15px;
-		border-radius: 29px;
-		background: #fff;
-		cursor: pointer;
-		-webkit-appearance: none;
-		margin-top: -5px;
-	}
-
-	&:focus::-webkit-slider-runnable-track {
-		background: #b2b2b2;
-	}
-
-	&::-moz-range-track {
-		width: 100%;
-		height: 5px;
-		cursor: pointer;
-		background: #969696;
-		border-radius: 10px;
-		border: 0px solid #010101;
-	}
-
-	&::-moz-range-thumb {
-		box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5),
-			0px 0px 1px rgba(13, 13, 13, 0.5);
-		border: none;
-		height: 15px;
-		width: 15px;
-		border-radius: 29px;
-		background: #fff;
-		cursor: pointer;
-	}
-
-	&::-ms-track {
-		width: 100%;
-		height: 5px;
-		cursor: pointer;
-		background: transparent;
-		border-color: transparent;
-		color: transparent;
-	}
-
-	&::-ms-fill-lower {
-		background: #7a7a7a;
-		border: 0px solid #010101;
-		border-radius: 20px;
-	}
-
-	&::-ms-fill-upper {
-		background: #969696;
-		border: 0px solid #010101;
-		border-radius: 20px;
-	}
-
-	&::-ms-thumb {
-		box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5),
-			0px 0px 1px rgba(13, 13, 13, 0.5);
-		border: none;
-		height: 15px;
-		width: 15px;
-		border-radius: 29px;
-		background: #fff;
-		cursor: pointer;
-		height: 5px;
-	}
-
-	&:focus::-ms-fill-lower {
-		background: #969696;
-	}
-
-	&:focus::-ms-fill-upper {
-		background: #b2b2b2;
-	}
-`;
-
 export const Label = styled.div`
 	display: flex;
 	justify-content: space-between;
@@ -185,8 +81,8 @@ export const Footer = styled.div`
 	background: #f6f6f6;
 	display: flex;
 	font-size: 0.85em;
-	justify-content: space-between;
-	padding: 4px 2px 2px 7px;
+	justify-content: flex-end;
+	padding: 4px 2px;
 	margin-bottom: -10px;
 
 	${media.medium`
@@ -196,14 +92,48 @@ export const Footer = styled.div`
 `;
 
 export const Link = styled.a`
-	color: blue;
+	color: ${darken(0.3, highlightColor)};
 	cursor: pointer;
 	text-decoration: underline;
+	text-decoration-style: dotted;
+
+	&:hover,
+	&:focus {
+		text-decoration: none;
+	}
 `;
 
-export const ResetLink = styled(Link)`
+export const ResetButton = styled.button.attrs({
+	type: 'button',
+})`
+	align-self: center;
+	appearance: none;
+	border: none;
+	color: white;
+	background: #9c9c9c;
+	border-radius: 2px;
+	cursor: pointer;
+	display: block;
 	font-size: 0.85em;
+	line-height: 2;
 	margin-left: auto;
+	outline: none;
+	padding: 0 7px;
+	transition: 0.15s;
+
+	&:hover,
+	&:focus {
+		background: ${highlightColor};
+	}
+
+	&:disabled {
+		opacity: 0.3;
+
+		&:hover,
+		&:focus {
+			background: #9c9c9c;
+		}
+	}
 
 	${media.medium`
 		font-size: 1em;
@@ -211,10 +141,12 @@ export const ResetLink = styled(Link)`
 	`};
 `;
 
-export const Swatch = styled.div.attrs({
-	children: <DownArrowIcon width="15" height="10" />,
+export const Swatch = styled.button.attrs({
+	type: 'button',
 })`
+	appearance: none;
 	align-items: center;
+	border: none;
 	border-radius: 2px;
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 	${props =>
@@ -222,29 +154,29 @@ export const Swatch = styled.div.attrs({
 		css`
 			background-color: ${props.color};
 		`};
+	cursor: pointer;
 	display: flex;
 	height: ${ROW_HEIGHT}px;
 	justify-content: center;
+	transition: box-shadow 0.15s;
 	width: ${ROW_HEIGHT * 1.5}px;
 
 	${Icon} {
 		color: rgba(180, 180, 180, 0.5);
+		height: 12px;
+		transition: color 0.15s;
 	}
-`;
-
-export const CloseColorButton = styled.button.attrs({
-	type: 'button',
-	children: <CloseIcon width="12" height="12" />,
-})`
-	appearance: none;
-	background: transparent;
-	border: none;
-	color: rgba(0, 0, 0, 0.4);
-	margin-left: auto;
-	outline: none;
 
 	&:hover,
 	&:focus {
-		color: rgba(0, 0, 0, 0.6);
+		box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+
+		${Icon} {
+			color: rgba(180, 180, 180, 0.7);
+		}
+	}
+
+	&:focus {
+		outline: 1px solid ${highlightColor};
 	}
 `;
