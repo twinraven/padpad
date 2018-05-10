@@ -31,6 +31,13 @@ export const getQueryParams = () =>
 		ignoreQueryPrefix: true,
 	});
 
+export function hasDefaultParams() {
+	const params = getQueryParams();
+	delete params.text;
+
+	return Object.keys(params).length === 0;
+}
+
 export function getShortUrl(longUrl) {
 	const token = process.env.REACT_APP_BITLY_API_TOKEN;
 

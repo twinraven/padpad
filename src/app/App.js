@@ -7,6 +7,7 @@ import { Spinner } from 'components/Spinner/Spinner';
 import { SharingPanel } from 'components/Sharing/Sharing';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
+import { isUndefined } from 'utils/type';
 import {
 	Wrapper,
 	Canvas,
@@ -28,9 +29,12 @@ class App extends Component {
 	};
 
 	static getDerivedStateFromProps() {
+		const queryParams = getQueryParams();
+
 		return {
 			...DEFAULT_PARAMS,
-			...getQueryParams(),
+			...queryParams,
+			isAutoFontColor: isUndefined(queryParams.fontColor),
 		};
 	}
 
@@ -113,8 +117,8 @@ class App extends Component {
 	}
 
 	changeSettings = settings => {
-		this.setState(settings);
 		setUrlParams(settings);
+		this.setState(settings);
 	};
 
 	toggleSettingsPanel = event => {
