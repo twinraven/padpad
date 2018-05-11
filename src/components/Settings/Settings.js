@@ -18,7 +18,7 @@ import {
 	Label,
 	Footer,
 	ColorWrapper,
-	transitionDurationExit,
+	exitTransitionMs,
 } from './Settings.styles';
 
 export class SettingsPanel extends Component {
@@ -82,7 +82,7 @@ export class SettingsPanel extends Component {
 						</Label>
 						<Transition
 							in={isEditingBgColor}
-							timeout={{ enter: 0, exit: transitionDurationExit }}
+							timeout={{ enter: 0, exit: exitTransitionMs }}
 							unmountOnExit
 						>
 							{state => (
@@ -119,7 +119,7 @@ export class SettingsPanel extends Component {
 						</Label>
 						<Transition
 							in={isEditingFontColor && !isAutoFontColor}
-							timeout={{ enter: 0, exit: transitionDurationExit }}
+							timeout={{ enter: 0, exit: exitTransitionMs }}
 							unmountOnExit
 						>
 							{state => (

@@ -125,8 +125,8 @@ export const SettingsButton = styled(RoundButton)`
 	`};
 `;
 
-export const transitionDurationEnter = 300;
-export const transitionDurationExit = 220;
+export const enterTransitionMs = 300;
+export const exitTransitionMs = 220;
 
 const modalTransitions = {
 	bigScreens: {
@@ -135,7 +135,7 @@ const modalTransitions = {
 		exiting: {
 			opacity: 0,
 			transform: 'scale(0.9, 0.9)',
-			transitionDuration: transitionDurationExit,
+			transitionDuration: exitTransitionMs,
 		},
 		exited: { opacity: 0 },
 	},
@@ -145,15 +145,14 @@ const modalTransitions = {
 		exiting: {
 			opacity: 0,
 			transform: 'translateY(10%)',
-			transitionDuration: transitionDurationExit,
+			transitionDuration: exitTransitionMs,
 		},
 		exited: { opacity: 0 },
 	},
 };
 
 const Modal = styled(_Modal)`
-	transition: opacity ${transitionDurationEnter}ms,
-		transform ${transitionDurationEnter}ms;
+	transition: opacity ${enterTransitionMs}ms, transform ${enterTransitionMs}ms;
 	transform-origin: 90% top;
 
 	${props =>

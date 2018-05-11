@@ -180,8 +180,8 @@ export const Swatch = styled.button.attrs({
 	}
 `;
 
-export const transitionDurationEnter = 250;
-export const transitionDurationExit = 180;
+export const enterTransitionMs = 250;
+export const exitTransitionMs = 180;
 
 const modalTransitions = {
 	entering: { opacity: 0, height: '0px', margin: 0, padding: 0 },
@@ -189,7 +189,7 @@ const modalTransitions = {
 	exiting: {
 		opacity: 0,
 		height: '0px',
-		transitionDuration: transitionDurationExit,
+		transitionDuration: exitTransitionMs,
 	},
 	exited: { opacity: 0, height: '0px' },
 };
@@ -199,7 +199,7 @@ export const ColorWrapper = styled.div`
 	overflow: hidden;
 	padding: 0 5px;
 	margin: 0 -5px -5px;
-	transition: ${transitionDurationEnter}ms;
+	transition: ${enterTransitionMs}ms;
 	transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
 
 	${props =>

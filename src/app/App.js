@@ -17,7 +17,7 @@ import {
 	SettingsButton,
 	SettingsModal,
 	SharingModal,
-	transitionDurationExit,
+	exitTransitionMs,
 } from './App.styles';
 import { getTitle } from './App.utils';
 
@@ -97,7 +97,7 @@ class App extends Component {
 					in={isSharingOpen && !isLoadingShareUrl}
 					timeout={{
 						enter: 0,
-						exit: transitionDurationExit,
+						exit: exitTransitionMs,
 					}}
 					unmountOnExit
 				>
@@ -116,7 +116,7 @@ class App extends Component {
 					in={isSettingsOpen}
 					timeout={{
 						enter: 0,
-						exit: transitionDurationExit,
+						exit: exitTransitionMs,
 					}}
 					unmountOnExit
 				>
