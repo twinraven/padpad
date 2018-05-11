@@ -52,10 +52,15 @@ export const ModalContent = styled.div`
 		border-radius: 0;
 		box-shadow: 0 -2px 25px rgba(0, 0, 0, 0.15);
 		max-width: none;
+		width: 350px;
 
 		&::before,
 		&::after {
 			display: none;
 		}
+	`};
+
+	${media.small`
+		width: 100%;
 	`};
 `;

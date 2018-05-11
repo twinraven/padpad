@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Transition } from 'react-transition-group';
 import Helmet from 'react-helmet';
 import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
 import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
@@ -16,6 +17,7 @@ import {
 	SettingsButton,
 	SettingsModal,
 	SharingModal,
+	transitionDurationExit,
 } from './App.styles';
 import { getTitle } from './App.utils';
 
@@ -91,27 +93,53 @@ class App extends Component {
 						)}
 					</SettingsButton>
 				</Controls>
-				{isSharingOpen &&
-					!isLoadingShareUrl && (
-						<SharingModal onClose={this.toggleSharingPanel}>
+				<Transition
+					in={isSharingOpen && !isLoadingShareUrl}
+					timeout={{
+						enter: 0,
+						exit: transitionDurationExit,
+					}}
+					unmountOnExit
+				>
+					{state => (
+						<SharingModal
+							onClose={this.toggleSharingPanel}
+							key="sharing-modal"
+							transitionState={state}
+						>
 							<SharingPanel url={shareUrl} />
 						</SharingModal>
 					)}
-				{isSettingsOpen && (
-					<SettingsModal onClose={this.toggleSettingsPanel}>
-						<SettingsPanel
-							bgColor={bgColor}
-							fontColor={fontColor}
-							fontSize={fontSize}
-							isAutoFontColor={isAutoFontColor}
-							onChangeSettings={this.changeSettings}
-							onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
-							onSetAutoFontColor={isAutoFontColor =>
-								this.setState({ isAutoFontColor })
-							}
-						/>
-					</SettingsModal>
-				)}
+				</Transition>
+
+				<Transition
+					in={isSettingsOpen}
+					timeout={{
+						enter: 0,
+						exit: transitionDurationExit,
+					}}
+					unmountOnExit
+				>
+					{state => (
+						<SettingsModal
+							onClose={this.toggleSettingsPanel}
+							key="settings-modal"
+							transitionState={state}
+						>
+							<SettingsPanel
+								bgColor={bgColor}
+								fontColor={fontColor}
+								fontSize={fontSize}
+								isAutoFontColor={isAutoFontColor}
+								onChangeSettings={this.changeSettings}
+								onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
+								onSetAutoFontColor={isAutoFontColor =>
+									this.setState({ isAutoFontColor })
+								}
+							/>
+						</SettingsModal>
+					)}
+				</Transition>
 			</Wrapper>
 		);
 	}

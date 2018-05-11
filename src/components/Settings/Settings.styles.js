@@ -78,7 +78,6 @@ export const Label = styled.div`
 `;
 
 export const Footer = styled.div`
-	background: #f6f6f6;
 	display: flex;
 	font-size: 0.85em;
 	justify-content: flex-end;
@@ -179,4 +178,32 @@ export const Swatch = styled.button.attrs({
 	&:focus {
 		outline: 1px solid ${highlightColor};
 	}
+`;
+
+export const transitionDurationEnter = 250;
+export const transitionDurationExit = 180;
+
+const modalTransitions = {
+	entering: { opacity: 0, height: '0px', margin: 0, padding: 0 },
+	entered: { opacity: 1, height: '116px' },
+	exiting: {
+		opacity: 0,
+		height: '0px',
+		transitionDuration: transitionDurationExit,
+	},
+	exited: { opacity: 0, height: '0px' },
+};
+
+export const ColorWrapper = styled.div`
+	box-sizing: content-box;
+	overflow: hidden;
+	padding: 0 5px;
+	margin: 0 -5px -5px;
+	transition: ${transitionDurationEnter}ms;
+	transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+
+	${props =>
+		props.transitionState && {
+			...modalTransitions[props.transitionState],
+		}};
 `;

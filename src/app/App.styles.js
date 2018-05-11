@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { media, context } from 'styles/mixins';
 import { Canvas as _Canvas } from 'components/Canvas/Canvas';
-import { Modal } from 'components/Modal/Modal';
+import { Modal as _Modal } from 'components/Modal/Modal';
 import { RoundButton } from 'shared/buttons';
 
 export const Wrapper = styled.div`
@@ -125,6 +125,56 @@ export const SettingsButton = styled(RoundButton)`
 	`};
 `;
 
+export const transitionDurationEnter = 300;
+export const transitionDurationExit = 220;
+
+const modalTransitions = {
+	bigScreens: {
+		entering: { opacity: 0, transform: 'scale(0.85, 0.85)' },
+		entered: { opacity: 1, transform: 'scale(1, 1)' },
+		exiting: {
+			opacity: 0,
+			transform: 'scale(0.9, 0.9)',
+			transitionDuration: transitionDurationExit,
+		},
+		exited: { opacity: 0 },
+	},
+	smallScreens: {
+		entering: { opacity: 0, transform: 'translateY(10%)' },
+		entered: { opacity: 1, transform: 'translateY(0)' },
+		exiting: {
+			opacity: 0,
+			transform: 'translateY(10%)',
+			transitionDuration: transitionDurationExit,
+		},
+		exited: { opacity: 0 },
+	},
+};
+
+const Modal = styled(_Modal)`
+	transition: opacity ${transitionDurationEnter}ms,
+		transform ${transitionDurationEnter}ms;
+	transform-origin: 90% top;
+
+	${props =>
+		props.transitionState && {
+			...modalTransitions.bigScreens[props.transitionState],
+		}};
+
+	${media.medium`
+		transform-origin: right bottom;
+	`};
+
+	${media.small`
+		transform-origin: center bottom;
+
+		${props =>
+			props.transitionState && {
+				...modalTransitions.smallScreens[props.transitionState],
+			}};
+	`};
+`;
+
 export const SettingsModal = styled(Modal)`
 	position: fixed;
 	top: 75px;
@@ -132,8 +182,8 @@ export const SettingsModal = styled(Modal)`
 
 	${media.medium`
 		bottom: 0;
-		margin-bottom: 74px;
-		padding-bottom: 0;
+		margin-bottom: 0;
+		padding-bottom: 74px;
 		right: 0;
 		top: auto;
 	`};

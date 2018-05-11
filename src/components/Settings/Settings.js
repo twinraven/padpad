@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Transition } from 'react-transition-group';
 import debounce from 'lodash.debounce';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE, COLOR_UPDATE_DELAY } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
@@ -16,6 +17,8 @@ import {
 	Row,
 	Label,
 	Footer,
+	ColorWrapper,
+	transitionDurationExit,
 } from './Settings.styles';
 
 export class SettingsPanel extends Component {
@@ -77,12 +80,20 @@ export class SettingsPanel extends Component {
 								{isEditingBgColor ? <CloseIcon /> : <DownArrowIcon />}
 							</Swatch>
 						</Label>
-						{isEditingBgColor && (
-							<ColorPicker
-								color={bgColor}
-								onChange={this.changeBgColorDebounced}
-							/>
-						)}
+						<Transition
+							in={isEditingBgColor}
+							timeout={{ enter: 0, exit: transitionDurationExit }}
+							unmountOnExit
+						>
+							{state => (
+								<ColorWrapper transitionState={state} key="bg-color">
+									<ColorPicker
+										color={bgColor}
+										onChange={this.changeBgColorDebounced}
+									/>
+								</ColorWrapper>
+							)}
+						</Transition>
 					</Row>
 					<Row>
 						<Label>
@@ -106,9 +117,17 @@ export class SettingsPanel extends Component {
 								</Swatch>
 							)}
 						</Label>
-						{!isAutoFontColor &&
-							isEditingFontColor && (
-								<React.Fragment>
+						<Transition
+							in={isEditingFontColor && !isAutoFontColor}
+							timeout={{ enter: 0, exit: transitionDurationExit }}
+							unmountOnExit
+						>
+							{state => (
+								<ColorWrapper
+									transitionState={state}
+									key="font-color"
+									style={{ paddingBottom: '20px ' }}
+								>
 									<ColorPicker
 										color={fontColor}
 										onChange={this.changeFontColorDebounced}
@@ -118,8 +137,9 @@ export class SettingsPanel extends Component {
 											set automatically
 										</Link>
 									</Footer>
-								</React.Fragment>
+								</ColorWrapper>
 							)}
+						</Transition>
 					</Row>
 					<Row>
 						<Label>
