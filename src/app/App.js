@@ -8,6 +8,8 @@ import { Spinner } from 'components/Spinner/Spinner';
 import { SharingPanel } from 'components/Sharing/Sharing';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
+import { exitTransitionMs } from 'components/Modal/Modal.styles';
+import { getTitle } from './App.utils';
 import { isUndefined } from 'utils/type';
 import {
 	Wrapper,
@@ -17,9 +19,7 @@ import {
 	SettingsButton,
 	SettingsModal,
 	SharingModal,
-	exitTransitionMs,
 } from './App.styles';
-import { getTitle } from './App.utils';
 
 class App extends Component {
 	state = {

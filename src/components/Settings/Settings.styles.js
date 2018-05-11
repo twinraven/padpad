@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { media } from 'styles/mixins';
 import { Icon } from 'shared/icons/Icons.styles';
 import { modalBgColor, highlightColor } from 'styles/colours';
-import { MIN_MODAL_WIDTH } from 'config.js';
+import { MIN_MODAL_WIDTH, transitionEasing } from 'config.js';
 import { darken } from 'polished';
 
 const ROW_HEIGHT = 25;
@@ -200,7 +200,7 @@ export const ColorWrapper = styled.div`
 	padding: 0 5px;
 	margin: 0 -5px -5px;
 	transition: ${enterTransitionMs}ms;
-	transition-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+	transition-timing-function: ${transitionEasing};
 
 	${props =>
 		props.transitionState && {
