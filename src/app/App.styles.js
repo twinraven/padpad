@@ -4,11 +4,12 @@ import { media, context } from 'styles/mixins';
 import { Canvas as _Canvas } from 'components/Canvas/Canvas';
 import { Modal } from 'components/Modal/Modal';
 import { RoundButton } from 'shared/buttons';
+import { transitionEasing } from 'config.js';
 
 export const Wrapper = styled.div`
 	position: relative;
 	text-align: center;
-	transition: background 0.1s ease-in-out;
+	transition: background 0.15s ${transitionEasing};
 	width: 100%;
 
 	${props =>
@@ -132,8 +133,8 @@ export const SettingsModal = styled(Modal)`
 
 	${media.medium`
 		bottom: 0;
-		margin-bottom: 74px;
-		padding-bottom: 0;
+		margin-bottom: 0;
+		padding-bottom: 74px;
 		right: 0;
 		top: auto;
 	`};

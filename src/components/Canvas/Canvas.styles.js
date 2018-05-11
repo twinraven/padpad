@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DEFAULT_FONT_SIZE } from 'config.js';
+import { DEFAULT_FONT_SIZE, transitionEasing } from 'config.js';
 
 export const Wrapper = styled.div`
 	display: flex;
@@ -22,7 +22,7 @@ export const Text = styled.textarea`
 	padding: 30px 0;
 	resize: none;
 	text-align: left;
-	transition: font 0.1s linear, color 0.1s ease-in-out;
+	transition: font 0.15s ${transitionEasing}, color 0.15s ${transitionEasing};
 	width: 100%;
 
 	&:focus {

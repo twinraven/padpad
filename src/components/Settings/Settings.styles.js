@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { media } from 'styles/mixins';
 import { Icon } from 'shared/icons/Icons.styles';
 import { modalBgColor, highlightColor } from 'styles/colours';
-import { MIN_MODAL_WIDTH } from 'config.js';
+import { MIN_MODAL_WIDTH, transitionEasing } from 'config.js';
 import { darken } from 'polished';
 
 const ROW_HEIGHT = 25;
@@ -78,7 +78,6 @@ export const Label = styled.div`
 `;
 
 export const Footer = styled.div`
-	background: #f6f6f6;
 	display: flex;
 	font-size: 0.85em;
 	justify-content: flex-end;
@@ -179,4 +178,32 @@ export const Swatch = styled.button.attrs({
 	&:focus {
 		outline: 1px solid ${highlightColor};
 	}
+`;
+
+export const enterTransitionMs = 250;
+export const exitTransitionMs = 180;
+
+const modalTransitions = {
+	entering: { opacity: 0, height: '0px', margin: 0, padding: 0 },
+	entered: { opacity: 1, height: '116px' },
+	exiting: {
+		opacity: 0,
+		height: '0px',
+		transitionDuration: exitTransitionMs,
+	},
+	exited: { opacity: 0, height: '0px' },
+};
+
+export const ColorWrapper = styled.div`
+	box-sizing: content-box;
+	overflow: hidden;
+	padding: 0 5px;
+	margin: 0 -5px -5px;
+	transition: ${enterTransitionMs}ms;
+	transition-timing-function: ${transitionEasing};
+
+	${props =>
+		props.transitionState && {
+			...modalTransitions[props.transitionState],
+		}};
 `;
