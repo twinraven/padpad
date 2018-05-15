@@ -7,7 +7,7 @@ import {
 	Input,
 	CopyButton,
 	Message,
-} from './Sharing.styles';
+} from './SharingPanel.styles';
 import { CopyIcon } from 'shared/icons';
 
 export class SharingPanel extends Component {
