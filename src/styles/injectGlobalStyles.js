@@ -21,6 +21,7 @@ export default function() {
 			font-weight: normal;
 			line-height: 1.5;
 			-webkit-font-smoothing: antialiased;
+			transition: background 0.15s cubic-bezier(0.745, 0.19, 0.3, 0.955);
 		}
 
 		a {

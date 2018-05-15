@@ -3,9 +3,9 @@ import { Transition } from 'react-transition-group';
 import Helmet from 'react-helmet';
 import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
 import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
-import { SettingsPanel } from 'components/Settings/Settings';
+import { SettingsPanel } from 'components/SettingsPanel/SettingsPanel';
 import { Spinner } from 'components/Spinner/Spinner';
-import { SharingPanel } from 'components/Sharing/Sharing';
+import { SharingPanel } from 'components/SharingPanel/SharingPanel';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
 import { exitTransitionMs } from 'components/Modal/Modal.styles';
@@ -56,9 +56,10 @@ class App extends Component {
 		const title = getTitle(text);
 
 		return (
-			<Wrapper bgColor={bgColor}>
+			<Wrapper>
 				<Helmet>
 					<title>{title}</title>
+					<body bgColor={bgColor} />
 				</Helmet>
 				<Canvas
 					fontColor={fontColor}

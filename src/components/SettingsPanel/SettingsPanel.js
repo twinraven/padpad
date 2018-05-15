@@ -19,7 +19,7 @@ import {
 	Footer,
 	ColorWrapper,
 	exitTransitionMs,
-} from './Settings.styles';
+} from './SettingsPanel.styles';
 
 export class SettingsPanel extends Component {
 	static propTypes = {
