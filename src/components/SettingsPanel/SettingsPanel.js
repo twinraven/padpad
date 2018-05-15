@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Transition } from 'react-transition-group';
+import Transition from 'react-transition-group/Transition';
 import debounce from 'lodash.debounce';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE, COLOR_UPDATE_DELAY } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
