@@ -1,30 +1,30 @@
 import styled, { css } from 'styled-components';
 import { opacify } from 'polished';
 import { media } from 'styles/mixins';
-import { highlightColor, buttonColor, buttonHoverColor } from 'styles/colours';
+import { highlightColor } from 'styles/colours';
 
 export const RoundButton = styled.button.attrs({
 	type: 'button',
 })`
 	align-items: center;
 	appearance: none;
-	background: ${buttonColor};
-	border: none;
+	background: rgba(0, 0, 0, 0.2);
+	border: 1px solid rgba(255, 255, 255, 0.7);
 	border-radius: 40px;
-	color: #888;
+	color: white;
 	cursor: pointer;
 	display: flex;
 	height: 40px;
 	justify-content: center;
 	overflow: hidden;
-	transition: background-color 0.1s, color 0.1s;
+	transition: 0.1s;
 	width: 40px;
 
 	-webkit-tap-highlight-color: transparent;
 
 	&:hover {
-		background: ${buttonHoverColor};
-		color: white;
+		background: rgba(0, 0, 0, 0.4);
+		border-color: white;
 	}
 
 	&:focus {
