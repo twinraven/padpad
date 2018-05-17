@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { InvisibleLabel } from 'styles/mixins';
 import {
 	Wrapper,
 	Title,
@@ -15,6 +16,15 @@ export class SharingPanel extends Component {
 		hasCopied: false,
 	};
 
+	constructor() {
+		super();
+		this.inputRef = React.createRef();
+	}
+
+	componentDidMount() {
+		this.inputRef.current.select();
+	}
+
 	render() {
 		const { url, ...props } = this.props;
 		const { hasCopied } = this.state;
@@ -23,7 +33,13 @@ export class SharingPanel extends Component {
 			<Wrapper {...props}>
 				<Title>Ready to share</Title>
 				<Row>
-					<Input defaultValue={url} />
+					<InvisibleLabel for="url">Share url</InvisibleLabel>
+					<Input
+						id="url"
+						defaultValue={url}
+						autoFocus
+						innerRef={this.inputRef}
+					/>
 					<CopyToClipboard onCopy={this.onCopy} text={url}>
 						<CopyButton>
 							<CopyIcon /> copy
