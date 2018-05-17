@@ -9,7 +9,7 @@ export function setUrlParams(newParams) {
 	const params = { ...getQueryParams(), ...newParams };
 	const parsedParams = pipe(
 		removeDefaultValues,
-		evolve({ text: removeMarkup }),
+		evolve({ text: cleanMarkup }),
 		map(encodeURIComponent)
 	)(params);
 
@@ -32,23 +32,11 @@ function removeDefaultValues(params) {
 
 // TODO: add tests
 // TODO: move out from here, into markup.js in utils?
-export function removeMarkup(val) {
-	// TODO: tidy up
+export function cleanMarkup(val) {
 	let output = val;
-	// remove all element props, e.g. style=X
+	// remove all element props, e.g. style="padding: 12px"
 	output = output.replace(/<([a-zA-Z]+)( [a-zA-Z]+=[^>]+)*>/gim, '<$1>');
 
-	/*
-	// if a <br> is needlessly wrapped in another tag, unwrap it
-	// output = output.replace(/(<[a-zA-Z]+>)<br ?(\/)?>(<\/[a-zA-Z]+>)/gim, '<br>');
-	// same as above, just to unwrap double-wrapped <br>s
-	// output = output.replace(/(<[a-zA-Z]+>)<br ?(\/)?>(<\/[a-zA-Z]+>)/gim, '<br>');
-	// would you believe it - triple wrapped. This is because we can expect 3 tags:
-	// div, b, and i, and in any order.
-	// output = output.replace(/(<[a-zA-Z]+>)<br ?(\/)?>(<\/[a-zA-Z]+>)/gim, '<br>');
-	*/
-
-	// REPLACES ABOVE
 	// if a <br> is wrapped in a div and any other tags, completely unwrap it
 	output = output.replace(
 		/<div>(<[a-zA-Z]+>)*<br ?(\/)?>(<\/[a-zA-Z]+>)*<\/div>/gim,

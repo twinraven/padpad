@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import { URL_UPDATE_DELAY } from 'config.js';
 import { AccessibleLabel } from 'styles/mixins';
-import { setUrlParams, removeMarkup } from 'utils/url';
+import { setUrlParams, cleanMarkup } from 'utils/url';
 import { Wrapper, ContentEditable } from './Canvas.styles';
 
 export class Canvas extends Component {
@@ -44,8 +44,6 @@ export class Canvas extends Component {
 	};
 
 	cleanMarkup = () => {
-		console.log(this.props.text);
-		console.log(removeMarkup(this.props.text));
-		//this.props.changeText(removeMarkup(this.props.text));
+		this.props.changeText(cleanMarkup(this.props.text));
 	};
 }
