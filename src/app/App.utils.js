@@ -11,5 +11,5 @@ export function getTitle(text) {
 		title = `${title}…`;
 	}
 
-	return title;
+	return `${DEFAULT_TITLE} | ${title}`;
 }

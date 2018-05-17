@@ -5,7 +5,7 @@ export const DEFAULT_DARK_COLOR = '#333333';
 export const DEFAULT_FONT_SIZE = '16';
 export const DEFAULT_TEXT = '';
 
-export const DEFAULT_TITLE = 'Pad';
+export const DEFAULT_TITLE = 'PadPad';
 
 export const DEFAULT_SETTINGS = {
 	bgColor: DEFAULT_LIGHT_COLOR,
