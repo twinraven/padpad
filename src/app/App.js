@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Transition } from 'react-transition-group';
+import Transition from 'react-transition-group/Transition';
 import Helmet from 'react-helmet';
 import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
 import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
