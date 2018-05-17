@@ -1,15 +1,19 @@
 import qs from 'qs';
-import { map } from 'ramda';
+import pipe from 'ramda/src/pipe';
+import map from 'ramda/src/map';
+import evolve from 'ramda/src/evolve';
 import { DEFAULT_PARAMS } from 'config.js';
 
 export function setUrlParams(newParams) {
 	const { pathname } = document.location;
 	const params = { ...getQueryParams(), ...newParams };
+	const parsedParams = pipe(
+		removeDefaultValues,
+		evolve({ text: removeMarkup }),
+		map(encodeURIComponent)
+	)(params);
 
-	const cleanParams = removeDefaultValues(params);
-	const encodedParams = map(encodeURIComponent, cleanParams);
-
-	const querystring = qs.stringify(encodedParams, { encode: false });
+	const querystring = qs.stringify(parsedParams, { encode: false });
 	const queryPrefix = querystring.length ? '?' : '';
 	const url = `${pathname}${queryPrefix}${querystring}`;
 
@@ -24,6 +28,19 @@ function removeDefaultValues(params) {
 	}
 
 	return params;
+}
+
+// TODO: add tests
+export function removeMarkup(val) {
+	// TODO: tidy up
+	let out = val;
+	out = out.replace(/<([a-zA-Z]+)( [a-zA-Z]+=[^>]+)*>/gim, '<$1>');
+	out = out.replace(/<div>(<br(\/)?>)+<\/div>/gim, '<$1>');
+	out = out.replace(/<(div|br)>/gim, '<br>');
+	out = out.replace(/<[/]?(?!(br|b|i))[a-zA-Z]+>/gim, '');
+	out = out.replace(/(&nbsp;)/gim, ' ');
+
+	return out;
 }
 
 export const getQueryParams = () =>

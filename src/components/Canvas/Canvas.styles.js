@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { DEFAULT_FONT_SIZE, transitionEasing } from 'config.js';
+import _ContentEditable from 'react-contenteditable';
 
 export const Wrapper = styled.div`
 	display: flex;
@@ -8,7 +9,7 @@ export const Wrapper = styled.div`
 	width: 100%;
 `;
 
-export const Text = styled.textarea`
+export const ContentEditable = styled(_ContentEditable)`
 	background-color: transparent;
 	border: none;
 	color: inherit;
@@ -23,11 +24,25 @@ export const Text = styled.textarea`
 	resize: none;
 	text-align: left;
 	transition: font 0.15s ${transitionEasing}, color 0.15s ${transitionEasing};
+	white-space: pre-wrap;
 	width: 100%;
+	word-wrap: break-word;
 
 	&:focus {
 		outline: none;
 	}
+
+	${props =>
+		props.fontSize &&
+		css`
+			font-size: ${props.fontSize}px;
+		`};
+
+	${props =>
+		props.fontColor &&
+		css`
+			color: ${props.fontColor};
+		`};
 
 	/* &::-moz-selection {
 		background-color: #f5d688;
@@ -38,8 +53,8 @@ export const Text = styled.textarea`
 	} */
 `;
 
-export const GhostText = styled(Text)`
-	position: absolute;
-	top: 0;
-	visibility: hidden;
-`;
+// export const GhostText = styled(Text)`
+// 	position: absolute;
+// 	top: 0;
+// 	visibility: hidden;
+// `;
