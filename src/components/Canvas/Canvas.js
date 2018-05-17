@@ -60,7 +60,7 @@ export class Canvas extends Component {
 					value={text}
 					readOnly={true}
 				/>
-				<AccessibleLabel for="input">Start typing</AccessibleLabel>
+				<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
 				<Text
 					id="input"
 					{...props}

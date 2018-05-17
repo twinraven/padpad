@@ -17,7 +17,7 @@ export default function() {
 
 		body {
 			font-family: ${systemFontStack};
-			font-size: 12px;
+			font-size: 16px;
 			font-weight: normal;
 			line-height: 1.5;
 			-webkit-font-smoothing: antialiased;

@@ -5,6 +5,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="theme-color" content="#293e5c">
+	<meta name="description" content="A simple, shareable scratchpad.">
 	<!--
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
@@ -47,13 +48,28 @@
 		#noscript-root {
 			box-sizing: border-box;
 			padding: 20px;
+			height: 800px;
+		}
+
+		label {
+			border: 0;
+			clip: rect(1px 1px 1px 1px);
+			/* IE6, IE7 */
+			clip: rect(1px, 1px, 1px, 1px);
+			height: 1px;
+			margin: -1px;
+			overflow: hidden;
+			padding: 0;
+			position: absolute;
+			width: 1px;
 		}
 	</style>
 </head>
 
 <body>
 	<noscript>
-		<div id="noscript-root" contenteditable></div>
+		<label for="noscript-root">Start typing</label>
+		<textarea id="noscript-root"></textarea>
 	</noscript>
 	<div id="root"></div>
 	<!--

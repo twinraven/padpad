@@ -2,7 +2,7 @@ import { css } from 'styled-components';
 
 export const DEFAULT_LIGHT_COLOR = '#ffffff';
 export const DEFAULT_DARK_COLOR = '#333333';
-export const DEFAULT_FONT_SIZE = '15';
+export const DEFAULT_FONT_SIZE = '16';
 export const DEFAULT_TEXT = '';
 
 export const DEFAULT_TITLE = 'Pad';

@@ -33,7 +33,7 @@ export class SharingPanel extends Component {
 			<Wrapper {...props}>
 				<Title>Ready to share</Title>
 				<Row>
-					<AccessibleLabel for="url">Share url</AccessibleLabel>
+					<AccessibleLabel htmlFor="url">Share url</AccessibleLabel>
 					<Input
 						id="url"
 						defaultValue={url}
