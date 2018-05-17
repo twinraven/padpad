@@ -52,9 +52,3 @@ export const ContentEditable = styled(_ContentEditable)`
 		background-color: #f5d688;
 	} */
 `;
-
-// export const GhostText = styled(Text)`
-// 	position: absolute;
-// 	top: 0;
-// 	visibility: hidden;
-// `;
