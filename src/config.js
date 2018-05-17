@@ -28,3 +28,10 @@ export const MIN_CANVAS_HEIGHT = 100;
 export const MIN_MODAL_WIDTH = 350;
 
 export const transitionEasing = css`cubic-bezier(0.745, 0.190, 0.300, 0.955)`;
+
+export const systemFontStack =
+	'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif';
+
+// TODO: add font stacks
+// export const serifFontStack = '';
+// export const monoFontStack = '';
