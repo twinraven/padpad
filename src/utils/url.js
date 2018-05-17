@@ -31,12 +31,12 @@ function removeDefaultValues(params) {
 }
 
 // TODO: add tests
+// TODO: move
 export function removeMarkup(val) {
 	// TODO: tidy up
 	let out = val;
 	out = out.replace(/<([a-zA-Z]+)( [a-zA-Z]+=[^>]+)*>/gim, '<$1>');
-	out = out.replace(/<div>(<br(\/)?>)+<\/div>/gim, '<$1>');
-	out = out.replace(/<(div|br)>/gim, '<br>');
+	out = out.replace(/([\w\d\s]+)(<div>)([\w\d\s]+)/gim, '$1<br>$3');
 	out = out.replace(/<[/]?(?!(br|b|i))[a-zA-Z]+>/gim, '');
 	out = out.replace(/(&nbsp;)/gim, ' ');
 
