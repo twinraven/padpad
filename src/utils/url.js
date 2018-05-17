@@ -31,16 +31,48 @@ function removeDefaultValues(params) {
 }
 
 // TODO: add tests
-// TODO: move
+// TODO: move out from here, into markup.js in utils?
 export function removeMarkup(val) {
 	// TODO: tidy up
-	let out = val;
-	out = out.replace(/<([a-zA-Z]+)( [a-zA-Z]+=[^>]+)*>/gim, '<$1>');
-	out = out.replace(/([\w\d\s]+)(<div>)([\w\d\s]+)/gim, '$1<br>$3');
-	out = out.replace(/<[/]?(?!(br|b|i))[a-zA-Z]+>/gim, '');
-	out = out.replace(/(&nbsp;)/gim, ' ');
+	let output = val;
+	// remove all element props, e.g. style=X
+	output = output.replace(/<([a-zA-Z]+)( [a-zA-Z]+=[^>]+)*>/gim, '<$1>');
 
-	return out;
+	/*
+	// if a <br> is needlessly wrapped in another tag, unwrap it
+	// output = output.replace(/(<[a-zA-Z]+>)<br ?(\/)?>(<\/[a-zA-Z]+>)/gim, '<br>');
+	// same as above, just to unwrap double-wrapped <br>s
+	// output = output.replace(/(<[a-zA-Z]+>)<br ?(\/)?>(<\/[a-zA-Z]+>)/gim, '<br>');
+	// would you believe it - triple wrapped. This is because we can expect 3 tags:
+	// div, b, and i, and in any order.
+	// output = output.replace(/(<[a-zA-Z]+>)<br ?(\/)?>(<\/[a-zA-Z]+>)/gim, '<br>');
+	*/
+
+	// REPLACES ABOVE
+	// if a <br> is wrapped in a div and any other tags, completely unwrap it
+	output = output.replace(
+		/<div>(<[a-zA-Z]+>)*<br ?(\/)?>(<\/[a-zA-Z]+>)*<\/div>/gim,
+		'<br>'
+	);
+
+	// after the cleaning above, if a br directly precedes a div, remove the div.
+	// any divs remaining after this step should become <br>s, as below
+	output = output.replace(/(<br ?(\/)?>)<div>/gim, '$1');
+
+	// replace any remaining <div>s with <br>s, but NOT
+	// if it's the very first thing in the value
+	output = output.replace(/(?!^)<div>/gim, '<br>');
+
+	// replace line breaks and returns with <br>s
+	output = output.replace(/[\n\r]/gim, '<br>');
+
+	// remove all remaining opening/closing tags except br, b & i
+	output = output.replace(/<[/]?(?!(br|b|i))[a-zA-Z]+>/gim, '');
+
+	// remove non-breaking spaces
+	output = output.replace(/(&nbsp;)/gim, ' ');
+
+	return output;
 }
 
 export const getQueryParams = () =>

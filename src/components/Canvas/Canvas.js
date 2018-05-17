@@ -44,6 +44,8 @@ export class Canvas extends Component {
 	};
 
 	cleanMarkup = () => {
-		this.props.changeText(removeMarkup(this.props.text));
+		console.log(this.props.text);
+		console.log(removeMarkup(this.props.text));
+		//this.props.changeText(removeMarkup(this.props.text));
 	};
 }
