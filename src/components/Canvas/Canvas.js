@@ -6,7 +6,7 @@ import {
 	URL_UPDATE_DELAY,
 	RESIZE_UPDATE_DELAY,
 } from 'config.js';
-import { InvisibleLabel } from 'styles/mixins';
+import { AccessibleLabel } from 'styles/mixins';
 import { setUrlParams } from 'utils/url';
 import { Wrapper, Text, GhostText } from './Canvas.styles';
 
@@ -60,7 +60,7 @@ export class Canvas extends Component {
 					value={text}
 					readOnly={true}
 				/>
-				<InvisibleLabel for="input">Start typing</InvisibleLabel>
+				<AccessibleLabel for="input">Start typing</AccessibleLabel>
 				<Text
 					id="input"
 					{...props}

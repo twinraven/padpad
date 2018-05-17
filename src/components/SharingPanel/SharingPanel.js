@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import { InvisibleLabel } from 'styles/mixins';
+import { AccessibleLabel } from 'styles/mixins';
 import {
 	Wrapper,
 	Title,
@@ -33,7 +33,7 @@ export class SharingPanel extends Component {
 			<Wrapper {...props}>
 				<Title>Ready to share</Title>
 				<Row>
-					<InvisibleLabel for="url">Share url</InvisibleLabel>
+					<AccessibleLabel for="url">Share url</AccessibleLabel>
 					<Input
 						id="url"
 						defaultValue={url}

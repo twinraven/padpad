@@ -29,7 +29,7 @@ export const context = {
 	`,
 };
 
-export const InvisibleLabel = styled.label`
+export const InvisibleTextStyles = css`
 	border: 0;
 	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
 	clip: rect(1px, 1px, 1px, 1px);
@@ -39,4 +39,12 @@ export const InvisibleLabel = styled.label`
 	padding: 0;
 	position: absolute;
 	width: 1px;
+`;
+
+export const AccessibleLabel = styled.label`
+	${InvisibleTextStyles};
+`;
+
+export const AccessibleText = styled.span`
+	${InvisibleTextStyles};
 `;

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Transition } from 'react-transition-group';
 import Helmet from 'react-helmet';
 import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
@@ -10,6 +10,7 @@ import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
 import { exitTransitionMs } from 'components/Modal/Modal.styles';
 import { getTitle } from './App.utils';
+import { AccessibleText } from 'styles/mixins';
 import { isUndefined } from 'utils/type';
 import {
 	Wrapper,
@@ -76,10 +77,16 @@ class App extends Component {
 							isLoadingShareUrl ? (
 								<Spinner />
 							) : (
-								<CloseIcon width="13" height="13" />
+								<Fragment>
+									<AccessibleText>Close sharing panel</AccessibleText>
+									<CloseIcon width="13" height="13" />
+								</Fragment>
 							)
 						) : (
-							<ShareIcon />
+							<Fragment>
+								<AccessibleText>Open settings panel</AccessibleText>
+								<ShareIcon />
+							</Fragment>
 						)}
 					</SharingButton>
 
@@ -88,9 +95,15 @@ class App extends Component {
 						onClick={this.toggleSettingsPanel}
 					>
 						{isSettingsOpen ? (
-							<CloseIcon width="13" height="13" />
+							<Fragment>
+								<AccessibleText>Close sharing panel</AccessibleText>
+								<CloseIcon width="13" height="13" />
+							</Fragment>
 						) : (
-							<SettingsIcon />
+							<Fragment>
+								<AccessibleText>Open settings panel</AccessibleText>
+								<SettingsIcon />
+							</Fragment>
 						)}
 					</SettingsButton>
 				</Controls>
