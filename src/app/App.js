@@ -59,7 +59,7 @@ class App extends Component {
 		return (
 			<Wrapper>
 				<Helmet>
-					<title>{title}</title>
+					<title>padpad ~ {title}</title>
 					<body bgColor={bgColor} />
 				</Helmet>
 				<Canvas
