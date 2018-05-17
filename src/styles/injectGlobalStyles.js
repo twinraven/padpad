@@ -1,5 +1,6 @@
 import { injectGlobal } from 'styled-components';
 import { normalize } from 'polished';
+import { systemFontStack } from 'config.js';
 
 export default function() {
 	return injectGlobal`
@@ -15,9 +16,8 @@ export default function() {
 		}
 
 		body {
-			font-family: 'Muli', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-				Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-			font-size: 12px;
+			font-family: ${systemFontStack};
+			font-size: 16px;
 			font-weight: normal;
 			line-height: 1.5;
 			-webkit-font-smoothing: antialiased;

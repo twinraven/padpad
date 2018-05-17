@@ -6,7 +6,7 @@ import { highlightColor, successColor } from 'styles/colours';
 
 export const Wrapper = styled.div`
 	${media.medium`
-		font-size: 15px;
+		font-size: 16px;
 		padding-bottom: 70px;
 	`};
 `;
@@ -77,7 +77,7 @@ export const CopyButton = styled.button.attrs({
 
 	${media.medium`
 		border-radius: 4px;
-		font-size: 15px;
+		font-size: 16px;
 		line-height: 2.5;
 	`};
 `;

@@ -6,6 +6,7 @@ import {
 	URL_UPDATE_DELAY,
 	RESIZE_UPDATE_DELAY,
 } from 'config.js';
+import { AccessibleLabel } from 'styles/mixins';
 import { setUrlParams } from 'utils/url';
 import { Wrapper, Text, GhostText } from './Canvas.styles';
 
@@ -59,7 +60,9 @@ export class Canvas extends Component {
 					value={text}
 					readOnly={true}
 				/>
+				<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
 				<Text
+					id="input"
 					{...props}
 					style={{ height }}
 					onChange={({ target }) => this.props.changeText(target.value)}

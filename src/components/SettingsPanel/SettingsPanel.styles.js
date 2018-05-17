@@ -70,7 +70,7 @@ Row.defaultProps = {
 	isFixed: false,
 };
 
-export const Label = styled.div`
+export const Label = styled.label`
 	display: flex;
 	justify-content: space-between;
 	line-height: ${ROW_HEIGHT}px;
