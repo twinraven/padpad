@@ -45,7 +45,7 @@ export class Canvas extends Component {
 					tabIndex={0}
 					html={text}
 					role="textbox"
-					spellcheck={true}
+					spellCheck={true}
 					dir="ltr"
 					aria-multiline={true}
 					aria-label="Note"
