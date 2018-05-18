@@ -52,3 +52,18 @@ export const ContentEditable = styled(_ContentEditable)`
 		background-color: #f5d688;
 	} */
 `;
+
+export const Label = styled.label`
+	color: #aaa;
+	font-size: 16px;
+	left: 50%;
+	max-width: 830px;
+	padding: 28px 15px;
+	pointer-events: none;
+	position: absolute;
+	text-align: left;
+	top: 0;
+	transform: translateX(-50%);
+	width: 100%;
+	z-index: 10;
+`;
