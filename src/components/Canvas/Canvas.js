@@ -59,7 +59,7 @@ export class Canvas extends Component {
 
 	updateUrl = () => setUrlParams({ text: this.props.text });
 
-	handleOnBlur = () => this.props.changeText(cleanMarkup(this.props.text));
+	fixText = () => this.props.changeText(cleanMarkup(this.props.text));
 
 	focusCanvas = () => {
 		if (this.canvasRef && this.canvasRef.current) {

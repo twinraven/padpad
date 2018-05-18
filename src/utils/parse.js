@@ -12,11 +12,8 @@ export function cleanMarkup(val) {
 		'<div><br></div>'
 	);
 
-	// if multiple <div><br></div> patterns exist in a row, put a <br> before the first one
-	output = output.replace(/((<div><br ?\/?><\/div>)+)/gim, '<br>$1');
-
-	// if a br directly precedes a div, remove the div.
-	output = output.replace(/(<br ?\/?>)<div>/gim, '$1');
+	// if a br directly precedes a div, remove the br
+	output = output.replace(/(<br ?\/?>)(<div>)/gim, '$2');
 
 	// unwrap the remaining <div><br></div> patterns to just the <br>
 	output = output.replace(/<div><br ?\/?><\/div>/gim, '<br>');
