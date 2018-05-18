@@ -44,6 +44,10 @@ export const ContentEditable = styled(_ContentEditable)`
 			color: ${props.fontColor};
 		`};
 
+	* {
+		font-size: inherit !important;
+	}
+
 	/* &::-moz-selection {
 		background-color: #f5d688;
 	}

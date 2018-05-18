@@ -15,8 +15,8 @@ export function setUrlParams(newParams) {
 }
 // TODO: add tests
 const cleanParams = pipe(
-	removeDefaultValues,
 	evolve({ text: cleanMarkup }),
+	removeDefaultValues,
 	map(encodeURIComponent)
 );
 
@@ -25,7 +25,8 @@ const createQuerystring = params =>
 	qs.stringify(cleanParams(params), { encode: false });
 
 // TODO: add tests
-const createUrl = qs => `${document.location.pathname}${qs.length && '?'}${qs}`;
+const createUrl = qs =>
+	`${document.location.pathname}${qs.length ? '?' : ''}${qs}`;
 
 export const getQueryParams = () =>
 	qs.parse(document.location.search, {
