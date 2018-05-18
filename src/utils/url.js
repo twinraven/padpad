@@ -2,66 +2,30 @@ import qs from 'qs';
 import pipe from 'ramda/src/pipe';
 import map from 'ramda/src/map';
 import evolve from 'ramda/src/evolve';
-import { DEFAULT_PARAMS } from 'config.js';
+import { removeDefaultValues, cleanMarkup } from 'utils/parse';
 
 export function setUrlParams(newParams) {
-	const { pathname } = document.location;
 	const params = { ...getQueryParams(), ...newParams };
-	const parsedParams = pipe(
-		removeDefaultValues,
-		evolve({ text: cleanMarkup }),
-		map(encodeURIComponent)
-	)(params);
-
-	const querystring = qs.stringify(parsedParams, { encode: false });
-	const queryPrefix = querystring.length ? '?' : '';
-	const url = `${pathname}${queryPrefix}${querystring}`;
+	const querystring = createQuerystring(params);
+	const url = createUrl(querystring);
 
 	if (window.history.pushState) {
 		window.history.pushState({ path: url }, '', url);
 	}
 }
-
-function removeDefaultValues(params) {
-	for (const [key, value] of Object.entries(params)) {
-		if (value === DEFAULT_PARAMS[key]) delete params[key];
-	}
-
-	return params;
-}
+// TODO: add tests
+const cleanParams = pipe(
+	removeDefaultValues,
+	evolve({ text: cleanMarkup }),
+	map(encodeURIComponent)
+);
 
 // TODO: add tests
-// TODO: move out from here, into markup.js in utils?
-export function cleanMarkup(val) {
-	let output = val;
-	// remove all element props, e.g. style="padding: 12px"
-	output = output.replace(/<([a-zA-Z]+)( [a-zA-Z]+=[^>]+)*>/gim, '<$1>');
+const createQuerystring = params =>
+	qs.stringify(cleanParams(params), { encode: false });
 
-	// if a <br> is wrapped in a div and any other tags, completely unwrap it
-	output = output.replace(
-		/<div>(<[a-zA-Z]+>)*<br ?(\/)?>(<\/[a-zA-Z]+>)*<\/div>/gim,
-		'<br>'
-	);
-
-	// after the cleaning above, if a br directly precedes a div, remove the div.
-	// any divs remaining after this step should become <br>s, as below
-	output = output.replace(/(<br ?(\/)?>)<div>/gim, '$1');
-
-	// replace any remaining <div>s with <br>s, but NOT
-	// if it's the very first thing in the value
-	output = output.replace(/(?!^)<div>/gim, '<br>');
-
-	// replace line breaks and returns with <br>s
-	output = output.replace(/[\n\r]/gim, '<br>');
-
-	// remove all remaining opening/closing tags except br, b & i
-	output = output.replace(/<[/]?(?!(br|b|i))[a-zA-Z]+>/gim, '');
-
-	// remove non-breaking spaces
-	output = output.replace(/(&nbsp;)/gim, ' ');
-
-	return output;
-}
+// TODO: add tests
+const createUrl = qs => `${document.location.pathname}${qs.length && '?'}${qs}`;
 
 export const getQueryParams = () =>
 	qs.parse(document.location.search, {
@@ -75,7 +39,8 @@ export function hasDefaultParams() {
 	return Object.keys(params).length === 0;
 }
 
-export function getShortUrl(longUrl) {
+// TODO: move to api file?
+function fetchShortUrl(longUrl) {
 	const token = process.env.REACT_APP_BITLY_API_TOKEN;
 
 	return fetch(
@@ -84,7 +49,7 @@ export function getShortUrl(longUrl) {
 }
 
 export function getShareUrl(urlToShare) {
-	return getShortUrl(encodeURIComponent(urlToShare))
+	return fetchShortUrl(encodeURIComponent(urlToShare))
 		.then(({ data, status_code }) => {
 			if (status_code === 500) {
 				throw new Error();

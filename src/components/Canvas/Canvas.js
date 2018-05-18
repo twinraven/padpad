@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import { URL_UPDATE_DELAY } from 'config.js';
 import { AccessibleLabel } from 'styles/mixins';
-import { setUrlParams, cleanMarkup } from 'utils/url';
+import { setUrlParams } from 'utils/url';
+import { cleanMarkup } from 'utils/parse';
 import { Wrapper, ContentEditable, Label } from './Canvas.styles';
 
 export class Canvas extends Component {
@@ -53,15 +54,9 @@ export class Canvas extends Component {
 		);
 	}
 
-	updateUrl = () => {
-		const { text } = this.props;
+	updateUrl = () => setUrlParams({ text: this.props.text });
 
-		setUrlParams({ text });
-	};
-
-	cleanMarkup = () => {
-		this.props.changeText(cleanMarkup(this.props.text));
-	};
+	cleanMarkup = () => this.props.changeText(cleanMarkup(this.props.text));
 
 	focusCanvas = () => {
 		if (this.canvasRef && this.canvasRef.current) {
