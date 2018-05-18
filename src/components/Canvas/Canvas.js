@@ -36,12 +36,13 @@ export class Canvas extends Component {
 					<Label>Type something...</Label>
 				)}
 				<ContentEditable
+					{...props}
 					id="input"
 					innerRef={this.canvasRef}
-					{...props}
-					onChange={event => this.props.changeText(event.target.value)}
+					onInput={this.onUpdate}
+					onChange={this.onUpdate}
 					onKeyUp={this.updateUrlDebounced}
-					onBlur={this.cleanMarkup}
+					onBlur={this.fixText}
 					tabIndex={0}
 					html={text}
 					role="textbox"
@@ -54,9 +55,11 @@ export class Canvas extends Component {
 		);
 	}
 
+	onUpdate = event => this.props.changeText(event.target.value);
+
 	updateUrl = () => setUrlParams({ text: this.props.text });
 
-	cleanMarkup = () => this.props.changeText(cleanMarkup(this.props.text));
+	handleOnBlur = () => this.props.changeText(cleanMarkup(this.props.text));
 
 	focusCanvas = () => {
 		if (this.canvasRef && this.canvasRef.current) {

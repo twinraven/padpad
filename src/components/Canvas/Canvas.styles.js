@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 import { DEFAULT_FONT_SIZE, transitionEasing } from 'config.js';
-import _ContentEditable from 'react-contenteditable';
+import _ContentEditable from 'components/ContentEditable/ContentEditable';
 
 export const Wrapper = styled.div`
 	display: flex;
