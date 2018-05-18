@@ -6,30 +6,29 @@ export function cleanMarkup(val) {
 	// remove all element props, e.g. style="padding: 12px"
 	output = output.replace(/<([a-zA-Z]+)( [a-zA-Z]+=[^>]+)*>/gim, '<$1>');
 
-	// if a <br> is wrapped in a div and any other tags, completely unwrap it
-	// and replace with two <br>s
+	// if a <br> is wrapped in a div and any other tags, partially unwrap it
 	output = output.replace(
-		/<div>(<[a-zA-Z]+>)*<br ?(\/)?>(<\/[a-zA-Z]+>)*<\/div>/gim,
-		'<br><br>'
+		/<div>(<[a-zA-Z]+>)*<br ?\/?>(<\/[a-zA-Z]+>)*<\/div>/gim,
+		'<div><br></div>'
 	);
 
-	// if there are 3 <br>s in a row (as a result of previous 'replace's above)
-	// then it's v likely we only want 2
-	output = output.replace(/<br ?(\/)?><br ?(\/)?><br ?(\/)?>/gim, '<br><br>');
+	// if multiple <div><br></div> patterns exist in a row, put a <br> before the first one
+	output = output.replace(/((<div><br ?\/?><\/div>)+)/gim, '<br>$1');
 
-	// after the cleaning above, if a br directly precedes a div, remove the div.
-	// any divs remaining after this step should become <br>s, as below
-	output = output.replace(/(<br ?(\/)?>)<div>/gim, '$1');
+	// if a br directly precedes a div, remove the div.
+	output = output.replace(/(<br ?\/?>)<div>/gim, '$1');
 
-	// replace any remaining <div>s with <br>s, but NOT
-	// if it's the very first thing in the input
+	// unwrap the remaining <div><br></div> patterns to just the <br>
+	output = output.replace(/<div><br ?\/?><\/div>/gim, '<br>');
+
+	// replace any remaining <div>s with <br>s, but NOT if it's at the start of the string
 	output = output.replace(/(?!^)<div>/gim, '<br>');
-
-	// replace line breaks and returns with <br>s
-	output = output.replace(/[\n\r]/gim, '<br>');
 
 	// remove all remaining opening/closing tags except br, b & i
 	output = output.replace(/<[/]?(?!(br|b|i))[a-zA-Z]+>/gim, '');
+
+	// replace line breaks and returns with <br>s
+	output = output.replace(/[\n\r]/gim, '<br>');
 
 	// remove non-breaking spaces
 	output = output.replace(/(&nbsp;)/gim, ' ');
