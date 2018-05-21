@@ -22,13 +22,12 @@ export const RoundButton = styled.button.attrs({
 
 	-webkit-tap-highlight-color: transparent;
 
-	&:hover {
+	&:hover,
+	&:focus {
 		background: rgba(0, 0, 0, 0.4);
 		border-color: white;
-	}
-
-	&:focus {
 		outline: none;
+		color: white;
 	}
 
 	${props =>
@@ -38,7 +37,8 @@ export const RoundButton = styled.button.attrs({
 			color: white;
 			z-index: 20;
 
-			&:hover {
+			&:hover,
+			&:focus {
 				background: ${opacify(0.2, highlightColor)};
 			}
 		`};

@@ -27,9 +27,10 @@ export const Row = styled.div`
 	align-items: center;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	display: flex;
-	flex-direction: column;
-	align-items: stretch;
+	flex-wrap: wrap;
 	justify-content: center;
+	line-height: ${ROW_HEIGHT}px;
+	min-height: ${ROW_HEIGHT}px;
 	padding: 10px 0;
 
 	&:first-child {
@@ -70,11 +71,11 @@ Row.defaultProps = {
 	isFixed: false,
 };
 
-export const Label = styled.label`
+export const Label = styled.div`
 	display: flex;
+	flex: 1;
 	justify-content: space-between;
-	line-height: ${ROW_HEIGHT}px;
-	min-height: ${ROW_HEIGHT}px;
+	padding-right: 12px;
 
 	${media.medium`
 		font-weight: bold;
@@ -85,12 +86,12 @@ export const Footer = styled.div`
 	display: flex;
 	font-size: 0.85em;
 	justify-content: flex-end;
-	padding: 4px 2px;
+	padding: 4px 0;
 	margin-bottom: -10px;
 
 	${media.medium`
 		font-size: 1em;
-		padding: 8px 4px;
+		padding: 5px 0;
 	`};
 `;
 
@@ -141,6 +142,7 @@ export const ResetButton = styled.button.attrs({
 	${media.medium`
 		font-size: 1em;
 		margin-left: 0;
+		margin-right: auto;
 	`};
 `;
 
@@ -200,6 +202,7 @@ const modalTransitions = {
 
 export const ColorWrapper = styled.div`
 	box-sizing: content-box;
+	flex-basis: 100%;
 	overflow: hidden;
 	padding: 0 5px;
 	margin: 0 -5px -5px;
@@ -210,4 +213,10 @@ export const ColorWrapper = styled.div`
 		props.transitionState && {
 			...modalTransitions[props.transitionState],
 		}};
+
+	${props =>
+		props.isEditing &&
+		css`
+			padding-bottom: 28px;
+		`};
 `;

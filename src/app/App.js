@@ -52,6 +52,7 @@ class App extends Component {
 			bgColor,
 			fontColor,
 			fontSize,
+			fontStyle,
 		} = this.state;
 
 		const title = getTitle(text);
@@ -65,10 +66,27 @@ class App extends Component {
 				<Canvas
 					fontColor={fontColor}
 					fontSize={fontSize}
+					fontStyle={fontStyle}
 					text={text}
 					changeText={text => this.setState({ text })}
 				/>
 				<Controls isActive={isSettingsOpen || isSharingOpen}>
+					<SettingsButton
+						isSelected={isSettingsOpen}
+						onClick={this.toggleSettingsPanel}
+					>
+						{isSettingsOpen ? (
+							<Fragment>
+								<AccessibleText>Close sharing panel</AccessibleText>
+								<CloseIcon width="13" height="13" />
+							</Fragment>
+						) : (
+							<Fragment>
+								<AccessibleText>Open settings panel</AccessibleText>
+								<SettingsIcon />
+							</Fragment>
+						)}
+					</SettingsButton>
 					<SharingButton
 						isSelected={isSharingOpen}
 						onClick={this.toggleSharingPanel}
@@ -89,24 +107,8 @@ class App extends Component {
 							</Fragment>
 						)}
 					</SharingButton>
-
-					<SettingsButton
-						isSelected={isSettingsOpen}
-						onClick={this.toggleSettingsPanel}
-					>
-						{isSettingsOpen ? (
-							<Fragment>
-								<AccessibleText>Close sharing panel</AccessibleText>
-								<CloseIcon width="13" height="13" />
-							</Fragment>
-						) : (
-							<Fragment>
-								<AccessibleText>Open settings panel</AccessibleText>
-								<SettingsIcon />
-							</Fragment>
-						)}
-					</SettingsButton>
 				</Controls>
+
 				<Transition
 					in={isSharingOpen && !isLoadingShareUrl}
 					timeout={{
@@ -144,6 +146,7 @@ class App extends Component {
 								bgColor={bgColor}
 								fontColor={fontColor}
 								fontSize={fontSize}
+								fontStyle={fontStyle}
 								isAutoFontColor={isAutoFontColor}
 								onChangeSettings={this.changeSettings}
 								onReset={() => this.changeSettings(DEFAULT_SETTINGS)}

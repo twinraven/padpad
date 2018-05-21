@@ -12,9 +12,16 @@ export default class ContentEditable extends React.Component {
 	}
 
 	render() {
-		// ##TB - added fontColor & fontSize here, to avoid warning:
+		// ##TB - added fontColor, fontSize & fontStyle here, to avoid warning:
 		// 'React does not recognize the `fontColor` prop on a DOM element'
-		var { tagName, html, fontColor, fontSize, ...props } = this.props;
+		var {
+			tagName,
+			html,
+			fontColor,
+			fontSize,
+			fontStyle,
+			...props
+		} = this.props;
 
 		return React.createElement(tagName || 'div', {
 			...props,

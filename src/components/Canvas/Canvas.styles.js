@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { DEFAULT_FONT_SIZE, transitionEasing } from 'config.js';
+import {
+	DEFAULT_FONT_SIZE,
+	transitionEasing,
+	FONT_STYLES_MAP,
+} from 'config.js';
 import _ContentEditable from 'components/ContentEditable/ContentEditable';
 
 export const Wrapper = styled.div`
@@ -45,6 +49,12 @@ export const ContentEditable = styled(_ContentEditable)`
 			color: ${props.fontColor};
 		`};
 
+	${props =>
+		props.fontStyle &&
+		css`
+			font-family: ${FONT_STYLES_MAP[props.fontStyle]};
+		`};
+
 	* {
 		font-size: inherit !important;
 	}
@@ -61,6 +71,7 @@ export const ContentEditable = styled(_ContentEditable)`
 ContentEditable.propTypes = {
 	fontSize: PropTypes.string,
 	fontColor: PropTypes.string,
+	fontStyle: PropTypes.string,
 };
 
 export const Label = styled.label`

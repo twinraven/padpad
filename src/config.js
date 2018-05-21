@@ -1,8 +1,28 @@
 import { css } from 'styled-components';
 
+export const systemFontStack =
+	'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif';
+export const serifFontStack =
+	'"Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif';
+export const monoFontStack =
+	'Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace';
+
+export const FONT_STYLES = {
+	SYSTEM: 'default',
+	SERIF: 'serif',
+	MONO: 'monospaced',
+};
+
+export const FONT_STYLES_MAP = {
+	[FONT_STYLES.SYSTEM]: systemFontStack,
+	[FONT_STYLES.SERIF]: serifFontStack,
+	[FONT_STYLES.MONO]: monoFontStack,
+};
+
 export const DEFAULT_LIGHT_COLOR = '#ffffff';
 export const DEFAULT_DARK_COLOR = '#333333';
 export const DEFAULT_FONT_SIZE = '16';
+export const DEFAULT_FONT_STYLE = FONT_STYLES.SYSTEM;
 export const DEFAULT_TEXT = '';
 
 export const DEFAULT_TITLE = 'PadPad';
@@ -11,6 +31,7 @@ export const DEFAULT_SETTINGS = {
 	bgColor: DEFAULT_LIGHT_COLOR,
 	fontColor: DEFAULT_DARK_COLOR,
 	fontSize: DEFAULT_FONT_SIZE,
+	fontStyle: DEFAULT_FONT_STYLE,
 };
 
 export const DEFAULT_PARAMS = {
@@ -26,10 +47,3 @@ export const MAX_FONT_SIZE = 60;
 export const MIN_MODAL_WIDTH = 350;
 
 export const transitionEasing = css`cubic-bezier(0.745, 0.190, 0.300, 0.955)`;
-
-export const systemFontStack =
-	'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif';
-
-// TODO: add font stacks
-// export const serifFontStack = '';
-// export const monoFontStack = '';

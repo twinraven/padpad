@@ -33,6 +33,7 @@ Wrapper.propTypes = {
 export const Controls = styled.div`
 	top: 20px;
 	display: flex;
+	flex-direction: row-reverse;
 	justify-content: space-between;
 	opacity: 0.4;
 	position: fixed;
