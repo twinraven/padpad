@@ -34,7 +34,7 @@ export function cleanMarkup(val) {
 	output = output.replace(/(&nbsp;)/gim, ' ');
 
 	// remove br or whitespace from the end
-	// output = output.replace(/(<br ?\/?>|\s)+$/gim, ''); // contentious
+	output = output.replace(/^(<br ?\/?>|\s)+$/gim, ''); // contentious
 
 	return output;
 }
