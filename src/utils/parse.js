@@ -3,6 +3,7 @@ import { DEFAULT_PARAMS } from 'config.js';
 // TODO: add tests
 export function cleanMarkup(val) {
 	let output = val;
+
 	// remove all element props, e.g. style="padding: 12px"
 	output = output.replace(/<([a-zA-Z]+[1-6]?)( [a-zA-Z-]+=[^>]+)*>/gim, '<$1>');
 

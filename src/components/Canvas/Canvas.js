@@ -33,7 +33,7 @@ export class Canvas extends Component {
 				{Boolean(text.length) ? (
 					<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
 				) : (
-					<Label>Type something...</Label>
+					<Label htmlFor="input">Type something...</Label>
 				)}
 				<ContentEditable
 					{...props}
@@ -58,10 +58,8 @@ export class Canvas extends Component {
 
 	handleUpdate = event => this.props.changeText(event.target.value);
 
-	handlePaste = () => {
-		// on next tick, reformat all the text
-		setTimeout(() => this.props.changeText(cleanMarkup(this.props.text)), 0);
-	};
+	// on next tick, reformat all the text
+	handlePaste = () => setTimeout(this.fixText, 0);
 
 	updateUrl = () => setUrlParams({ text: this.props.text });
 

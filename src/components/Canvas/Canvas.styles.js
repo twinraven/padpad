@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { DEFAULT_FONT_SIZE, transitionEasing } from 'config.js';
 import _ContentEditable from 'components/ContentEditable/ContentEditable';
 
@@ -56,6 +57,11 @@ export const ContentEditable = styled(_ContentEditable)`
 		background-color: #f5d688;
 	} */
 `;
+
+ContentEditable.propTypes = {
+	fontSize: PropTypes.string,
+	fontColor: PropTypes.string,
+};
 
 export const Label = styled.label`
 	color: #aaa;
