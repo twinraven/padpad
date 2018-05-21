@@ -4,7 +4,7 @@ import { DEFAULT_PARAMS } from 'config.js';
 export function cleanMarkup(val) {
 	let output = val;
 	// remove all element props, e.g. style="padding: 12px"
-	output = output.replace(/<([a-zA-Z]+)( [a-zA-Z]+=[^>]+)*>/gim, '<$1>');
+	output = output.replace(/<([a-zA-Z]+)( [a-zA-Z-]+=[^>]+)*>/gim, '<$1>');
 
 	// if a <br> is wrapped in a div and any other tags, partially unwrap it
 	output = output.replace(
@@ -22,7 +22,7 @@ export function cleanMarkup(val) {
 	output = output.replace(/(?!^)<div>/gim, '<br>');
 
 	// remove all remaining opening/closing tags except br, b & i
-	output = output.replace(/<[/]?(?!(br|b|i))[a-zA-Z]+>/gim, '');
+	output = output.replace(/<[/]?(?!(br|b>|i>))[a-zA-Z]+>/gim, '');
 
 	// replace line breaks and returns with <br>s
 	output = output.replace(/[\n\r]/gim, '<br>');
