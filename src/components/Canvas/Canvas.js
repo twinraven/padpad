@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
-import {
-	MIN_CANVAS_HEIGHT,
-	URL_UPDATE_DELAY,
-	RESIZE_UPDATE_DELAY,
-} from 'config.js';
+import { URL_UPDATE_DELAY } from 'config.js';
 import { AccessibleLabel } from 'styles/mixins';
 import { setUrlParams } from 'utils/url';
-import { Wrapper, Text, GhostText } from './Canvas.styles';
+import { cleanMarkup } from 'utils/parse';
+import { Wrapper, ContentEditable, Label } from './Canvas.styles';
 
 export class Canvas extends Component {
 	static propTypes = {
@@ -16,81 +14,61 @@ export class Canvas extends Component {
 		changeText: PropTypes.func.isRequired,
 	};
 
-	state = {
-		height: MIN_CANVAS_HEIGHT,
-	};
-
 	constructor(props) {
 		super(props);
 
-		this.ghostRef = React.createRef();
-
+		this.canvasRef = React.createRef();
 		this.updateUrlDebounced = debounce(this.updateUrl, URL_UPDATE_DELAY);
-		this.setHeightDebounced = debounce(this.setHeight, RESIZE_UPDATE_DELAY);
-
-		window.addEventListener('resize', this.setHeightDebounced);
 	}
 
 	componentDidMount() {
-		this.setHeight();
-	}
-
-	componentDidUpdate(prevProps) {
-		// needed to ensure that height updates get pushed through.
-		// componentDidUpdate has a race condition with scrollHeight being updated
-		if (this.props.fontSize !== prevProps.fontSize) {
-			setTimeout(() => this.setHeight(), 100);
-		}
-	}
-
-	componentWillUnmount() {
-		window.removeEventListener('resize', this.setHeightDebounced);
+		this.focusCanvas();
 	}
 
 	render() {
 		const { text, changeText, ...props } = this.props;
-		const { height } = this.state;
 
 		return (
-			<Wrapper>
-				<GhostText
+			<Wrapper onClick={this.focusCanvas}>
+				{Boolean(text.length) ? (
+					<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
+				) : (
+					<Label htmlFor="input">Type something...</Label>
+				)}
+				<ContentEditable
 					{...props}
-					aria-hidden={true}
-					innerRef={this.ghostRef}
-					value={text}
-					readOnly={true}
-				/>
-				<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
-				<Text
 					id="input"
-					{...props}
-					style={{ height }}
-					onChange={({ target }) => this.props.changeText(target.value)}
-					onKeyUp={this.handleKeyUp}
-					autoFocus={true}
-					value={text}
-					placeholder="Type something…"
+					innerRef={this.canvasRef}
+					onInput={this.handleUpdate}
+					onChange={this.handleUpdate}
+					onKeyUp={this.updateUrlDebounced}
+					onBlur={this.fixText}
+					onPaste={this.handlePaste}
+					tabIndex={0}
+					html={text}
+					role="textbox"
+					spellCheck={true}
+					dir="ltr"
+					aria-multiline={true}
+					aria-label="Note"
 				/>
 			</Wrapper>
 		);
 	}
 
-	handleKeyUp = () => {
-		this.updateUrlDebounced();
-		this.setHeight();
-	};
+	handleUpdate = event => this.props.changeText(event.target.value);
 
-	setHeight = () => {
-		if (this.ghostRef.current) {
-			this.setState({
-				height: this.ghostRef.current.scrollHeight,
-			});
+	// on next tick, reformat all the text
+	handlePaste = () => setTimeout(this.fixText, 0);
+
+	updateUrl = () => setUrlParams({ text: this.props.text });
+
+	fixText = () => this.props.changeText(cleanMarkup(this.props.text));
+
+	focusCanvas = () => {
+		if (this.canvasRef && this.canvasRef.current) {
+			const canvasNode = ReactDOM.findDOMNode(this.canvasRef.current);
+			canvasNode.focus();
 		}
-	};
-
-	updateUrl = () => {
-		const { text } = this.props;
-
-		setUrlParams({ text });
 	};
 }

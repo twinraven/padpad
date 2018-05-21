@@ -1,4 +1,5 @@
-import { complement, isNil } from 'ramda';
+import complement from 'ramda/src/complement';
+import isNil from 'ramda/src/isNil';
 
 export const isUndefined = isNil;
 

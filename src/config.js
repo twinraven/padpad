@@ -18,13 +18,11 @@ export const DEFAULT_PARAMS = {
 	text: DEFAULT_TEXT,
 };
 
-export const URL_UPDATE_DELAY = 250;
+export const URL_UPDATE_DELAY = 320;
 export const COLOR_UPDATE_DELAY = 100;
-export const RESIZE_UPDATE_DELAY = 100;
 
 export const MIN_FONT_SIZE = 10;
 export const MAX_FONT_SIZE = 60;
-export const MIN_CANVAS_HEIGHT = 100;
 export const MIN_MODAL_WIDTH = 350;
 
 export const transitionEasing = css`cubic-bezier(0.745, 0.190, 0.300, 0.955)`;

@@ -55,5 +55,9 @@ export default function() {
 		input {
 			font-family: inherit;
 		}
+
+		b, strong {
+			font-weight: bold;
+		}
 	`;
 }

@@ -1,30 +1,32 @@
 import qs from 'qs';
-import { map } from 'ramda';
-import { DEFAULT_PARAMS } from 'config.js';
+import pipe from 'ramda/src/pipe';
+import map from 'ramda/src/map';
+import evolve from 'ramda/src/evolve';
+import { removeDefaultValues, cleanMarkup } from 'utils/parse';
 
 export function setUrlParams(newParams) {
-	const { pathname } = document.location;
 	const params = { ...getQueryParams(), ...newParams };
-
-	const cleanParams = removeDefaultValues(params);
-	const encodedParams = map(encodeURIComponent, cleanParams);
-
-	const querystring = qs.stringify(encodedParams, { encode: false });
-	const queryPrefix = querystring.length ? '?' : '';
-	const url = `${pathname}${queryPrefix}${querystring}`;
+	const querystring = createQuerystring(params);
+	const url = createUrl(querystring);
 
 	if (window.history.pushState) {
 		window.history.pushState({ path: url }, '', url);
 	}
 }
+// TODO: add tests
+const cleanParams = pipe(
+	evolve({ text: cleanMarkup }),
+	removeDefaultValues,
+	map(encodeURIComponent)
+);
 
-function removeDefaultValues(params) {
-	for (const [key, value] of Object.entries(params)) {
-		if (value === DEFAULT_PARAMS[key]) delete params[key];
-	}
+// TODO: add tests
+const createQuerystring = params =>
+	qs.stringify(cleanParams(params), { encode: false });
 
-	return params;
-}
+// TODO: add tests
+const createUrl = qs =>
+	`${document.location.pathname}${qs.length ? '?' : ''}${qs}`;
 
 export const getQueryParams = () =>
 	qs.parse(document.location.search, {
@@ -38,7 +40,8 @@ export function hasDefaultParams() {
 	return Object.keys(params).length === 0;
 }
 
-export function getShortUrl(longUrl) {
+// TODO: move to api file?
+function fetchShortUrl(longUrl) {
 	const token = process.env.REACT_APP_BITLY_API_TOKEN;
 
 	return fetch(
@@ -47,7 +50,7 @@ export function getShortUrl(longUrl) {
 }
 
 export function getShareUrl(urlToShare) {
-	return getShortUrl(encodeURIComponent(urlToShare))
+	return fetchShortUrl(encodeURIComponent(urlToShare))
 		.then(({ data, status_code }) => {
 			if (status_code === 500) {
 				throw new Error();

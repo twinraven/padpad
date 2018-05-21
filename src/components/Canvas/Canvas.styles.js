@@ -1,5 +1,7 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import { DEFAULT_FONT_SIZE, transitionEasing } from 'config.js';
+import _ContentEditable from 'components/ContentEditable/ContentEditable';
 
 export const Wrapper = styled.div`
 	display: flex;
@@ -8,7 +10,7 @@ export const Wrapper = styled.div`
 	width: 100%;
 `;
 
-export const Text = styled.textarea`
+export const ContentEditable = styled(_ContentEditable)`
 	background-color: transparent;
 	border: none;
 	color: inherit;
@@ -23,10 +25,28 @@ export const Text = styled.textarea`
 	resize: none;
 	text-align: left;
 	transition: font 0.15s ${transitionEasing}, color 0.15s ${transitionEasing};
+	white-space: pre-wrap;
 	width: 100%;
+	word-wrap: break-word;
 
 	&:focus {
 		outline: none;
+	}
+
+	${props =>
+		props.fontSize &&
+		css`
+			font-size: ${props.fontSize}px;
+		`};
+
+	${props =>
+		props.fontColor &&
+		css`
+			color: ${props.fontColor};
+		`};
+
+	* {
+		font-size: inherit !important;
 	}
 
 	/* &::-moz-selection {
@@ -38,8 +58,22 @@ export const Text = styled.textarea`
 	} */
 `;
 
-export const GhostText = styled(Text)`
+ContentEditable.propTypes = {
+	fontSize: PropTypes.string,
+	fontColor: PropTypes.string,
+};
+
+export const Label = styled.label`
+	color: #aaa;
+	font-size: 16px;
+	left: 50%;
+	max-width: 830px;
+	padding: 28px 15px;
+	pointer-events: none;
 	position: absolute;
+	text-align: left;
 	top: 0;
-	visibility: hidden;
+	transform: translateX(-50%);
+	width: 100%;
+	z-index: 10;
 `;
