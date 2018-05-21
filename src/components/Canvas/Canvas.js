@@ -39,10 +39,11 @@ export class Canvas extends Component {
 					{...props}
 					id="input"
 					innerRef={this.canvasRef}
-					onInput={this.onUpdate}
-					onChange={this.onUpdate}
+					onInput={this.handleUpdate}
+					onChange={this.handleUpdate}
 					onKeyUp={this.updateUrlDebounced}
 					onBlur={this.fixText}
+					onPaste={this.handlePaste}
 					tabIndex={0}
 					html={text}
 					role="textbox"
@@ -55,7 +56,12 @@ export class Canvas extends Component {
 		);
 	}
 
-	onUpdate = event => this.props.changeText(event.target.value);
+	handleUpdate = event => this.props.changeText(event.target.value);
+
+	handlePaste = () => {
+		// on next tick, reformat all the text
+		setTimeout(() => this.props.changeText(cleanMarkup(this.props.text)), 0);
+	};
 
 	updateUrl = () => setUrlParams({ text: this.props.text });
 

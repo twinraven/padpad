@@ -75,6 +75,10 @@ export const Label = styled.label`
 	justify-content: space-between;
 	line-height: ${ROW_HEIGHT}px;
 	min-height: ${ROW_HEIGHT}px;
+
+	${media.medium`
+		font-weight: bold;
+	`};
 `;
 
 export const Footer = styled.div`
