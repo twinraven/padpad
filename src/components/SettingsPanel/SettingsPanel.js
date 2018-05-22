@@ -7,7 +7,7 @@ import { getAutoTextColor } from 'utils/colour';
 import { hasDefaultParams } from 'utils/url';
 import { DownArrowIcon, CloseIcon } from 'shared/icons';
 import { Range } from 'components/Range/Range.styles';
-import ColorPicker from 'components/ColorPicker/ColorPicker';
+import { ColorPicker } from 'components/ColorPicker/ColorPicker';
 import { Select } from 'components/Select/Select';
 import {
 	Wrapper,

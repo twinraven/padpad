@@ -8,14 +8,14 @@ export const Wrapper = styled.div`
 
 export const SelectedValue = styled.span`
 	border-bottom: 1px dotted ${darken(0.3, highlightColor)};
+	color: ${darken(0.3, highlightColor)};
+	cursor: pointer;
 	display: block;
 	line-height: 1.7;
 	padding: 0 2px;
-	color: ${darken(0.3, highlightColor)};
-	cursor: pointer;
 `;
 
-export const SelectInput = styled.select`
+export const SelectField = styled.select`
 	appearance: none;
 	background: transparent;
 	border: none;
