@@ -10,7 +10,7 @@ import {
 	SaturationPicker,
 } from './ColorPicker.styles';
 
-const ColorPicker = props => {
+const _ColorPicker = props => {
 	return (
 		<Wrapper>
 			<HueWrapper>
@@ -23,9 +23,9 @@ const ColorPicker = props => {
 	);
 };
 
-ColorPicker.propTypes = {
+_ColorPicker.propTypes = {
 	color: PropTypes.string.isRequired,
 	onChange: PropTypes.func.isRequired,
 };
 
-export default CustomPicker(ColorPicker);
+export const ColorPicker = CustomPicker(_ColorPicker);

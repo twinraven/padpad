@@ -4,10 +4,11 @@ import Transition from 'react-transition-group/Transition';
 import debounce from 'lodash.debounce';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE, COLOR_UPDATE_DELAY } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
-import ColorPicker from 'components/ColorPicker/ColorPicker';
-import { Range } from 'components/Range/Range.styles';
-import { DownArrowIcon, CloseIcon } from 'shared/icons';
 import { hasDefaultParams } from 'utils/url';
+import { DownArrowIcon, CloseIcon } from 'shared/icons';
+import { Range } from 'components/Range/Range.styles';
+import { ColorPicker } from 'components/ColorPicker/ColorPicker';
+import { Select } from 'components/Select/Select';
 import {
 	Wrapper,
 	Content,
@@ -27,6 +28,7 @@ export class SettingsPanel extends Component {
 		bgColor: PropTypes.string.isRequired,
 		fontColor: PropTypes.string.isRequired,
 		fontSize: PropTypes.string.isRequired,
+		fontStyle: PropTypes.string.isRequired,
 		onChangeSettings: PropTypes.func.isRequired,
 		onReset: PropTypes.func.isRequired,
 		onSetAutoFontColor: PropTypes.func.isRequired,
@@ -56,6 +58,7 @@ export class SettingsPanel extends Component {
 			bgColor,
 			fontColor,
 			fontSize,
+			fontStyle,
 			onChangeSettings,
 			...props
 		} = this.props;
@@ -67,19 +70,18 @@ export class SettingsPanel extends Component {
 			<Wrapper {...props}>
 				<Content>
 					<Row>
-						<Label>
-							Background color
-							<Swatch
-								color={bgColor}
-								onClick={() =>
-									this.setState(({ isEditingBgColor }) => ({
-										isEditingBgColor: !isEditingBgColor,
-									}))
-								}
-							>
-								{isEditingBgColor ? <CloseIcon /> : <DownArrowIcon />}
-							</Swatch>
-						</Label>
+						<Label id="bg-color">Background color</Label>
+						<Swatch
+							aria-labelledby="bg-color"
+							color={bgColor}
+							onClick={() =>
+								this.setState(({ isEditingBgColor }) => ({
+									isEditingBgColor: !isEditingBgColor,
+								}))
+							}
+						>
+							{isEditingBgColor ? <CloseIcon /> : <DownArrowIcon />}
+						</Swatch>
 						<Transition
 							in={isEditingBgColor}
 							timeout={{ enter: 0, exit: exitTransitionMs }}
@@ -96,27 +98,24 @@ export class SettingsPanel extends Component {
 						</Transition>
 					</Row>
 					<Row>
-						<Label>
-							Font color
-							{isAutoFontColor ? (
-								<p>
-									auto (<Link onClick={this.handleActivateFontControl}>
-										edit
-									</Link>)
-								</p>
-							) : (
-								<Swatch
-									color={fontColor}
-									onClick={() =>
-										this.setState(({ isEditingFontColor }) => ({
-											isEditingFontColor: !isEditingFontColor,
-										}))
-									}
-								>
-									{isEditingFontColor ? <CloseIcon /> : <DownArrowIcon />}
-								</Swatch>
-							)}
-						</Label>
+						<Label id="font-color">Font color</Label>
+						{isAutoFontColor ? (
+							<p>
+								auto (<Link onClick={this.handleActivateFontControl}>edit</Link>)
+							</p>
+						) : (
+							<Swatch
+								aria-labelledby="font-color"
+								color={fontColor}
+								onClick={() =>
+									this.setState(({ isEditingFontColor }) => ({
+										isEditingFontColor: !isEditingFontColor,
+									}))
+								}
+							>
+								{isEditingFontColor ? <CloseIcon /> : <DownArrowIcon />}
+							</Swatch>
+						)}
 						<Transition
 							in={isEditingFontColor && !isAutoFontColor}
 							timeout={{ enter: 0, exit: exitTransitionMs }}
@@ -126,7 +125,7 @@ export class SettingsPanel extends Component {
 								<ColorWrapper
 									transitionState={state}
 									key="font-color"
-									style={{ paddingBottom: '20px ' }}
+									isEditing={isEditingFontColor}
 								>
 									<ColorPicker
 										color={fontColor}
@@ -142,28 +141,32 @@ export class SettingsPanel extends Component {
 						</Transition>
 					</Row>
 					<Row>
-						<Label>
-							Font size
-							<Range
-								min={MIN_FONT_SIZE}
-								max={MAX_FONT_SIZE}
-								step={0.1}
-								value={fontSize}
-								onChange={event =>
-									onChangeSettings({ fontSize: event.target.value })
-								}
-							/>
-						</Label>
+						<Label htmlFor="font-size">Font size</Label>
+						<Range
+							id="font-size"
+							min={MIN_FONT_SIZE}
+							max={MAX_FONT_SIZE}
+							step={0.1}
+							value={fontSize}
+							onChange={event =>
+								onChangeSettings({ fontSize: event.target.value })
+							}
+						/>
+					</Row>
+					<Row>
+						<Label htmlFor="font-style">Font style</Label>
+						<Select
+							id="font-style"
+							value={fontStyle}
+							onChange={event =>
+								onChangeSettings({ fontStyle: event.target.value })
+							}
+						/>
 					</Row>
 					<Row isFixed>
-						<Label>
-							<ResetButton
-								onClick={this.handleReset}
-								disabled={isResetDisabled}
-							>
-								reset all
-							</ResetButton>
-						</Label>
+						<ResetButton onClick={this.handleReset} disabled={isResetDisabled}>
+							reset all
+						</ResetButton>
 					</Row>
 				</Content>
 			</Wrapper>

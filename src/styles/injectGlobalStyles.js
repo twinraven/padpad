@@ -1,6 +1,6 @@
 import { injectGlobal } from 'styled-components';
 import { normalize } from 'polished';
-import { systemFontStack } from 'config.js';
+import { systemFontStack } from './fonts';
 
 export default function() {
 	return injectGlobal`

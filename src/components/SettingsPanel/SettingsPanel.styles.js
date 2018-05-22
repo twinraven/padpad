@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { media } from 'styles/mixins';
-import { Icon } from 'shared/icons/Icons.styles';
-import { modalBgColor, highlightColor } from 'styles/colours';
-import { MIN_MODAL_WIDTH, transitionEasing } from 'config.js';
 import { darken } from 'polished';
+import { media } from 'styles/mixins';
+import { MIN_MODAL_WIDTH, transitionEasing } from 'config.js';
+import { modalBgColor, highlightColor } from 'styles/colours';
+import { Icon } from 'shared/icons/Icons.styles';
 
 const ROW_HEIGHT = 25;
 
@@ -27,9 +27,11 @@ export const Row = styled.div`
 	align-items: center;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 	display: flex;
-	flex-direction: column;
-	align-items: stretch;
+	flex-wrap: wrap;
 	justify-content: center;
+	line-height: ${ROW_HEIGHT}px;
+	min-height: ${ROW_HEIGHT}px;
+	min-width: 200px;
 	padding: 10px 0;
 
 	&:first-child {
@@ -72,9 +74,9 @@ Row.defaultProps = {
 
 export const Label = styled.label`
 	display: flex;
+	flex: 1;
 	justify-content: space-between;
-	line-height: ${ROW_HEIGHT}px;
-	min-height: ${ROW_HEIGHT}px;
+	padding-right: 12px;
 
 	${media.medium`
 		font-weight: bold;
@@ -82,15 +84,14 @@ export const Label = styled.label`
 `;
 
 export const Footer = styled.div`
-	display: flex;
 	font-size: 0.85em;
-	justify-content: flex-end;
-	padding: 4px 2px;
 	margin-bottom: -10px;
+	padding: 4px 0;
+	text-align: right;
 
 	${media.medium`
 		font-size: 1em;
-		padding: 8px 4px;
+		padding: 5px 0;
 	`};
 `;
 
@@ -103,6 +104,7 @@ export const Link = styled.a`
 	&:hover,
 	&:focus {
 		text-decoration: none;
+		color: ${darken(0.1, highlightColor)};
 	}
 `;
 
@@ -141,6 +143,7 @@ export const ResetButton = styled.button.attrs({
 	${media.medium`
 		font-size: 1em;
 		margin-left: 0;
+		margin-right: auto;
 	`};
 `;
 
@@ -200,6 +203,7 @@ const modalTransitions = {
 
 export const ColorWrapper = styled.div`
 	box-sizing: content-box;
+	flex-basis: 100%;
 	overflow: hidden;
 	padding: 0 5px;
 	margin: 0 -5px -5px;
@@ -210,4 +214,10 @@ export const ColorWrapper = styled.div`
 		props.transitionState && {
 			...modalTransitions[props.transitionState],
 		}};
+
+	${props =>
+		props.isEditing &&
+		css`
+			padding-bottom: 28px;
+		`};
 `;

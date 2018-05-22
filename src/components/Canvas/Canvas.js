@@ -10,7 +10,10 @@ import { Wrapper, ContentEditable, Label } from './Canvas.styles';
 
 export class Canvas extends Component {
 	static propTypes = {
-		text: PropTypes.string,
+		fontColor: PropTypes.string.isRequired,
+		fontSize: PropTypes.string.isRequired,
+		fontStyle: PropTypes.string.isRequired,
+		text: PropTypes.string.isRequired,
 		changeText: PropTypes.func.isRequired,
 	};
 
