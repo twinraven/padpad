@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { media } from 'styles/mixins';
-import { Icon } from 'shared/icons/Icons.styles';
-import { modalBgColor, highlightColor } from 'styles/colours';
-import { MIN_MODAL_WIDTH, transitionEasing } from 'config.js';
 import { darken } from 'polished';
+import { media } from 'styles/mixins';
+import { MIN_MODAL_WIDTH, transitionEasing } from 'config.js';
+import { modalBgColor, highlightColor } from 'styles/colours';
+import { Icon } from 'shared/icons/Icons.styles';
 
 const ROW_HEIGHT = 25;
 
@@ -31,6 +31,7 @@ export const Row = styled.div`
 	justify-content: center;
 	line-height: ${ROW_HEIGHT}px;
 	min-height: ${ROW_HEIGHT}px;
+	min-width: 200px;
 	padding: 10px 0;
 
 	&:first-child {
@@ -71,7 +72,7 @@ Row.defaultProps = {
 	isFixed: false,
 };
 
-export const Label = styled.div`
+export const Label = styled.label`
 	display: flex;
 	flex: 1;
 	justify-content: space-between;
@@ -83,11 +84,10 @@ export const Label = styled.div`
 `;
 
 export const Footer = styled.div`
-	display: flex;
 	font-size: 0.85em;
-	justify-content: flex-end;
-	padding: 4px 0;
 	margin-bottom: -10px;
+	padding: 4px 0;
+	text-align: right;
 
 	${media.medium`
 		font-size: 1em;
@@ -104,6 +104,7 @@ export const Link = styled.a`
 	&:hover,
 	&:focus {
 		text-decoration: none;
+		color: ${darken(0.1, highlightColor)};
 	}
 `;
 

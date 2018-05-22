@@ -2,17 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Transition from 'react-transition-group/Transition';
 import debounce from 'lodash.debounce';
-import {
-	MIN_FONT_SIZE,
-	MAX_FONT_SIZE,
-	COLOR_UPDATE_DELAY,
-	FONT_STYLES,
-} from 'config.js';
+import { MIN_FONT_SIZE, MAX_FONT_SIZE, COLOR_UPDATE_DELAY } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
-import ColorPicker from 'components/ColorPicker/ColorPicker';
-import { Range } from 'components/Range/Range.styles';
-import { DownArrowIcon, CloseIcon } from 'shared/icons';
 import { hasDefaultParams } from 'utils/url';
+import { DownArrowIcon, CloseIcon } from 'shared/icons';
+import { Range } from 'components/Range/Range.styles';
+import ColorPicker from 'components/ColorPicker/ColorPicker';
+import { Select } from 'components/Select/Select';
 import {
 	Wrapper,
 	Content,
@@ -145,9 +141,9 @@ export class SettingsPanel extends Component {
 						</Transition>
 					</Row>
 					<Row>
-						<Label id="font-size">Font size</Label>
+						<Label htmlFor="font-size">Font size</Label>
 						<Range
-							aria-labelledby="font-size"
+							id="font-size"
 							min={MIN_FONT_SIZE}
 							max={MAX_FONT_SIZE}
 							step={0.1}
@@ -158,19 +154,14 @@ export class SettingsPanel extends Component {
 						/>
 					</Row>
 					<Row>
-						<Label id="font-style">Font style</Label>
-						<select
+						<Label htmlFor="font-style">Font style</Label>
+						<Select
+							id="font-style"
 							value={fontStyle}
 							onChange={event =>
 								onChangeSettings({ fontStyle: event.target.value })
 							}
-						>
-							{Object.entries(FONT_STYLES).map(([, type]) => (
-								<option value={type} key={type}>
-									{type}
-								</option>
-							))}
-						</select>
+						/>
 					</Row>
 					<Row isFixed>
 						<ResetButton onClick={this.handleReset} disabled={isResetDisabled}>
