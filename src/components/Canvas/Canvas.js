@@ -29,10 +29,22 @@ export class Canvas extends Component {
 	}
 
 	render() {
-		const { text, changeText, ...props } = this.props;
+		const {
+			text,
+			changeText,
+			fontSize,
+			fontColor,
+			fontStyle,
+			...props
+		} = this.props;
 
 		return (
-			<Wrapper onClick={this.focusCanvas}>
+			<Wrapper
+				onClick={this.focusCanvas}
+				fontSize={fontSize}
+				fontColor={fontColor}
+				fontStyle={fontStyle}
+			>
 				{Boolean(text.length) ? (
 					<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
 				) : (
