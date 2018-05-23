@@ -6,6 +6,7 @@ import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
 import { SettingsPanel } from 'components/SettingsPanel/SettingsPanel';
 import { Spinner } from 'components/Spinner/Spinner';
 import { SharingPanel } from 'components/SharingPanel/SharingPanel';
+import { Providers } from 'providers/AllProviders/AllProviders';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
 import { exitTransitionMs } from 'components/Modal/Modal.styles';
@@ -58,106 +59,102 @@ class App extends Component {
 		const title = getTitle(text);
 
 		return (
-			<Wrapper>
-				<Helmet>
-					<title>{title}</title>
-					<body bgColor={bgColor} />
-				</Helmet>
-				<Canvas
-					fontColor={fontColor}
-					fontSize={fontSize}
-					fontStyle={fontStyle}
-					text={text}
-					changeText={text => this.setState({ text })}
-				/>
-				<Controls isActive={isSettingsOpen || isSharingOpen}>
-					<SettingsButton
-						isSelected={isSettingsOpen}
-						onClick={this.toggleSettingsPanel}
-					>
-						{isSettingsOpen ? (
-							<Fragment>
-								<AccessibleText>Close sharing panel</AccessibleText>
-								<CloseIcon width="13" height="13" />
-							</Fragment>
-						) : (
-							<Fragment>
-								<AccessibleText>Open settings panel</AccessibleText>
-								<SettingsIcon />
-							</Fragment>
-						)}
-					</SettingsButton>
-					<SharingButton
-						isSelected={isSharingOpen}
-						onClick={this.toggleSharingPanel}
-					>
-						{isSharingOpen ? (
-							isLoadingShareUrl ? (
-								<Spinner />
-							) : (
+			<Providers>
+				<Wrapper>
+					<Helmet>
+						<title>{title}</title>
+						<body bgColor={bgColor} />
+					</Helmet>
+					<Canvas text={text} changeText={text => this.setState({ text })} />
+					<Controls isActive={isSettingsOpen || isSharingOpen}>
+						<SettingsButton
+							isSelected={isSettingsOpen}
+							onClick={this.toggleSettingsPanel}
+						>
+							{isSettingsOpen ? (
 								<Fragment>
 									<AccessibleText>Close sharing panel</AccessibleText>
 									<CloseIcon width="13" height="13" />
 								</Fragment>
-							)
-						) : (
-							<Fragment>
-								<AccessibleText>Open settings panel</AccessibleText>
-								<ShareIcon />
-							</Fragment>
+							) : (
+								<Fragment>
+									<AccessibleText>Open settings panel</AccessibleText>
+									<SettingsIcon />
+								</Fragment>
+							)}
+						</SettingsButton>
+						<SharingButton
+							isSelected={isSharingOpen}
+							onClick={this.toggleSharingPanel}
+						>
+							{isSharingOpen ? (
+								isLoadingShareUrl ? (
+									<Spinner />
+								) : (
+									<Fragment>
+										<AccessibleText>Close sharing panel</AccessibleText>
+										<CloseIcon width="13" height="13" />
+									</Fragment>
+								)
+							) : (
+								<Fragment>
+									<AccessibleText>Open settings panel</AccessibleText>
+									<ShareIcon />
+								</Fragment>
+							)}
+						</SharingButton>
+					</Controls>
+
+					<Transition
+						in={isSharingOpen && !isLoadingShareUrl}
+						timeout={{
+							enter: 0,
+							exit: exitTransitionMs,
+						}}
+						unmountOnExit
+					>
+						{state => (
+							<SharingModal
+								onClose={this.toggleSharingPanel}
+								key="sharing-modal"
+								transitionState={state}
+							>
+								<SharingPanel url={shareUrl} />
+							</SharingModal>
 						)}
-					</SharingButton>
-				</Controls>
+					</Transition>
 
-				<Transition
-					in={isSharingOpen && !isLoadingShareUrl}
-					timeout={{
-						enter: 0,
-						exit: exitTransitionMs,
-					}}
-					unmountOnExit
-				>
-					{state => (
-						<SharingModal
-							onClose={this.toggleSharingPanel}
-							key="sharing-modal"
-							transitionState={state}
-						>
-							<SharingPanel url={shareUrl} />
-						</SharingModal>
-					)}
-				</Transition>
-
-				<Transition
-					in={isSettingsOpen}
-					timeout={{
-						enter: 0,
-						exit: exitTransitionMs,
-					}}
-					unmountOnExit
-				>
-					{state => (
-						<SettingsModal
-							onClose={this.toggleSettingsPanel}
-							key="settings-modal"
-							transitionState={state}
-						>
-							<SettingsPanel
-								bgColor={bgColor}
-								fontColor={fontColor}
-								fontSize={fontSize}
-								fontStyle={fontStyle}
-								isAutoFontColor={isAutoFontColor}
-								onChangeSettings={this.changeSettings}
-								onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
-								onSetAutoFontColor={isAutoFontColor =>
-									this.setState({ isAutoFontColor })
-								}
-							/>
-						</SettingsModal>
-					)}
-				</Transition>
-			</Wrapper>
+					<Transition
+						in={isSettingsOpen}
+						timeout={{
+							enter: 0,
+							exit: exitTransitionMs,
+						}}
+						unmountOnExit
+					>
+						{state => (
+							<SettingsModal
+								onClose={this.toggleSettingsPanel}
+								key="settings-modal"
+								transitionState={state}
+							>
+								<SettingsPanel
+									bgColor={bgColor}
+									fontColor={fontColor}
+									fontSize={fontSize}
+									fontStyle={fontStyle}
+									isAutoFontColor={isAutoFontColor}
+									onChangeSettings={this.changeSettings}
+									onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
+									onSetAutoFontColor={isAutoFontColor =>
+										this.setState({ isAutoFontColor })
+									}
+								/>
+							</SettingsModal>
+						)}
+					</Transition>
+				</Wrapper>
+			</Providers>
 		);
 	}
 

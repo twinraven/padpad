@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { darken } from 'polished';
 import { media } from 'styles/mixins';
-import { MIN_MODAL_WIDTH, transitionEasing } from 'config.js';
+import { transitionEasing } from 'config.js';
 import { modalBgColor, highlightColor } from 'styles/colours';
 import { Icon } from 'shared/icons/Icons.styles';
 
@@ -26,13 +26,14 @@ export const Content = styled.div`
 export const Row = styled.div`
 	align-items: center;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
 	line-height: ${ROW_HEIGHT}px;
 	min-height: ${ROW_HEIGHT}px;
-	min-width: 200px;
 	padding: 10px 0;
+	width: 200px;
 
 	&:first-child {
 		padding-top: 5px;
@@ -44,6 +45,10 @@ export const Row = styled.div`
 		min-height: 0;
 	}
 
+	${media.medium`
+			width: 100%;
+		`};
+
 	${props =>
 		props.isFixed &&
 		media.medium`
@@ -54,7 +59,6 @@ export const Row = styled.div`
 			padding: 0 12px;
 			position: fixed;
 			right: 0;
-			width: ${MIN_MODAL_WIDTH}px;
 		`};
 
 	${props =>
@@ -73,9 +77,7 @@ Row.defaultProps = {
 };
 
 export const Label = styled.label`
-	display: flex;
-	flex: 1;
-	justify-content: space-between;
+	margin-right: auto;
 	padding-right: 12px;
 
 	${media.medium`
@@ -203,12 +205,10 @@ const modalTransitions = {
 
 export const ColorWrapper = styled.div`
 	box-sizing: content-box;
-	flex-basis: 100%;
 	overflow: hidden;
-	padding: 0 5px;
-	margin: 0 -5px -5px;
 	transition: ${enterTransitionMs}ms;
 	transition-timing-function: ${transitionEasing};
+	width: 100%;
 
 	${props =>
 		props.transitionState && {

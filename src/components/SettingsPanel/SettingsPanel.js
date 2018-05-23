@@ -22,6 +22,7 @@ import {
 	ColorWrapper,
 	exitTransitionMs,
 } from './SettingsPanel.styles';
+import { PersistenceConsumer } from 'providers/PersistenceProvider/PersistenceProvider';
 
 export class SettingsPanel extends Component {
 	static propTypes = {
@@ -164,6 +165,19 @@ export class SettingsPanel extends Component {
 								onChangeSettings({ fontStyle: event.target.value })
 							}
 						/>
+					</Row>
+					<Row>
+						<Label htmlFor="persist">Save settings</Label>
+						<PersistenceConsumer>
+							{({ persistSettings, setPersistence }) => (
+								<input
+									type="checkbox"
+									id="persist"
+									checked={persistSettings}
+									onChange={event => setPersistence(event.target.checked)}
+								/>
+							)}
+						</PersistenceConsumer>
 					</Row>
 					<Row isFixed>
 						<ResetButton onClick={this.handleReset} disabled={isResetDisabled}>
