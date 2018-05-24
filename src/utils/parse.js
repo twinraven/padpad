@@ -24,13 +24,18 @@ export const removeBreakBeforeDiv = input =>
 // NOT if it's at the start of the string
 export const replaceBlockTagsWithBreaks = input =>
 	input.replace(
-		/(?!^)<(div|p|h1|h2|h3|h4|h5|h6|ul|ol|li|dl|dd|dt|pre|hr)>/gim,
+		/(?!^)<(div|p|h1|h2|h3|h4|h5|h6|ul|ol|li|dl|dd|dt|pre|hr) ?\/?>/gim,
 		'<br>'
 	);
 
+export const replaceStrongTags = input =>
+	input.replace(/(<\/?)strong>/gim, '$1b>');
+
+export const replaceEmTags = input => input.replace(/(<\/?)em>/gim, '$1i>');
+
 // except br, b & i
 export const removeAllTagsExceptWhitelist = input =>
-	input.replace(/<[/]?(?!(br|b>|i>))[a-zA-Z]+[1-6]?>/gim, '');
+	input.replace(/<[/]?(?!(br|b>|i>))[a-zA-Z]+[1-6]? ?\/?>/gim, '');
 
 export const replaceLineWrapsWithBreaks = input =>
 	input.replace(/[\n\r]/gim, '<br>');
@@ -39,7 +44,7 @@ export const removeNonBreakingSpaces = input =>
 	input.replace(/(&nbsp;)/gim, ' ');
 
 export const removeTrailingWhitespaceOrBreaks = input =>
-	input.replace(/^(<br ?\/?>|\s)+$/gim, '');
+	input.replace(/(<br ?\/?>|\s)+$/gim, '');
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -49,6 +54,8 @@ export const cleanMarkup = pipe(
 	removeBreakBeforeDiv,
 	unwrapBreaks,
 	replaceBlockTagsWithBreaks,
+	replaceStrongTags,
+	replaceEmTags,
 	removeAllTagsExceptWhitelist,
 	replaceLineWrapsWithBreaks,
 	removeNonBreakingSpaces,
