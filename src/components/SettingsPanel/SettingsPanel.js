@@ -4,7 +4,7 @@ import Transition from 'react-transition-group/Transition';
 import debounce from 'lodash.debounce';
 import { MIN_FONT_SIZE, MAX_FONT_SIZE, COLOR_UPDATE_DELAY } from 'config.js';
 import { getAutoTextColor } from 'utils/colour';
-import { hasDefaultParams } from 'utils/url';
+import { hasDefaultParams, getQueryParams } from 'utils/url';
 import { DownArrowIcon, CloseIcon } from 'shared/icons';
 import { Range } from 'components/Range/Range.styles';
 import { ColorPicker } from 'components/ColorPicker/ColorPicker';
@@ -64,7 +64,8 @@ export class SettingsPanel extends Component {
 		} = this.props;
 		const { isEditingBgColor, isEditingFontColor } = this.state;
 
-		const isResetDisabled = hasDefaultParams();
+		const params = getQueryParams();
+		const isResetDisabled = hasDefaultParams(params);
 
 		return (
 			<Wrapper {...props}>

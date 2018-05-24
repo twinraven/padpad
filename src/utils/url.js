@@ -3,50 +3,40 @@ import pipe from 'ramda/src/pipe';
 import map from 'ramda/src/map';
 import evolve from 'ramda/src/evolve';
 import { removeDefaultValues, cleanMarkup } from 'utils/parse';
+import { fetchShortUrl } from 'api/api';
 
 export function setUrlParams(newParams) {
 	const params = { ...getQueryParams(), ...newParams };
 	const querystring = createQuerystring(params);
-	const url = createUrl(querystring);
+	const url = createUrl(querystring, document.location.pathname);
 
 	if (window.history.pushState) {
 		window.history.pushState({ path: url }, '', url);
 	}
 }
-// TODO: add tests
-const cleanParams = pipe(
-	evolve({ text: cleanMarkup }),
-	removeDefaultValues,
-	map(encodeURIComponent)
-);
-
-// TODO: add tests
-const createQuerystring = params =>
-	qs.stringify(cleanParams(params), { encode: false });
-
-// TODO: add tests
-const createUrl = qs =>
-	`${document.location.pathname}${qs.length ? '?' : ''}${qs}`;
 
 export const getQueryParams = () =>
 	qs.parse(document.location.search, {
 		ignoreQueryPrefix: true,
 	});
 
-export function hasDefaultParams() {
-	const params = getQueryParams();
-	delete params.text;
+const cleanParams = pipe(
+	evolve({ text: cleanMarkup }),
+	removeDefaultValues,
+	map(encodeURIComponent)
+);
 
-	return Object.keys(params).length === 0;
-}
+const createQuerystring = params =>
+	qs.stringify(cleanParams(params), { encode: false });
 
-// TODO: move to api file?
-function fetchShortUrl(longUrl) {
-	const token = process.env.REACT_APP_BITLY_API_TOKEN;
+export const createUrl = (qs, pathname) =>
+	`${pathname}${qs.length ? '?' : ''}${qs}`;
 
-	return fetch(
-		`https://api-ssl.bitly.com/v3/shorten?access_token=${token}&longUrl=${longUrl}`
-	).then(response => response.json());
+export function hasDefaultParams(params) {
+	const testParams = { ...params };
+	delete testParams.text;
+
+	return Object.keys(testParams).length === 0;
 }
 
 export function getShareUrl(urlToShare) {
