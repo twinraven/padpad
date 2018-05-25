@@ -243,38 +243,32 @@ describe('clean markup', () => {
 	});
 
 	describe('removeAllTagsExceptWhitelist', () => {
-		it('removes an opening tag', () => {
-			const input = '<div>';
+		it('removes a tag', () => {
+			const input = '<div>test</div>';
 			const output = removeAllTagsExceptWhitelist(input);
-			expect(output).toBe('');
-		});
-
-		it('removes a closing tag', () => {
-			const input = '</div>';
-			const output = removeAllTagsExceptWhitelist(input);
-			expect(output).toBe('');
+			expect(output).toBe('test');
 		});
 
 		it('removes a self-closing tag', () => {
-			const input = '<b />';
+			const input = '<g />';
 			const output = removeAllTagsExceptWhitelist(input);
 			expect(output).toBe('');
 		});
 
-		it('does not remove a br tag', () => {
-			const input = '<br>';
+		it('does not remove br tags', () => {
+			const input = '<br><br />';
 			const output = removeAllTagsExceptWhitelist(input);
 			expect(output).toBe(input);
 		});
 
 		it('does not remove a b tag', () => {
-			const input = '<b>';
+			const input = '<b>test</b>';
 			const output = removeAllTagsExceptWhitelist(input);
 			expect(output).toBe(input);
 		});
 
 		it('does not remove an i tag', () => {
-			const input = '<i>';
+			const input = '<i>test</i>';
 			const output = removeAllTagsExceptWhitelist(input);
 			expect(output).toBe(input);
 		});
