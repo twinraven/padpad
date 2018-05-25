@@ -108,12 +108,12 @@ describe('clean markup', () => {
 
 			return `${startTags}${element}${endTags}`;
 		};
-		const result = '<div><br></div>';
+		const expected = '<div><br></div>';
 
 		it('ignores a perfect result', () => {
 			const input = wrapElement('<br>', ['div']);
 			const output = partiallyUnwrapBreaks(input);
-			expect(output).toBe(result);
+			expect(output).toBe(expected);
 		});
 
 		it('ignores whitespace', () => {
@@ -125,19 +125,19 @@ describe('clean markup', () => {
 		it('removes single wrapping elements', () => {
 			const input = wrapElement('<br>', ['div', 'span']);
 			const output = partiallyUnwrapBreaks(input);
-			expect(output).toBe(result);
+			expect(output).toBe(expected);
 		});
 
 		it('removes multiple wrapping elements', () => {
 			const input = wrapElement('<br>', ['div', 'span', 'div']);
 			const output = partiallyUnwrapBreaks(input);
-			expect(output).toBe(result);
+			expect(output).toBe(expected);
 		});
 
 		it('tidies up break element to replace self-closing tags', () => {
 			const input = wrapElement('<br />', ['div']);
 			const output = partiallyUnwrapBreaks(input);
-			expect(output).toBe(result);
+			expect(output).toBe(expected);
 		});
 	});
 
