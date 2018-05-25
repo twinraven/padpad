@@ -5,8 +5,8 @@ import {
 	unwrapBreaks,
 	removeBreakBeforeDiv,
 	replaceBlockTagsWithBreaks,
-	replaceStrongTags,
-	replaceEmTags,
+	replaceStrongTagsWithBs,
+	replaceEmTagsWithIs,
 	removeAllTagsExceptWhitelist,
 	replaceLineWrapsWithBreaks,
 	removeNonBreakingSpaces,
@@ -214,30 +214,30 @@ describe('clean markup', () => {
 		});
 	});
 
-	describe('replaceStrongTags', () => {
+	describe('replaceStrongTagsWithBs', () => {
 		it('replace an opening strong tag', () => {
 			const input = '<strong>';
-			const output = replaceStrongTags(input);
+			const output = replaceStrongTagsWithBs(input);
 			expect(output).toBe('<b>');
 		});
 
 		it('replace a closing strong tag', () => {
 			const input = '</strong>';
-			const output = replaceStrongTags(input);
+			const output = replaceStrongTagsWithBs(input);
 			expect(output).toBe('</b>');
 		});
 	});
 
-	describe('replaceEmTags', () => {
+	describe('replaceEmTagsWithIs', () => {
 		it('replace an opening em tag', () => {
 			const input = '<em>';
-			const output = replaceEmTags(input);
+			const output = replaceEmTagsWithIs(input);
 			expect(output).toBe('<i>');
 		});
 
 		it('replace a closing em tag', () => {
 			const input = '</em>';
-			const output = replaceEmTags(input);
+			const output = replaceEmTagsWithIs(input);
 			expect(output).toBe('</i>');
 		});
 	});

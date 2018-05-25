@@ -28,10 +28,11 @@ export const replaceBlockTagsWithBreaks = input =>
 		'<br>'
 	);
 
-export const replaceStrongTags = input =>
+export const replaceStrongTagsWithBs = input =>
 	input.replace(/(<\/?)strong>/gim, '$1b>');
 
-export const replaceEmTags = input => input.replace(/(<\/?)em>/gim, '$1i>');
+export const replaceEmTagsWithIs = input =>
+	input.replace(/(<\/?)em>/gim, '$1i>');
 
 // except br, b & i
 export const removeAllTagsExceptWhitelist = input =>
@@ -54,8 +55,8 @@ export const cleanMarkup = pipe(
 	removeBreakBeforeDiv,
 	unwrapBreaks,
 	replaceBlockTagsWithBreaks,
-	replaceStrongTags,
-	replaceEmTags,
+	replaceStrongTagsWithBs,
+	replaceEmTagsWithIs,
 	removeAllTagsExceptWhitelist,
 	replaceLineWrapsWithBreaks,
 	removeNonBreakingSpaces,
