@@ -2,7 +2,7 @@ import qs from 'qs';
 import pipe from 'ramda/src/pipe';
 import map from 'ramda/src/map';
 import evolve from 'ramda/src/evolve';
-import { removeDefaultValues, cleanMarkup } from 'utils/parse';
+import { removeDefaultParams, cleanMarkup } from 'utils/parse';
 import { fetchShortUrl } from 'api/api';
 
 export function setUrlParams(newParams) {
@@ -22,7 +22,7 @@ export const getQueryParams = () =>
 
 const cleanParams = pipe(
 	evolve({ text: cleanMarkup }),
-	removeDefaultValues,
+	removeDefaultParams,
 	map(encodeURIComponent)
 );
 
@@ -31,13 +31,6 @@ const createQuerystring = params =>
 
 export const createUrl = (qs, pathname) =>
 	`${pathname}${qs.length ? '?' : ''}${qs}`;
-
-export function hasDefaultParams(params) {
-	const testParams = { ...params };
-	delete testParams.text;
-
-	return Object.keys(testParams).length === 0;
-}
 
 export function getShareUrl(urlToShare) {
 	return fetchShortUrl(encodeURIComponent(urlToShare))

@@ -1,5 +1,4 @@
 import {
-	removeDefaultValues,
 	removeElementProps,
 	partiallyUnwrapBreaks,
 	unwrapBreaks,
@@ -12,6 +11,8 @@ import {
 	removeNonBreakingSpaces,
 	removeTrailingWhitespaceOrBreaks,
 	cleanMarkup,
+	removeDefaultParams,
+	hasDefaultParams,
 } from './parse';
 import {
 	DEFAULT_FONT_SIZE,
@@ -319,16 +320,42 @@ describe('clean markup', () => {
 	});
 });
 
-describe('removeDefaultValues', () => {
+describe('hasDefaultParams', () => {
+	it('handles empty parameters', () => {
+		const input = {};
+		const output = hasDefaultParams(input);
+		expect(output).toBe(true);
+	});
+
+	it('handles params with only text defined', () => {
+		const input = { text: 'test' };
+		const output = hasDefaultParams(input);
+		expect(output).toBe(true);
+	});
+
+	it('handles user-defined params', () => {
+		const input = {
+			text: 'test',
+			bgColor: '#f00',
+			fontColor: '#00f',
+			fontSize: '16',
+			fontStyle: 'monospaced',
+		};
+		const output = hasDefaultParams(input);
+		expect(output).toBe(false);
+	});
+});
+
+describe('removeDefaultParams', () => {
 	it('ignores empty params', () => {
 		const input = {};
-		const output = removeDefaultValues(input);
+		const output = removeDefaultParams(input);
 		expect(output).toEqual(input);
 	});
 
 	it('ignores params with only text defined', () => {
 		const input = { test: 'test' };
-		const output = removeDefaultValues(input);
+		const output = removeDefaultParams(input);
 		expect(output).toEqual(input);
 	});
 
@@ -340,7 +367,7 @@ describe('removeDefaultValues', () => {
 			fontSize: DEFAULT_FONT_SIZE,
 			fontStyle: 'monospaced',
 		};
-		const output = removeDefaultValues(input);
+		const output = removeDefaultParams(input);
 		expect(output).not.toContain('fontSize');
 	});
 
@@ -351,7 +378,7 @@ describe('removeDefaultValues', () => {
 			fontSize: DEFAULT_FONT_SIZE,
 			fontStyle: DEFAULT_FONT_STYLE,
 		};
-		const output = removeDefaultValues(input);
+		const output = removeDefaultParams(input);
 		expect(output).toEqual({});
 	});
 });

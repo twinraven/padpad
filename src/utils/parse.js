@@ -63,7 +63,14 @@ export const cleanMarkup = pipe(
 	removeTrailingWhitespaceOrBreaks
 );
 
-export function removeDefaultValues(params) {
+export function hasDefaultParams(params) {
+	const testParams = { ...params };
+	delete testParams.text;
+
+	return Object.keys(testParams).length === 0;
+}
+
+export function removeDefaultParams(params) {
 	for (const [key, value] of Object.entries(params)) {
 		if (value === DEFAULT_PARAMS[key]) delete params[key];
 	}
