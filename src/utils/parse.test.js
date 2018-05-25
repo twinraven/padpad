@@ -20,24 +20,6 @@ import {
 	DEFAULT_FONT_STYLE,
 } from 'config';
 
-const params = {
-	empty: {},
-	simple: { text: 'hello' },
-	removeOne: {
-		text: 'hello',
-		bgColor: '#f00',
-		fontColor: '#00f',
-		fontSize: DEFAULT_FONT_SIZE,
-		fontStyle: 'monospaced',
-	},
-	removeAll: {
-		bgColor: DEFAULT_LIGHT_COLOR,
-		fontColor: DEFAULT_DARK_COLOR,
-		fontSize: DEFAULT_FONT_SIZE,
-		fontStyle: DEFAULT_FONT_STYLE,
-	},
-};
-
 describe('clean markup', () => {
 	describe('removeElementProps', () => {
 		const createElem = (elem, params = '') =>
@@ -275,7 +257,7 @@ describe('clean markup', () => {
 	});
 
 	describe('replaceLineWrapsWithBreaks', () => {
-		it('removes a line wrap', () => {
+		it('replaces a line wrap with a br', () => {
 			const input = `
 `;
 			const output = replaceLineWrapsWithBreaks(input);
@@ -313,7 +295,7 @@ describe('clean markup', () => {
 		it('does not remove a break from the middle of the input', () => {
 			const input = 'test<br><div>';
 			const output = removeTrailingWhitespaceOrBreaks(input);
-			expect(output).toBe('test<br><div>');
+			expect(output).toBe(input);
 		});
 	});
 
@@ -338,23 +320,38 @@ describe('clean markup', () => {
 });
 
 describe('removeDefaultValues', () => {
-	it('handles empty params', () => {
-		const output = removeDefaultValues(params.empty);
-		expect(output).toEqual({});
+	it('ignores empty params', () => {
+		const input = {};
+		const output = removeDefaultValues(input);
+		expect(output).toEqual(input);
 	});
 
-	it('handles params with only text defined', () => {
-		const output = removeDefaultValues(params.simple);
-		expect(output).toEqual(params.simple);
+	it('ignores params with only text defined', () => {
+		const input = { test: 'test' };
+		const output = removeDefaultValues(input);
+		expect(output).toEqual(input);
 	});
 
-	it('removes 1 of 5 params with default value', () => {
-		const output = removeDefaultValues(params.removeOne);
+	it('removes a default value', () => {
+		const input = {
+			text: 'hello',
+			bgColor: '#f00',
+			fontColor: '#00f',
+			fontSize: DEFAULT_FONT_SIZE,
+			fontStyle: 'monospaced',
+		};
+		const output = removeDefaultValues(input);
 		expect(output).not.toContain('fontSize');
 	});
 
-	it('removes all params', () => {
-		const output = removeDefaultValues(params.removeAll);
+	it('removes all params if all are default', () => {
+		const input = {
+			bgColor: DEFAULT_LIGHT_COLOR,
+			fontColor: DEFAULT_DARK_COLOR,
+			fontSize: DEFAULT_FONT_SIZE,
+			fontStyle: DEFAULT_FONT_STYLE,
+		};
+		const output = removeDefaultValues(input);
 		expect(output).toEqual({});
 	});
 });
