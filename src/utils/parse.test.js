@@ -116,10 +116,10 @@ describe('clean markup', () => {
 			expect(output).toBe(expected);
 		});
 
-		it('ignores whitespace', () => {
+		it('removes whitespace', () => {
 			const input = '<div> <br> </div>';
 			const output = partiallyUnwrapBreaks(input);
-			expect(output).toBe('<div><br></div>');
+			expect(output).toBe(expected);
 		});
 
 		it('removes single wrapping elements', () => {
