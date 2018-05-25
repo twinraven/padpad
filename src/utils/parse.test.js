@@ -201,13 +201,13 @@ describe('clean markup', () => {
 			expect(output).toBe('prefix text<br>');
 		});
 
-		it("doesn't replace a div tag at the start", () => {
-			const input = '<div>';
+		it('does not replace a div tag at the start', () => {
+			const input = '<div>test';
 			const output = replaceBlockTagsWithBreaks(input);
-			expect(output).toBe('<div>');
+			expect(output).toBe('<div>test');
 		});
 
-		it("doesn't replace an inline element", () => {
+		it('does not replace an inline element', () => {
 			const input = '<span>';
 			const output = replaceBlockTagsWithBreaks(input);
 			expect(output).toBe('<span>');
