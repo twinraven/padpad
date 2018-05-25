@@ -52,8 +52,8 @@ describe('clean markup', () => {
 
 		it('handles div element with props', () => {
 			const input = createElem('div', 'style="font-size: 20px;"');
-			const output = removeElementProps(input);
 			const expected = createElem('div');
+			const output = removeElementProps(input);
 			expect(output).toBe(expected);
 		});
 
