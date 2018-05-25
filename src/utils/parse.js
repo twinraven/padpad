@@ -1,47 +1,76 @@
+import pipe from 'ramda/src/pipe';
 import { DEFAULT_PARAMS } from 'config.js';
 
-// TODO: add tests
-export function cleanMarkup(val) {
-	let output = val;
+// remove all element props, e.g. style="padding: 12px"
+export const removeElementProps = input =>
+	input.replace(/<([a-zA-Z-]+[1-6]?)( [a-zA-Z-]+=[^>]+)*>/gim, '<$1>');
 
-	// remove all element props, e.g. style="padding: 12px"
-	output = output.replace(/<([a-zA-Z]+[1-6]?)( [a-zA-Z-]+=[^>]+)*>/gim, '<$1>');
-
-	// if a <br> is wrapped in a div and any other tags, partially unwrap it
-	output = output.replace(
-		/<div>(<[a-zA-Z]+>)*<br ?\/?>(<\/[a-zA-Z]+>)*<\/div>/gim,
+// TODO: potential bug -- <div><br><br></div> not handled here
+// if a <br> is wrapped in a div and any other tags, partially unwrap it
+export const partiallyUnwrapBreaks = input =>
+	input.replace(
+		/<div>(<[a-zA-Z]+>)*\s*<br ?\/?>(<\/[a-zA-Z]+>)*\s*<\/div>/gim,
 		'<div><br></div>'
 	);
 
-	// if a br directly precedes a div, remove the br
-	output = output.replace(/(<br ?\/?>)(<div>)/gim, '$2');
+// unwrap the remaining <div><br></div> patterns to just the <br>
+export const unwrapBreaks = input =>
+	input.replace(/<div><br ?\/?><\/div>/gim, '<br>');
 
-	// unwrap the remaining <div><br></div> patterns to just the <br>
-	output = output.replace(/<div><br ?\/?><\/div>/gim, '<br>');
+// if a br directly precedes a div, remove the br
+export const removeBreakBeforeDiv = input =>
+	input.replace(/(<br ?\/?>)(<div>)/gim, '$2');
 
-	// replace any remaining block level tags with <br>s, but NOT if it's at the start of the string
-	output = output.replace(
-		/(?!^)<(div|p|h1|h2|h3|h4|h5|h6|ul|ol|li|dl|dd|dt|pre|hr)>/gim,
+// NOT if it's at the start of the string
+export const replaceBlockTagsWithBreaks = input =>
+	input.replace(
+		/(?!^)<(div|p|h1|h2|h3|h4|h5|h6|ul|ol|li|dl|dd|dt|pre|hr) ?\/?>/gim,
 		'<br>'
 	);
 
-	// remove all remaining opening/closing tags except br, b & i
-	output = output.replace(/<[/]?(?!(br|b>|i>))[a-zA-Z]+[1-6]?>/gim, '');
+export const replaceStrongTagsWithBs = input =>
+	input.replace(/(<\/?)strong>/gim, '$1b>');
 
-	// replace line breaks and returns with <br>s
-	output = output.replace(/[\n\r]/gim, '<br>');
+export const replaceEmTagsWithIs = input =>
+	input.replace(/(<\/?)em>/gim, '$1i>');
 
-	// remove non-breaking spaces
-	output = output.replace(/(&nbsp;)/gim, ' ');
+// except br, b & i
+export const removeAllTagsExceptWhitelist = input =>
+	input.replace(/<[/]?(?!(br|b>|i>))[a-zA-Z]+[1-6]? ?\/?>/gim, '');
 
-	// remove br or whitespace from the end
-	output = output.replace(/^(<br ?\/?>|\s)+$/gim, ''); // contentious
+export const replaceLineWrapsWithBreaks = input =>
+	input.replace(/[\n\r]/gim, '<br>');
 
-	return output;
+export const removeNonBreakingSpaces = input =>
+	input.replace(/(&nbsp;)/gim, ' ');
+
+export const removeTrailingWhitespaceOrBreaks = input =>
+	input.replace(/(<br ?\/?>|\s)+$/gim, '');
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+export const cleanMarkup = pipe(
+	removeElementProps,
+	partiallyUnwrapBreaks,
+	removeBreakBeforeDiv,
+	unwrapBreaks,
+	replaceBlockTagsWithBreaks,
+	replaceStrongTagsWithBs,
+	replaceEmTagsWithIs,
+	removeAllTagsExceptWhitelist,
+	replaceLineWrapsWithBreaks,
+	removeNonBreakingSpaces,
+	removeTrailingWhitespaceOrBreaks
+);
+
+export function hasDefaultParams(params) {
+	const testParams = { ...params };
+	delete testParams.text;
+
+	return Object.keys(testParams).length === 0;
 }
 
-// TODO: add tests
-export function removeDefaultValues(params) {
+export function removeDefaultParams(params) {
 	for (const [key, value] of Object.entries(params)) {
 		if (value === DEFAULT_PARAMS[key]) delete params[key];
 	}
