@@ -34,13 +34,15 @@ export class Canvas extends Component {
 				{config => (
 					<Wrapper onClick={this.focusCanvas} {...config}>
 						{Boolean(text.length) ? (
-							<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
+							<AccessibleLabel htmlFor="contenteditable">
+								Start typing
+							</AccessibleLabel>
 						) : (
-							<Label htmlFor="input">Type something...</Label>
+							<Label htmlFor="contenteditable">Type something...</Label>
 						)}
 						<ContentEditable
 							{...props}
-							id="input"
+							id="contenteditable"
 							innerRef={this.canvasRef}
 							onInput={this.handleUpdate}
 							onChange={this.handleUpdate}
@@ -63,10 +65,11 @@ export class Canvas extends Component {
 
 	handleUpdate = event => this.props.changeText(event.target.value);
 
-	// on next tick, reformat all the text
-	handlePaste = () => setTimeout(this.fixText, 0);
-
 	updateUrl = () => setUrlParams({ text: this.props.text });
+
+	// on next tick, reformat all the text
+	// TODO: fix cursor position when doing this!
+	handlePaste = () => setTimeout(this.fixText, 0);
 
 	fixText = () => this.props.changeText(cleanMarkup(this.props.text));
 

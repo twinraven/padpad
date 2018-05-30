@@ -27,11 +27,7 @@ import { PersistenceConsumer } from 'providers/PersistenceProvider/PersistencePr
 export class SettingsPanel extends Component {
 	static propTypes = {
 		isAutoFontColor: PropTypes.bool.isRequired,
-		bgColor: PropTypes.string.isRequired,
-		fontColor: PropTypes.string.isRequired,
-		fontSize: PropTypes.string.isRequired,
-		fontStyle: PropTypes.string.isRequired,
-		onChangeSettings: PropTypes.func.isRequired,
+		onUpdateConfig: PropTypes.func.isRequired,
 		onReset: PropTypes.func.isRequired,
 		onSetAutoFontColor: PropTypes.func.isRequired,
 	};
@@ -61,7 +57,7 @@ export class SettingsPanel extends Component {
 			fontColor,
 			fontSize,
 			fontStyle,
-			onChangeSettings,
+			onUpdateConfig,
 			...props
 		} = this.props;
 		const { isEditingBgColor, isEditingFontColor } = this.state;
@@ -162,7 +158,7 @@ export class SettingsPanel extends Component {
 							id="font-style"
 							value={fontStyle}
 							onChange={event =>
-								onChangeSettings({ fontStyle: event.target.value })
+								onUpdateConfig({ fontStyle: event.target.value })
 							}
 						/>
 					</Row>
@@ -190,14 +186,14 @@ export class SettingsPanel extends Component {
 	}
 
 	handleChangeBgColor = ({ hex }) => {
-		const { isAutoFontColor, onChangeSettings } = this.props;
+		const { isAutoFontColor, onUpdateConfig } = this.props;
 		let settings = { bgColor: hex };
 
 		if (isAutoFontColor) {
 			settings.fontColor = getAutoTextColor(hex);
 		}
 
-		onChangeSettings(settings);
+		onUpdateConfig(settings);
 	};
 
 	handleActivateFontControl = () => {
@@ -206,19 +202,19 @@ export class SettingsPanel extends Component {
 	};
 
 	handleResetFontControl = () => {
-		const { bgColor, onSetAutoFontColor, onChangeSettings } = this.props;
+		const { bgColor, onSetAutoFontColor, onUpdateConfig } = this.props;
 
 		onSetAutoFontColor(true);
-		onChangeSettings({ fontColor: getAutoTextColor(bgColor) });
+		onUpdateConfig({ fontColor: getAutoTextColor(bgColor) });
 
 		this.setState({ isEditingFontColor: false });
 	};
 
 	handleChangeFontColor = ({ hex }) => {
-		const { onSetAutoFontColor, onChangeSettings } = this.props;
+		const { onSetAutoFontColor, onUpdateConfig } = this.props;
 
 		onSetAutoFontColor(false);
-		onChangeSettings({ fontColor: hex });
+		onUpdateConfig({ fontColor: hex });
 	};
 
 	handleReset = () => {

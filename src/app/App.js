@@ -7,6 +7,7 @@ import { SettingsPanel } from 'components/SettingsPanel/SettingsPanel';
 import { Spinner } from 'components/Spinner/Spinner';
 import { SharingPanel } from 'components/SharingPanel/SharingPanel';
 import { Providers } from 'providers/AllProviders/AllProviders';
+import { ConfigConsumer } from 'providers/ConfigProvider/ConfigProvider';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
 import { exitTransitionMs } from 'components/Modal/Modal.styles';
@@ -32,14 +33,13 @@ class App extends Component {
 		shareUrl: '',
 	};
 
-	static getDerivedStateFromProps() {
-		const queryParams = getQueryParams();
+	componentDidMount() {
+		const { fontColor, text } = getQueryParams();
 
-		return {
-			...DEFAULT_PARAMS,
-			...queryParams,
-			isAutoFontColor: isUndefined(queryParams.fontColor),
-		};
+		this.setState({
+			text,
+			isAutoFontColor: isUndefined(fontColor),
+		});
 	}
 
 	render() {
@@ -50,10 +50,6 @@ class App extends Component {
 			isLoadingShareUrl,
 			shareUrl,
 			text,
-			bgColor,
-			fontColor,
-			fontSize,
-			fontStyle,
 		} = this.state;
 
 		const title = getTitle(text);
@@ -61,10 +57,14 @@ class App extends Component {
 		return (
 			<Providers>
 				<Wrapper>
-					<Helmet>
-						<title>{title}</title>
-						<body bgColor={bgColor} />
-					</Helmet>
+					<ConfigConsumer>
+						{({ bgColor }) => (
+							<Helmet>
+								<title>{title}</title>
+								<body bgColor={bgColor} />
+							</Helmet>
+						)}
+					</ConfigConsumer>
 					<Canvas text={text} changeText={text => this.setState({ text })} />
 					<Controls isActive={isSettingsOpen || isSharingOpen}>
 						<SettingsButton
@@ -124,44 +124,40 @@ class App extends Component {
 						)}
 					</Transition>
 
-					<Transition
-						in={isSettingsOpen}
-						timeout={{
-							enter: 0,
-							exit: exitTransitionMs,
-						}}
-						unmountOnExit
-					>
-						{state => (
-							<SettingsModal
-								onClose={this.toggleSettingsPanel}
-								key="settings-modal"
-								transitionState={state}
+					<ConfigConsumer>
+						{({ setConfig, resetConfig, ...config }) => (
+							<Transition
+								in={isSettingsOpen}
+								timeout={{
+									enter: 0,
+									exit: exitTransitionMs,
+								}}
+								unmountOnExit
 							>
-								<SettingsPanel
-									bgColor={bgColor}
-									fontColor={fontColor}
-									fontSize={fontSize}
-									fontStyle={fontStyle}
-									isAutoFontColor={isAutoFontColor}
-									onChangeSettings={this.changeSettings}
-									onReset={() => this.changeSettings(DEFAULT_SETTINGS)}
-									onSetAutoFontColor={isAutoFontColor =>
-										this.setState({ isAutoFontColor })
-									}
-								/>
-							</SettingsModal>
+								{state => (
+									<SettingsModal
+										onClose={this.toggleSettingsPanel}
+										key="settings-modal"
+										transitionState={state}
+									>
+										<SettingsPanel
+											{...config}
+											isAutoFontColor={isAutoFontColor}
+											onUpdateConfig={setConfig}
+											onReset={resetConfig}
+											onSetAutoFontColor={isAutoFontColor =>
+												this.setState({ isAutoFontColor })
+											} /* TODO: move this into config provider */
+										/>
+									</SettingsModal>
+								)}
+							</Transition>
 						)}
-					</Transition>
+					</ConfigConsumer>
 				</Wrapper>
 			</Providers>
 		);
 	}
-
-	changeSettings = settings => {
-		setUrlParams(settings);
-		this.setState(settings);
-	};
 
 	toggleSettingsPanel = event => {
 		this.handleEvent(event);
