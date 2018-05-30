@@ -1,5 +1,6 @@
 import { DEFAULT_LIGHT_COLOR, DEFAULT_DARK_COLOR } from 'config.js';
 
+// TODO: add tests
 export function getAutoTextColor(hex = DEFAULT_LIGHT_COLOR) {
 	let color = hex.replace('#', '');
 

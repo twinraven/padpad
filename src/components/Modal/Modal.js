@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import ClickOutside from 'react-click-outside';
-import { isEscapeKey } from 'utils/keyboard';
+import { ESCAPE_KEY_CODE } from 'config.js';
 import { ModalOverlay, ModalContent } from './Modal.styles';
 
 export class Modal extends Component {
@@ -41,7 +41,7 @@ export class Modal extends Component {
 	}
 
 	handleKeyUp = ({ keyCode }) => {
-		if (isEscapeKey(keyCode)) {
+		if (keyCode === ESCAPE_KEY_CODE) {
 			this.props.onClose();
 		}
 	};

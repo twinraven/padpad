@@ -41,3 +41,5 @@ export const MAX_FONT_SIZE = 60;
 export const MIN_MODAL_WIDTH = 350;
 
 export const transitionEasing = css`cubic-bezier(0.745, 0.190, 0.300, 0.955)`;
+
+export const ESCAPE_KEY_CODE = 27;
