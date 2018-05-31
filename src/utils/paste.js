@@ -6,9 +6,10 @@ export function tryPasteFromClipboard(event, fallback) {
 	if (event.clipboardData) {
 		stopEvent(event);
 
-		const content = event.clipboardData.getData('text/plain');
-		const cleanContent = cleanMarkup(content);
-		document.execCommand('insertText', false, cleanContent);
+		const htmlContent = event.clipboardData.getData('text/html');
+		const textContent = event.clipboardData.getData('text/plain');
+		const cleanContent = cleanMarkup(htmlContent || textContent);
+		document.execCommand('insertHTML', false, cleanContent);
 	} else if (window.clipboardData && window.getSelection) {
 		stopEvent(event);
 
