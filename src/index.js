@@ -6,8 +6,5 @@ import registerServiceWorker from 'registerServiceWorker';
 
 injectGlobalStyles();
 
-// TODO: Make this work?
-// window.addEventListener('hashchange', event => console.log('event'), false);
-
 ReactDOM.render(<App />, document.getElementById('root'));
 registerServiceWorker();

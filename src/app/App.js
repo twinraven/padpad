@@ -1,17 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import Transition from 'react-transition-group/Transition';
 import Helmet from 'react-helmet';
-import { DEFAULT_SETTINGS, DEFAULT_PARAMS } from 'config.js';
-import { getQueryParams, getShareUrl, setUrlParams } from 'utils/url';
+import { DEFAULT_SETTINGS } from 'config.js';
 import { SettingsPanel } from 'components/SettingsPanel/SettingsPanel';
 import { Spinner } from 'components/Spinner/Spinner';
 import { SharingPanel } from 'components/SharingPanel/SharingPanel';
+import { exitTransitionMs } from 'components/Modal/Modal.styles';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
-import { exitTransitionMs } from 'components/Modal/Modal.styles';
-import { getTitle } from './App.utils';
+import {
+	getShareUrl,
+	setUrlParams,
+	deriveStateFromQueryParams,
+} from 'utils/url';
+import { stopEvent } from 'utils/event';
 import { AccessibleText } from 'styles/mixins';
-import { isUndefined } from 'utils/type';
 import {
 	Wrapper,
 	Canvas,
@@ -21,6 +24,7 @@ import {
 	SettingsModal,
 	SharingModal,
 } from './App.styles';
+import { getTitle } from './App.utils';
 
 class App extends Component {
 	state = {
@@ -32,22 +36,26 @@ class App extends Component {
 	};
 
 	static getDerivedStateFromProps() {
-		const queryParams = getQueryParams();
+		return deriveStateFromQueryParams();
+	}
 
-		return {
-			...DEFAULT_PARAMS,
-			...queryParams,
-			isAutoFontColor: isUndefined(queryParams.fontColor),
-		};
+	componentDidMount() {
+		window.addEventListener('popstate', this.setStateOnQueryChange, false);
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('popstate', this.setStateOnQueryChange);
 	}
 
 	render() {
 		const {
+			// app-based
 			isSettingsOpen,
 			isSharingOpen,
 			isAutoFontColor,
 			isLoadingShareUrl,
 			shareUrl,
+			// content-based
 			text,
 			bgColor,
 			fontColor,
@@ -161,13 +169,15 @@ class App extends Component {
 		);
 	}
 
+	setStateOnQueryChange = () => this.setState(deriveStateFromQueryParams());
+
 	changeSettings = settings => {
 		setUrlParams(settings);
 		this.setState(settings);
 	};
 
 	toggleSettingsPanel = event => {
-		this.handleEvent(event);
+		stopEvent(event);
 
 		this.setState({ isSettingsOpen: !this.state.isSettingsOpen });
 	};
@@ -175,7 +185,7 @@ class App extends Component {
 	toggleSharingPanel = event => {
 		const { isSharingOpen } = this.state;
 
-		this.handleEvent(event);
+		stopEvent(event);
 
 		this.setState(
 			{
@@ -191,13 +201,6 @@ class App extends Component {
 			}
 		);
 	};
-
-	handleEvent(event) {
-		if (event) {
-			event.stopPropagation();
-			event.preventDefault();
-		}
-	}
 }
 
 export default App;

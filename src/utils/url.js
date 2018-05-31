@@ -2,8 +2,11 @@ import qs from 'qs';
 import pipe from 'ramda/src/pipe';
 import map from 'ramda/src/map';
 import evolve from 'ramda/src/evolve';
-import { removeDefaultParams, cleanMarkup } from 'utils/parse';
+import { removeDefaultParams, cleanMarkup } from './parse';
 import { fetchShortUrl } from 'api/api';
+import { isUndefined } from './type';
+import { getAutoTextColor } from './colour';
+import { DEFAULT_PARAMS } from 'config';
 
 export function setUrlParams(newParams) {
 	const params = { ...getQueryParams(), ...newParams };
@@ -42,4 +45,19 @@ export function getShareUrl(urlToShare) {
 			return data.url;
 		})
 		.catch(() => urlToShare);
+}
+
+export function deriveStateFromQueryParams() {
+	const queryParams = getQueryParams();
+	const isAutoFontColor = isUndefined(queryParams.fontColor);
+
+	if (isAutoFontColor) {
+		queryParams.fontColor = getAutoTextColor(queryParams.bgColor);
+	}
+
+	return {
+		...DEFAULT_PARAMS,
+		...queryParams,
+		isAutoFontColor,
+	};
 }
