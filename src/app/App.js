@@ -33,18 +33,15 @@ class App extends Component {
 		isAutoFontColor: true,
 		isLoadingShareUrl: false,
 		shareUrl: '',
+		...deriveStateFromQueryParams(),
 	};
 
-	static getDerivedStateFromProps() {
-		return deriveStateFromQueryParams();
-	}
-
 	componentDidMount() {
-		window.addEventListener('popstate', this.setStateOnQueryChange, false);
+		window.addEventListener('popstate', this.alignStateWithQueryParams, false);
 	}
 
 	componentWillUnmount() {
-		window.removeEventListener('popstate', this.setStateOnQueryChange);
+		window.removeEventListener('popstate', this.alignStateWithQueryParams);
 	}
 
 	render() {
@@ -64,7 +61,7 @@ class App extends Component {
 		} = this.state;
 
 		const title = getTitle(text);
-
+		console.log('no');
 		return (
 			<Wrapper>
 				<Helmet>
@@ -169,7 +166,7 @@ class App extends Component {
 		);
 	}
 
-	setStateOnQueryChange = () => this.setState(deriveStateFromQueryParams());
+	alignStateWithQueryParams = () => this.setState(deriveStateFromQueryParams());
 
 	changeSettings = settings => {
 		setUrlParams(settings);
