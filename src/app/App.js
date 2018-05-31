@@ -61,7 +61,7 @@ class App extends Component {
 		} = this.state;
 
 		const title = getTitle(text);
-		console.log('no');
+
 		return (
 			<Wrapper>
 				<Helmet>
