@@ -1,7 +1,8 @@
 import { stopEvent } from './event';
 import { cleanMarkup } from './parse';
 
-export function tryPaste(event, fallback) {
+// manual handling of paste event to ensure only cleaned text is inserted
+export function tryPasteFromClipboard(event, fallback) {
 	if (event.clipboardData) {
 		stopEvent(event);
 

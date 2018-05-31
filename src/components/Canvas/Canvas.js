@@ -7,7 +7,7 @@ import { AccessibleLabel } from 'styles/mixins';
 import { setUrlParams } from 'utils/url';
 import { cleanMarkup } from 'utils/parse';
 import { Wrapper, ContentEditable, Label } from './Canvas.styles';
-import { tryPaste } from 'utils/paste';
+import { tryPasteFromClipboard } from 'utils/paste';
 
 export class Canvas extends Component {
 	static propTypes = {
@@ -76,10 +76,10 @@ export class Canvas extends Component {
 
 	handlePaste = event => {
 		// fallback behaviour: ctrl+z undo is broken, and the cursor pos is reset
-		// wait 1 tick for the content to be fully inserted
+		// wait a tick for the content to be fully inserted
 		const fallback = () => setTimeout(this.fixText, 0);
 
-		tryPaste(event, fallback);
+		tryPasteFromClipboard(event, fallback);
 	};
 
 	updateUrl = () => setUrlParams({ text: this.props.text });

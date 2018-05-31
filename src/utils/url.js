@@ -2,11 +2,11 @@ import qs from 'qs';
 import pipe from 'ramda/src/pipe';
 import map from 'ramda/src/map';
 import evolve from 'ramda/src/evolve';
-import { removeDefaultParams, cleanMarkup } from './parse';
 import { fetchShortUrl } from 'api/api';
+import { DEFAULT_PARAMS } from 'config.js';
+import { removeDefaultParams, cleanMarkup } from './parse';
 import { isUndefined } from './type';
 import { getAutoTextColor } from './colour';
-import { DEFAULT_PARAMS } from 'config';
 
 export function setUrlParams(newParams) {
 	const params = { ...getQueryParams(), ...newParams };
