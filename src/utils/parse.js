@@ -1,5 +1,8 @@
 import pipe from 'ramda/src/pipe';
 import { DEFAULT_PARAMS } from 'config.js';
+import { isUndefined } from './type';
+import { getAutoTextColor } from './colour';
+import { getQueryParams } from './url';
 
 // remove all element props, e.g. style="padding: 12px"
 export const removeElementProps = input =>
@@ -63,17 +66,26 @@ export const cleanMarkup = pipe(
 	removeTrailingWhitespaceOrBreaks
 );
 
-export function hasDefaultParams(params) {
-	const testParams = { ...params };
-	delete testParams.text;
-
-	return Object.keys(testParams).length === 0;
-}
-
 export function removeDefaultParams(params) {
 	for (const [key, value] of Object.entries(params)) {
 		if (value === DEFAULT_PARAMS[key]) delete params[key];
 	}
 
 	return params;
+}
+
+// TODO: rename?
+export function getParsedQueryParams() {
+	const queryParams = getQueryParams();
+	const isAutoFontColor = isUndefined(queryParams.fontColor);
+
+	if (isAutoFontColor) {
+		queryParams.fontColor = getAutoTextColor(queryParams.bgColor);
+	}
+
+	return {
+		...DEFAULT_PARAMS,
+		...queryParams,
+		isAutoFontColor,
+	};
 }

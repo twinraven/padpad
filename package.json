@@ -34,8 +34,8 @@
 		"start": "react-app-rewired start",
 		"build": "react-app-rewired build",
 		"test": "react-app-rewired test --env=jsdom",
-    "coverage": "react-app-rewired test --env=jsdom --coverage",
+		"coverage": "react-app-rewired test --env=jsdom --coverage",
 		"format": "prettier --config .prettierrc --write \"**/*.js\"",
-    "precommit": "lint-staged"
+		"precommit": "lint-staged"
 	}
 }

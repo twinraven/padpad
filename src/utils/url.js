@@ -2,8 +2,8 @@ import qs from 'qs';
 import pipe from 'ramda/src/pipe';
 import map from 'ramda/src/map';
 import evolve from 'ramda/src/evolve';
-import { removeDefaultParams, cleanMarkup } from 'utils/parse';
 import { fetchShortUrl } from 'api/api';
+import { removeDefaultParams, cleanMarkup } from './parse';
 
 export function setUrlParams(newParams) {
 	const params = { ...getQueryParams(), ...newParams };
@@ -19,6 +19,13 @@ export const getQueryParams = () =>
 	qs.parse(document.location.search, {
 		ignoreQueryPrefix: true,
 	});
+
+export function hasDefaultParams(params) {
+	const testParams = { ...params };
+	delete testParams.text;
+
+	return Object.keys(testParams).length === 0;
+}
 
 const cleanParams = pipe(
 	evolve({ text: cleanMarkup }),
