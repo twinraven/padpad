@@ -8,11 +8,8 @@ import { SharingPanel } from 'components/SharingPanel/SharingPanel';
 import { exitTransitionMs } from 'components/Modal/Modal.styles';
 import { SettingsIcon } from 'shared/icons/SettingsIcon';
 import { CloseIcon, ShareIcon } from 'shared/icons';
-import {
-	getShareUrl,
-	setUrlParams,
-	deriveStateFromQueryParams,
-} from 'utils/url';
+import { getShareUrl, setUrlParams } from 'utils/url';
+import { getParsedQueryParams } from 'utils/parse';
 import { stopEvent } from 'utils/event';
 import { AccessibleText } from 'styles/mixins';
 import {
@@ -33,7 +30,7 @@ class App extends Component {
 		isAutoFontColor: true,
 		isLoadingShareUrl: false,
 		shareUrl: '',
-		...deriveStateFromQueryParams(),
+		...getParsedQueryParams(),
 	};
 
 	componentDidMount() {
@@ -166,7 +163,7 @@ class App extends Component {
 		);
 	}
 
-	alignStateWithQueryParams = () => this.setState(deriveStateFromQueryParams());
+	alignStateWithQueryParams = () => this.setState(getParsedQueryParams());
 
 	changeSettings = settings => {
 		setUrlParams(settings);
