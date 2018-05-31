@@ -74,6 +74,7 @@ export function removeDefaultParams(params) {
 	return params;
 }
 
+// TODO: rename?
 export function getParsedQueryParams() {
 	const queryParams = getQueryParams();
 	const isAutoFontColor = isUndefined(queryParams.fontColor);
