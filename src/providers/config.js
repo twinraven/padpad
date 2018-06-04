@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DEFAULT_PARAMS, DEFAULT_SETTINGS } from 'config.js';
+import { DEFAULT_PARAMS, DEFAULT_CONFIG } from 'config.js';
 import { getParsedQueryParams } from 'utils/parse';
 
 const { Provider, Consumer } = React.createContext('config');
@@ -7,7 +7,7 @@ const { Provider, Consumer } = React.createContext('config');
 export class ConfigProvider extends Component {
 	state = {
 		changeConfig: config => this.setState(config),
-		resetConfig: () => this.setState({ ...DEFAULT_SETTINGS }),
+		resetConfig: () => this.setState({ ...DEFAULT_CONFIG }),
 	};
 
 	static getDerivedStateFromProps(prevProps, prevState) {
@@ -33,3 +33,16 @@ export class ConfigProvider extends Component {
 }
 
 export const ConfigConsumer = Consumer;
+
+/* export const ConfigContainer = props => (
+	<Container
+		initialState={{ ...DEFAULT_PARAMS }}
+		actions={{
+			changeConfig: config => () => ({ ...config }),
+			resetConfig: () => this.setState({ ...DEFAULT_CONFIG }),
+		}}
+		context="config"
+		{...props}
+	/>
+);
+ */

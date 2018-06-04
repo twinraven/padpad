@@ -10,18 +10,11 @@ import { tryPasteFromClipboard } from 'utils/paste';
 import { ConfigConsumer } from 'providers/config';
 
 export class Canvas extends Component {
-	state = {
-		text: '',
-	};
-
 	constructor(props) {
 		super(props);
 
 		this.canvasRef = React.createRef();
-		this.updateUrlDebounced = debounce(
-			params => setUrlParams(params),
-			URL_UPDATE_DELAY
-		);
+		this.setUrlParamsDebounced = debounce(setUrlParams, URL_UPDATE_DELAY);
 	}
 
 	componentDidMount() {
@@ -30,7 +23,7 @@ export class Canvas extends Component {
 
 	render() {
 		return (
-			<ConfigConsumer>
+			<ConfigConsumer onUpdate={this.handleConfigUpdate}>
 				{({ text, fontSize, fontColor, fontStyle, changeConfig }) => (
 					<Wrapper
 						onClick={this.focusCanvas}
@@ -38,7 +31,7 @@ export class Canvas extends Component {
 						fontColor={fontColor}
 						fontStyle={fontStyle}
 					>
-						{text || this.state.text.length ? (
+						{text.length ? (
 							<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
 						) : (
 							<Label htmlFor="input">Type something...</Label>
@@ -47,8 +40,8 @@ export class Canvas extends Component {
 							{...this.props}
 							id="input"
 							innerRef={this.canvasRef}
-							onChange={event => this.handleChange(event, changeConfig)}
-							onBlur={this.handleBlur}
+							onChange={event => changeConfig({ text: event.target.value })}
+							onBlur={() => setUrlParams({ text: cleanMarkup(text) })}
 							onPaste={this.handlePaste}
 							tabIndex={0}
 							html={text}
@@ -64,15 +57,9 @@ export class Canvas extends Component {
 		);
 	}
 
-	handleChange = (event, changeConfig) => {
-		const text = { text: event.target.value };
-
-		this.setState(text);
-		changeConfig(text);
-		this.updateUrlDebounced(text);
+	handleConfigUpdate = data => {
+		this.setUrlParamsDebounced(data);
 	};
-
-	handleBlur = () => setUrlParams({ text: cleanMarkup(this.state.text) });
 
 	handlePaste = event => {
 		// fallback behaviour: ctrl+z undo is broken, and the cursor pos is reset

@@ -21,7 +21,7 @@ export const DEFAULT_TEXT = '';
 
 export const DEFAULT_TITLE = 'PadPad';
 
-export const DEFAULT_SETTINGS = {
+export const DEFAULT_CONFIG = {
 	bgColor: DEFAULT_LIGHT_COLOR,
 	fontColor: DEFAULT_DARK_COLOR,
 	fontSize: DEFAULT_FONT_SIZE,
@@ -29,7 +29,7 @@ export const DEFAULT_SETTINGS = {
 };
 
 export const DEFAULT_PARAMS = {
-	...DEFAULT_SETTINGS,
+	...DEFAULT_CONFIG,
 	text: DEFAULT_TEXT,
 };
 

@@ -138,7 +138,9 @@ class App extends Component {
 								key="settings-modal"
 								transitionState={state}
 							>
-								<SettingsPanel />
+								<ConfigConsumer>
+									{config => <SettingsPanel {...config} />}
+								</ConfigConsumer>
 							</SettingsModal>
 						)}
 					</Transition>
