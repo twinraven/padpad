@@ -19,7 +19,7 @@ import {
 	DEFAULT_DARK_COLOR,
 	DEFAULT_LIGHT_COLOR,
 	DEFAULT_FONT_STYLE,
-} from 'config';
+} from 'config.js';
 
 describe('clean markup', () => {
 	describe('removeElementProps', () => {

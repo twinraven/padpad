@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import debounce from 'lodash.debounce';
 import { URL_UPDATE_DELAY } from 'config.js';
 import { AccessibleLabel } from 'styles/mixins';
@@ -8,21 +7,21 @@ import { setUrlParams } from 'utils/url';
 import { cleanMarkup } from 'utils/parse';
 import { Wrapper, ContentEditable, Label } from './Canvas.styles';
 import { tryPasteFromClipboard } from 'utils/paste';
+import { ConfigConsumer } from 'providers/config';
 
 export class Canvas extends Component {
-	static propTypes = {
-		fontColor: PropTypes.string.isRequired,
-		fontSize: PropTypes.string.isRequired,
-		fontStyle: PropTypes.string.isRequired,
-		text: PropTypes.string.isRequired,
-		changeText: PropTypes.func.isRequired,
+	state = {
+		text: '',
 	};
 
 	constructor(props) {
 		super(props);
 
 		this.canvasRef = React.createRef();
-		this.updateUrlDebounced = debounce(this.updateUrl, URL_UPDATE_DELAY);
+		this.updateUrlDebounced = debounce(
+			params => setUrlParams(params),
+			URL_UPDATE_DELAY
+		);
 	}
 
 	componentDidMount() {
@@ -30,60 +29,58 @@ export class Canvas extends Component {
 	}
 
 	render() {
-		const {
-			text,
-			changeText,
-			fontSize,
-			fontColor,
-			fontStyle,
-			...props
-		} = this.props;
-
 		return (
-			<Wrapper
-				onClick={this.focusCanvas}
-				fontSize={fontSize}
-				fontColor={fontColor}
-				fontStyle={fontStyle}
-			>
-				{Boolean(text.length) ? (
-					<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
-				) : (
-					<Label htmlFor="input">Type something...</Label>
+			<ConfigConsumer>
+				{({ text, fontSize, fontColor, fontStyle, changeConfig }) => (
+					<Wrapper
+						onClick={this.focusCanvas}
+						fontSize={fontSize}
+						fontColor={fontColor}
+						fontStyle={fontStyle}
+					>
+						{text || this.state.text.length ? (
+							<AccessibleLabel htmlFor="input">Start typing</AccessibleLabel>
+						) : (
+							<Label htmlFor="input">Type something...</Label>
+						)}
+						<ContentEditable
+							{...this.props}
+							id="input"
+							innerRef={this.canvasRef}
+							onChange={event => this.handleChange(event, changeConfig)}
+							onBlur={this.handleBlur}
+							onPaste={this.handlePaste}
+							tabIndex={0}
+							html={text}
+							role="textbox"
+							spellCheck={true}
+							dir="ltr"
+							aria-multiline={true}
+							aria-label="Note"
+						/>
+					</Wrapper>
 				)}
-				<ContentEditable
-					{...props}
-					id="input"
-					innerRef={this.canvasRef}
-					onChange={this.handleUpdate}
-					onKeyUp={this.updateUrlDebounced}
-					onBlur={this.fixText}
-					onPaste={this.handlePaste}
-					tabIndex={0}
-					html={text}
-					role="textbox"
-					spellCheck={true}
-					dir="ltr"
-					aria-multiline={true}
-					aria-label="Note"
-				/>
-			</Wrapper>
+			</ConfigConsumer>
 		);
 	}
 
-	handleUpdate = event => this.props.changeText(event.target.value);
+	handleChange = (event, changeConfig) => {
+		const text = { text: event.target.value };
+
+		this.setState(text);
+		changeConfig(text);
+		this.updateUrlDebounced(text);
+	};
+
+	handleBlur = () => setUrlParams({ text: cleanMarkup(this.state.text) });
 
 	handlePaste = event => {
 		// fallback behaviour: ctrl+z undo is broken, and the cursor pos is reset
 		// wait a tick for the content to be fully inserted
-		const fallback = () => setTimeout(this.fixText, 0);
+		const fallback = () => setTimeout(this.handleBlur, 0);
 
 		tryPasteFromClipboard(event, fallback);
 	};
-
-	updateUrl = () => setUrlParams({ text: this.props.text });
-
-	fixText = () => this.props.changeText(cleanMarkup(this.props.text));
 
 	focusCanvas = () => {
 		if (this.canvasRef && this.canvasRef.current) {

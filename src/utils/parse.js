@@ -5,8 +5,9 @@ import { getAutoTextColor } from './colour';
 import { getQueryParams } from './url';
 
 // remove all element props, e.g. style="padding: 12px"
-export const removeElementProps = input =>
-	input.replace(/<([a-zA-Z-]+[1-6]?)( [a-zA-Z-]+=[^>]+)*>/gim, '<$1>');
+export const removeElementProps = input => {
+	return input.replace(/<([a-zA-Z-]+[1-6]?)( [a-zA-Z-]+=[^>]+)*>/gim, '<$1>');
+};
 
 // TODO: potential bug -- <div><br><br></div> not handled here
 // if a <br> is wrapped in a div and any other tags, partially unwrap it
