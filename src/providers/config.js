@@ -11,11 +11,9 @@ export class ConfigProvider extends Component {
 	};
 
 	static getDerivedStateFromProps(prevProps, prevState) {
-		const parsedQueryParams = getParsedQueryParams();
-
 		return {
 			...DEFAULT_PARAMS,
-			...parsedQueryParams,
+			...getParsedQueryParams(),
 		};
 	}
 
