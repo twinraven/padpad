@@ -41,6 +41,10 @@ export const replaceEmTagsWithIs = input =>
 export const removeAllTagsExceptWhitelist = input =>
 	input.replace(/<[/]?(?!(br|b>|i>))[a-zA-Z]+[1-6]? ?\/?>/gim, '');
 
+// used in getTitle
+export const removeAllTags = input =>
+	input.replace(/<[/]?[a-zA-Z]+[1-6]? ?\/?>/gim, '');
+
 export const replaceLineWrapsWithBreaks = input =>
 	input.replace(/[\n\r]/gim, '<br>');
 
@@ -51,6 +55,8 @@ export const removeTrailingWhitespaceOrBreaks = input =>
 	input.replace(/(<br ?\/?>|\s)+$/gim, '');
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+export const getText = pipe(removeElementProps, removeAllTags);
 
 export const cleanMarkup = pipe(
 	removeElementProps,

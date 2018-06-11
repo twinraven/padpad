@@ -55,7 +55,6 @@ export class Canvas extends Component {
 					{...props}
 					id="input"
 					innerRef={this.canvasRef}
-					onInput={this.handleUpdate}
 					onChange={this.handleUpdate}
 					onKeyUp={this.updateUrlDebounced}
 					onBlur={this.fixText}
