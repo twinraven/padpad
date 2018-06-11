@@ -7,6 +7,7 @@ import {
 	replaceStrongTagsWithBs,
 	replaceEmTagsWithIs,
 	removeAllTagsExceptWhitelist,
+	removeAllTags,
 	replaceLineWrapsWithBreaks,
 	removeNonBreakingSpaces,
 	removeTrailingWhitespaceOrBreaks,
@@ -253,6 +254,26 @@ describe('clean markup', () => {
 			const input = '<i>test</i>';
 			const output = removeAllTagsExceptWhitelist(input);
 			expect(output).toBe(input);
+		});
+	});
+
+	describe('removeAllTags', () => {
+		it('removes a tag', () => {
+			const input = '<div>test</div>';
+			const output = removeAllTags(input);
+			expect(output).toBe('test');
+		});
+
+		it('removes a self-closing tag', () => {
+			const input = '<g />';
+			const output = removeAllTags(input);
+			expect(output).toBe('');
+		});
+
+		it('removes br tags', () => {
+			const input = '<br><br />';
+			const output = removeAllTags(input);
+			expect(output).toBe('');
 		});
 	});
 
