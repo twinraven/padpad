@@ -12,6 +12,8 @@ import { getShareUrl, setUrlParams } from 'utils/url';
 import { getParsedQueryParams } from 'utils/parse';
 import { stopEvent } from 'utils/event';
 import { AccessibleText } from 'styles/mixins';
+import { getTitle } from './App.utils';
+import { GlobalStyle } from '../styles';
 import {
 	Wrapper,
 	Canvas,
@@ -21,7 +23,6 @@ import {
 	SettingsModal,
 	SharingModal,
 } from './App.styles';
-import { getTitle } from './App.utils';
 
 class App extends Component {
 	state = {
@@ -61,6 +62,7 @@ class App extends Component {
 
 		return (
 			<Wrapper>
+				<GlobalStyle />
 				<Helmet>
 					<title>{title}</title>
 					<body bgColor={bgColor} />
