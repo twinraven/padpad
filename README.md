@@ -4,7 +4,9 @@
 
 PadPad works by putting all the content of the pad into the URL - so the whole thing (from words to appearance) is immediately shareable.
 
-### [Start a new pad](https://padpad.netlify.com)
+#### [Start a blank new pad](https://padpad.netlify.com)
+
+#### [Try a different style](https://padpad.netlify.com/?bgColor=%232d3c73&fontColor=%23ffffff&fontStyle=monospaced&fontSize=16.5)
 
 ---
 
